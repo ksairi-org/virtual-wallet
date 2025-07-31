@@ -15,16 +15,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: "1.0.0",
   orientation: "portrait",
   userInterfaceStyle: "light",
+  icon: "./assets/app-icon.png",
   newArchEnabled: true,
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",
-    backgroundColor: "#121212",
+    backgroundColor: "#dce9ed",
   },
   ios: {
     bundleIdentifier: process.env.APP_IDENTIFIER_IOS,
     googleServicesFile: process.env.GOOGLE_SERVICES_INFOPLIST_PATH,
-    icon: "./assets/ios-app-icon.png",
     infoPlist: {
       UIBackgroundModes: ["fetch", "remote-notification"],
       NSAppTransportSecurity: {
@@ -38,9 +38,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           CFBundleURLSchemes: ["virtual-wallet"],
         },
         {
-          CFBundleURLSchemes: [
-            "com.googleusercontent.apps.663127213070-cstftg1kcf091el3op17slhrvtn15jqj",
-          ],
+          CFBundleURLSchemes: [],
         },
       ],
     },
@@ -49,11 +47,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   android: {
-    icon: "./assets/android-app-icon.png",
     adaptiveIcon: {
-      foregroundImage: "./assets/android-app-icon-foreground.png",
-      backgroundImage: "./assets/android-app-icon-background.png",
-      monochromeImage: "./assets/android-monochrome-app-icon.png",
+      foregroundImage: "./assets/adaptive-icon.png",
+      backgroundColor: "#000000",
     },
     package: process.env.APP_IDENTIFIER_ANDROID,
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON_PATH,

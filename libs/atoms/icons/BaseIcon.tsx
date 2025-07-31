@@ -44,9 +44,6 @@ const BaseIcon = ({
   viewBox = "0 0 24 24",
   ...rest
 }: BaseIconProps) => {
-  console.log(iconName);
-  console.log(svgImports[iconName]);
-
   if (!isIconValid(iconName)) {
     throw new Error(`Icon ${iconName} does not exist`);
   }

@@ -1,7 +1,7 @@
 import type { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 import { QueryClient } from "@tanstack/react-query";
-import { refreshToken } from "@utility-nyc/react-query-sdk";
+//import { refreshToken } from "@utility-nyc/react-query-sdk";
 
 import { getIsRefreshEndpoint } from "./getIsRefreshEndpoint";
 import { getIsObjectAuthTokens } from "./getIsResponseAuthTokens";
@@ -23,7 +23,7 @@ type ErrorResponseArg = Parameters<ResponseInterceptor["use"]>[1];
 const queryClient = new QueryClient();
 
 const querifiedRefetchToken = () =>
-  queryClient.fetchQuery(["refreshToken"], refreshToken);
+  queryClient.fetchQuery(["refreshToken"] /*refreshToken*/);
 
 /**
  * all requests, before being sent, will be added an access token in the header's Authorization field, saved in storage.

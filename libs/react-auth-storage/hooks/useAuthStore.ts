@@ -1,23 +1,23 @@
-import type { AuthState } from './types';
-import type { AuthTokens } from '@utility-nyc/react-query-sdk';
+import type { AuthState } from "./types";
+//import type { AuthTokens } from '@utility-nyc/react-query-sdk';
 
-import { createJSONStorage, persist } from 'zustand/middleware';
-import { shallow } from 'zustand/shallow';
-import { createWithEqualityFn } from 'zustand/traditional';
+import { createJSONStorage, persist } from "zustand/middleware";
+import { shallow } from "zustand/shallow";
+import { createWithEqualityFn } from "zustand/traditional";
 
-import { createZustandMmkvStorage } from '../utils/createZustandMmkvStorage';
+import { createZustandMmkvStorage } from "../utils/createZustandMmkvStorage";
 // @ts-ignore
-const IS_WEB = typeof sessionStorage !== 'undefined';
+const IS_WEB = typeof sessionStorage !== "undefined";
 
-const SESSION_STORAGE_NAME = 'auth-storage';
+const SESSION_STORAGE_NAME = "auth-storage";
 
 const INITIAL_TOKENS_STATE: Pick<
   AuthState,
-  'accessToken' | 'refreshToken' | 'idToken'
+  "accessToken" | "refreshToken" | "idToken"
 > = {
-  accessToken: '',
-  refreshToken: '',
-  idToken: '',
+  accessToken: "",
+  refreshToken: "",
+  idToken: "",
 };
 
 const useAuthStore = createWithEqualityFn<AuthState>()(
@@ -32,9 +32,9 @@ const useAuthStore = createWithEqualityFn<AuthState>()(
 
         const wipedState = keys.reduce((acc, nextKey) => {
           // We want to wipe all tokens
-          if (typeof state[nextKey] === 'string') {
+          if (typeof state[nextKey] === "string") {
             // @ts-ignore
-            acc[nextKey] = '';
+            acc[nextKey] = "";
           }
 
           return acc;

@@ -1,11 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { useMagicLinkLogin } from '@utility-nyc/react-query-sdk';
+//import { useMagicLinkLogin } from '@utility-nyc/react-query-sdk';
 
-type UseLoginReturn = ReturnType<typeof useMagicLinkLogin>;
-type MutationParams = Parameters<UseLoginReturn['mutateAsync']>[0]['data'];
+//type UseLoginReturn = ReturnType<typeof useMagicLinkLogin>;
+type MutationParams = Parameters<UseLoginReturn["mutateAsync"]>[0]["data"];
 
-type ExtraLoginData = Omit<MutationParams, 'credential'>;
+type ExtraLoginData = Omit<MutationParams, "credential">;
 
 type LoginData = {
   identifier: string;
@@ -15,22 +15,23 @@ type LoginData = {
  * @returns function to be used to login sending an email with magic link
  */
 const useLoginMagicLink = () => {
-  const { mutateAsync, ...mutationMetadata } = useMagicLinkLogin();
+  //const { mutateAsync, ...mutationMetadata } = useMagicLinkLogin();
 
   const handleLogIn = useCallback(
     async ({ identifier }: LoginData) => {
-      const { data } = await mutateAsync({
-        data: {
-          identifier,
-        },
-      });
-
-      return data;
+      // const { data } = await mutateAsync({
+      //   data: {
+      //     identifier,
+      //   },
+      //});
+      //      return data;
     },
-    [mutateAsync],
+    [
+      /*mutateAsync*/
+    ],
   );
 
-  return { handleLogIn, ...mutationMetadata };
+  return { handleLogIn /*...mutationMetadata*/ };
 };
 
 export { useLoginMagicLink };

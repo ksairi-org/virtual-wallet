@@ -2,11 +2,11 @@ import { useFonts } from "expo-font";
 
 const useCustomFonts = () => {
   const [fontsLoaded, error] = useFonts({
-    "Gotham-Bold": require("../../../assets/fonts/Gotham-Bold.otf"),
+    "Inter-SemiBold": require("../../../assets/fonts/Inter-SemiBold.ttf"),
 
-    "Gotham-Medium": require("../../../assets/fonts/Gotham-Medium.otf"),
+    "Inter-Bold": require("../../../assets/fonts/Inter-Bold.ttf"),
 
-    "Gotham-Regular": require("../../../assets/fonts/Gotham-Book.otf"),
+    "Inter-Regular": require("../../../assets/fonts/Inter-Regular.ttf"),
   });
 
   if (error) {

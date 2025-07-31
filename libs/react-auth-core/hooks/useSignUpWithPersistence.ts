@@ -1,11 +1,11 @@
-import type { Profile } from "@utility-nyc/react-query-sdk";
+//import type { Profile } from "@utility-nyc/react-query-sdk";
 
 import { useCallback } from "react";
 
-import { useSignUp } from "@utility-nyc/react-query-sdk";
+//import { useSignUp } from "@utility-nyc/react-query-sdk";
 import { useAuthStore } from "@react-auth-storage";
 
-type UseSignUpReturn = ReturnType<typeof useSignUp>;
+//type UseSignUpReturn = ReturnType<typeof useSignUp>;
 type MutationParams = Parameters<UseSignUpReturn["mutateAsync"]>[0]["data"];
 
 type ExtraSignUpData = Omit<MutationParams, "credential" | "confirmCredential">;
@@ -14,7 +14,7 @@ type SignUpData = {
   identifier: string;
   password: string;
   identifierType: "email" | "username";
-  profile: Profile;
+  //profile: Profile;
 } & ExtraSignUpData;
 
 const REGEX_LOWER_CASE_UP2_NUMBERS = /^[a-z]*(?:\d[a-z]*){0,2}$/;
@@ -49,7 +49,7 @@ const isValidEmail = (email: string) => REGEX_VALID_EMAIL.test(email);
  * @returns function to be used to sign up
  */
 const useSignUpWithPersistence = () => {
-  const { mutateAsync, ...mutationMetadata } = useSignUp();
+  const { mutateAsync, ...mutationMetadata } = {}; //useSignUp();
   const setTokens = useAuthStore((state) => state.setTokens);
 
   const handleSignUp = useCallback(

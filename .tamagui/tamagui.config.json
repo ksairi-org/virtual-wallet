@@ -28268,154 +28268,194 @@
   "tamaguiConfig": {
     "fonts": {
       "body": {
-        "family": "Gotham, var(--font-gotham)",
+        "family": "Inter, var(--font-inter)",
         "size": {
-          "1": 10,
-          "2": 12,
-          "3": 15,
+          "1": 12,
+          "2": 14,
+          "3": 16,
           "4": 18,
-          "5": 24,
-          "6": 32,
-          "7": 40,
-          "8": 64,
-          "true": 15
+          "5": 20,
+          "6": 24,
+          "7": 28,
+          "8": 32,
+          "9": 36,
+          "10": 48,
+          "11": 64,
+          "12": 80,
+          "13": 80,
+          "true": 16
         },
         "lineHeight": {
-          "1": 11,
-          "2": 13.200000762939453,
-          "3": 16.5,
-          "4": 19.80000114440918,
-          "5": 26.400001525878906,
-          "6": 35.20000076293945,
-          "7": 44,
-          "8": 70.4000015258789,
-          "true": 16.5
+          "1": 16,
+          "2": 18,
+          "3": 20,
+          "4": 22,
+          "5": 24,
+          "6": 28,
+          "7": 32,
+          "8": 38,
+          "9": 40,
+          "10": 44,
+          "11": 56,
+          "12": 72,
+          "13": 88,
+          "true": 16
         },
         "weight": {
           "1": 400,
-          "2": 500,
+          "2": 600,
           "3": 700,
           "4": 700,
           "5": 700,
           "6": 700,
           "7": 700,
           "8": 700,
+          "9": 700,
+          "10": 700,
+          "11": 700,
+          "12": 700,
+          "13": 700,
           "true": 400
         },
         "letterSpacing": {
-          "1": 0,
-          "2": 0,
-          "3": 0,
-          "4": 0,
-          "5": 0,
-          "6": 0,
+          "1": -1.2000000476837158,
+          "2": -0.6000000238418579,
+          "3": -0.3499999940395355,
+          "4": -0.30000001192092896,
+          "5": -0.15000000596046448,
+          "6": -0.10000000149011612,
           "7": 0,
           "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
           "true": 0
         },
         "face": {
           "100": {
-            "normal": "Gotham, var(--font-gotham)"
+            "normal": "Inter, var(--font-inter)"
           },
           "200": {
-            "normal": "Gotham, var(--font-gotham)"
+            "normal": "Inter, var(--font-inter)"
           },
           "300": {
-            "normal": "Gotham, var(--font-gotham)"
+            "normal": "Inter, var(--font-inter)"
           },
           "400": {
-            "normal": "Gotham-Regular"
+            "normal": "Inter-Regular"
           },
           "500": {
-            "normal": "Gotham-Medium"
+            "normal": "Inter-Regular"
           },
           "600": {
-            "normal": "Gotham-Medium"
+            "normal": "Inter-SemiBold"
           },
           "700": {
-            "normal": "Gotham-Bold"
+            "normal": "Inter-Bold"
           },
           "800": {
-            "normal": "Gotham-Bold"
+            "normal": "Inter-Bold"
           },
           "900": {
-            "normal": "Gotham-Bold"
+            "normal": "Inter-Bold"
           }
         }
       },
       "heading": {
-        "family": "Gotham, var(--font-gotham)",
+        "family": "Inter, var(--font-inter)",
         "size": {
-          "1": 10,
-          "2": 12,
-          "3": 15,
+          "1": 12,
+          "2": 14,
+          "3": 16,
           "4": 18,
-          "5": 24,
-          "6": 32,
-          "7": 40,
-          "8": 64,
-          "true": 15
+          "5": 20,
+          "6": 24,
+          "7": 28,
+          "8": 32,
+          "9": 36,
+          "10": 48,
+          "11": 64,
+          "12": 80,
+          "13": 80,
+          "true": 16
         },
         "lineHeight": {
-          "1": 11,
-          "2": 13.200000762939453,
-          "3": 16.5,
-          "4": 19.80000114440918,
-          "5": 26.400001525878906,
-          "6": 35.20000076293945,
-          "7": 44,
-          "8": 70.4000015258789,
-          "true": 16.5
+          "1": 16,
+          "2": 18,
+          "3": 20,
+          "4": 22,
+          "5": 24,
+          "6": 28,
+          "7": 32,
+          "8": 38,
+          "9": 40,
+          "10": 44,
+          "11": 56,
+          "12": 72,
+          "13": 88,
+          "true": 16
         },
         "weight": {
           "1": 400,
-          "2": 500,
+          "2": 600,
           "3": 700,
           "4": 700,
           "5": 700,
           "6": 700,
           "7": 700,
           "8": 700,
+          "9": 700,
+          "10": 700,
+          "11": 700,
+          "12": 700,
+          "13": 700,
           "true": 400
         },
         "letterSpacing": {
-          "1": 0,
-          "2": 0,
-          "3": 0,
-          "4": 0,
-          "5": 0,
-          "6": 0,
+          "1": -1.2000000476837158,
+          "2": -0.6000000238418579,
+          "3": -0.3499999940395355,
+          "4": -0.30000001192092896,
+          "5": -0.15000000596046448,
+          "6": -0.10000000149011612,
           "7": 0,
           "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
           "true": 0
         },
         "face": {
           "100": {
-            "normal": "Gotham, var(--font-gotham)"
+            "normal": "Inter, var(--font-inter)"
           },
           "200": {
-            "normal": "Gotham, var(--font-gotham)"
+            "normal": "Inter, var(--font-inter)"
           },
           "300": {
-            "normal": "Gotham, var(--font-gotham)"
+            "normal": "Inter, var(--font-inter)"
           },
           "400": {
-            "normal": "Gotham-Regular"
+            "normal": "Inter-Regular"
           },
           "500": {
-            "normal": "Gotham-Medium"
+            "normal": "Inter-Regular"
           },
           "600": {
-            "normal": "Gotham-Medium"
+            "normal": "Inter-SemiBold"
           },
           "700": {
-            "normal": "Gotham-Bold"
+            "normal": "Inter-Bold"
           },
           "800": {
-            "normal": "Gotham-Bold"
+            "normal": "Inter-Bold"
           },
           "900": {
-            "normal": "Gotham-Bold"
+            "normal": "Inter-Bold"
           }
         }
       }
@@ -28426,6 +28466,8 @@
     "media": {},
     "themes": {
       "light": {
+        "splash-background2": "rgba(215,221,211,1)",
+        "splash-background": "#767ff5",
         "background-page": "rgba(255,255,255,1)",
         "border-strong": "rgba(44,54,64,1)",
         "border-subtle": "rgba(211,220,229,1)",
@@ -28475,6 +28517,8 @@
         "id": "light"
       },
       "dark": {
+        "splash-background2": "rgba(215,221,211,1)",
+        "splash-background": "#767ff5",
         "background-page": "rgba(0,0,0,1)",
         "border-strong": "rgba(211,220,229,1)",
         "border-subtle": "rgba(44,54,64,1)",
@@ -28526,6 +28570,20 @@
     },
     "tokens": {
       "color": {
+        "splash-background2": {
+          "isVar": true,
+          "key": "$splash-background2",
+          "name": "c-splash-background2",
+          "val": "rgba(215,221,211,1)",
+          "variable": ""
+        },
+        "splash-background": {
+          "isVar": true,
+          "key": "$splash-background",
+          "name": "c-splash-background",
+          "val": "#767ff5",
+          "variable": ""
+        },
         "background-page": {
           "isVar": true,
           "key": "$background-page",
@@ -29366,6 +29424,20 @@
     "getNewCSS": "Function",
     "fontSizeTokens": {},
     "specificTokens": {
+      "$color.splash-background2": {
+        "isVar": true,
+        "key": "$splash-background2",
+        "name": "c-splash-background2",
+        "val": "rgba(215,221,211,1)",
+        "variable": ""
+      },
+      "$color.splash-background": {
+        "isVar": true,
+        "key": "$splash-background",
+        "name": "c-splash-background",
+        "val": "#767ff5",
+        "variable": ""
+      },
       "$color.background-page": {
         "isVar": true,
         "key": "$background-page",

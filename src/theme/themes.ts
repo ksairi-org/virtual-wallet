@@ -5,6 +5,8 @@
 
 const themes = {
   light: {
+    "splash-background2": "rgba(215,221,211,1)",
+    "splash-background": "#767ff5",
     "background-page": "rgba(255,255,255,1)",
     "border-strong": "rgba(44,54,64,1)",
     "border-subtle": "rgba(211,220,229,1)",
@@ -53,6 +55,8 @@ const themes = {
     "button-background-inactive-brand": "rgba(68,78,89,1)",
   },
   dark: {
+    "splash-background2": "rgba(215,221,211,1)",
+    "splash-background": "#767ff5",
     "background-page": "rgba(0,0,0,1)",
     "border-strong": "rgba(211,220,229,1)",
     "border-subtle": "rgba(44,54,64,1)",

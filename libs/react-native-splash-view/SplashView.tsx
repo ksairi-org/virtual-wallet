@@ -139,12 +139,12 @@ const SplashView = forwardRef<RiveRef, SplashViewProps>(
 
     const opacity = useSharedValue(1);
 
-    // Android has a weird behavior - when autoplay is set to false, the Rive logo gets displaced momentarily and "jumps" around
-    useEffect(() => {
-      if (Platform.OS === "android") {
-        riveRef.current?.stop();
-      }
-    }, []);
+    // // Android has a weird behavior - when autoplay is set to false, the Rive logo gets displaced momentarily and "jumps" around
+    // useEffect(() => {
+    //   if (Platform.OS === "android") {
+    //     riveRef.current?.stop();
+    //   }
+    // }, []);
 
     // Handles hiding the static native Launch screen
     useEffect(() => {
@@ -258,6 +258,7 @@ const SplashView = forwardRef<RiveRef, SplashViewProps>(
           {...rest}
           {...riveSource}
           style={animationViewStyle}
+          autoplay={Platform.OS === "android"}
           onError={(err) => {
             console.error(`${err.type}: ${err.message}`);
           }}

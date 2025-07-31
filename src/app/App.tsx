@@ -31,8 +31,8 @@ queryClient.setDefaultOptions({
 
 const getSplashViewStyle = (isOSThemeDark: boolean) => ({
   backgroundColor: isOSThemeDark
-    ? themes.dark["background"]
-    : themes.light["background"],
+    ? themes.dark["splash-background2"]
+    : themes.light["splash-background2"],
 });
 
 export default function App() {

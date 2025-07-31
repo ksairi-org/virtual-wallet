@@ -1,8 +1,8 @@
-import { gotham } from './gotham';
+import { inter } from "./inter";
 
 const fonts = {
-  body: gotham,
-  heading: gotham,
+  body: inter,
+  heading: inter,
 };
 
 export { fonts };
