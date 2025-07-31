@@ -1,0 +1,82 @@
+{
+  "build": {
+    "dev-client-android": {
+      "distribution": "internal",
+      "developmentClient": true,
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "dev-client-ios": {
+      "extends": "dev-client-android",
+      "ios": {
+        "simulator": true
+      }
+    },
+    "dev-client-ios-real-device": {
+      "extends": "dev-client-android",
+      "ios": {
+        "simulator": false
+      }
+    },
+    "store": {
+      "autoIncrement": true,
+      "distribution": "store",
+      "ios": {
+        "image": "latest",
+        "resourceClass": "default"
+      },
+      "android": {
+        "image": "latest",
+        "resourceClass": "default",
+        "buildType": "app-bundle"
+      }
+    },
+    "internal": {
+      "extends": "store",
+      "autoIncrement": false,
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "internal-simulator": {
+      "extends": "store",
+      "autoIncrement": false,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      }
+    }
+  },
+  "submit": {
+    "stg": {
+      "ios": {
+        "appleTeamId": "A2PNRR8L9D",
+        "ascAppId": "6748040218",
+        "companyName": "Wana",
+        "bundleIdentifier": "com.kalbby.staging"
+      },
+      "android": {
+        "track": "internal",
+        "releaseStatus": "completed",
+        "applicationId": "com.kalbby.staging"
+      }
+    },
+    "prod": {
+      "extends": "stg",
+      "ios": {
+        "ascAppId": "1624774435",
+        "bundleIdentifier": "com.kalbby.Kalbby"
+      },
+      "android": {
+        "track": "production",
+        "applicationId": "com.kalbby"
+      }
+    }
+  },
+  "cli": {
+    "appVersionSource": "remote",
+    "version": ">= 16.6.0"
+  }
+}

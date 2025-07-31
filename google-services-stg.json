@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "712595393023",
+    "project_id": "virtual-wallet-9aaeb",
+    "storage_bucket": "virtual-wallet-9aaeb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712595393023:android:854d0a92c0c328b76bffca",
+        "android_client_info": {
+          "package_name": "com.virtual_wallet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuMhbrpPVq9RqHzkEFrRayy2FzMPKNPVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712595393023:android:e4c7fc967e23237b6bffca",
+        "android_client_info": {
+          "package_name": "com.virtual_wallet.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuMhbrpPVq9RqHzkEFrRayy2FzMPKNPVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

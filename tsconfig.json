@@ -1,0 +1,31 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@default-tamagui-config": ["src/theme/tamagui.config.ts"],
+      "@screens": ["src/screens"],
+      "@navigation": ["src/navigation"],
+      "@utils": ["src/utils"],
+      "@organisms": ["src/components/organisms"],
+      "@theme": ["src/theme/index.ts"],
+      "@sentry": ["src/services/sentry/index.ts"],
+      "@firebase-messaging": ["src/services/firebase-messaging/index.ts"],
+      "@react-native-hooks": ["libs/react-native-hooks"],
+      "@react-hooks": ["libs/react-hooks"],
+      "@react-native-functions": ["libs/react-native-functions"],
+      "@react-native-ui-config": ["libs/react-native-ui-config"],
+      "@typescript-functions": ["libs/typescript-functions"],
+      "@react-native-splash-view": ["libs/react-native-splash-view"],
+      "@ui-containers": ["libs/ui-containers"],
+      "@ui-touchables": ["libs/ui-touchables"],
+      "@fonts": ["libs/atoms/fonts"],
+      "@icons": ["libs/atoms/icons"],
+      "@stores": ["src/stores/index.ts"],
+      "@react-auth-setup": ["libs/react-auth-setup"],
+      "@react-auth-core": ["libs/react-auth-core"],
+      "@react-auth-storage": ["libs/react-auth-storage"]
+    }
+  }
+}

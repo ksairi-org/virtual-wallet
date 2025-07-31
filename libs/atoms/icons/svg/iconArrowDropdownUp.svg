@@ -1,0 +1,15 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Type=Export, Variants=Arrow-Dropdown-Up" clip-path="url(#clip0_2184_6603)">
+<mask id="mask0_2184_6603" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<rect id="Bounding box" width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_2184_6603)">
+<path id="Arrow-Dropdown-Right" d="M17.5 14.5H7.5L12.5 9.5L17.5 14.5Z" fill="currentColor"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_2184_6603">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>

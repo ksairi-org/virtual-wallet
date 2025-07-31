@@ -1,0 +1,42 @@
+name: Build and Deploy to App Stores
+
+on:
+  push:
+    branches: [add-expo] # remove this when deploying to main or develop (default branch)
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment (stg, prod)'
+        required: true
+        type: choice
+        options:
+          - stg
+          - prod
+      platform:
+        description: 'Platform to build and deploy (ios, android, all)'
+        required: true
+        type: choice
+        options:
+          - ios
+          - android
+          - all
+jobs:
+  deploy-android:
+    if: ${{ (inputs.platform == 'android' || inputs.platform == 'all') && github.event_name == 'workflow_dispatch' }}
+    # uncomment the above line when this file hits the default branch and can be triggered manually | comment the above to test the workflow
+    uses: ./.github/workflows/expo-android-deploy.yml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      # environment: 'stg'
+      node-version: '23.1'
+
+  deploy-ios:
+    if: ${{ (inputs.platform == 'ios' || inputs.platform == 'all') && github.event_name == 'workflow_dispatch' }}
+    # uncomment the above line when this file hits the default branch and can be triggered manually | comment the above to test the workflow
+    uses: ./.github/workflows/expo-ios-deploy.yml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      # environment: 'stg'
+      node-version: '23.1'

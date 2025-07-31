@@ -1,0 +1,15 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Type=Export, Variants=Warning" clip-path="url(#clip0_2184_6573)">
+<mask id="mask0_2184_6573" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="25" height="25">
+<rect id="Bounding box" x="0.422119" y="0.352417" width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_2184_6573)">
+<path id="Warning" d="M11.4221 14.3524V5.35242H13.4221V14.3524H11.4221ZM11.4221 19.3524V17.3524H13.4221V19.3524H11.4221Z" fill="currentColor"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_2184_6573">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>

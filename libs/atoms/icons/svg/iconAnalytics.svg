@@ -1,0 +1,15 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Type=Export, Variants=Analytics" clip-path="url(#clip0_2184_6326)">
+<mask id="mask0_2184_6326" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-1" y="-1" width="25" height="25">
+<rect id="Bounding box" x="-0.409424" y="-0.276123" width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_2184_6326)">
+<path id="Analytics" d="M15.5906 19.7239V12.7239H19.5906V19.7239H15.5906ZM9.59058 19.7239V3.72388H13.5906V19.7239H9.59058ZM3.59058 19.7239V8.72388H7.59058V19.7239H3.59058Z" fill="currentColor"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_2184_6326">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>
