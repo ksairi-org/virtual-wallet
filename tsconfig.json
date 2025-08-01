@@ -25,7 +25,9 @@
       "@stores": ["src/stores/index.ts"],
       "@react-auth-setup": ["libs/react-auth-setup"],
       "@react-auth-core": ["libs/react-auth-core"],
-      "@react-auth-storage": ["libs/react-auth-storage"]
+      "@react-auth-storage": ["libs/react-auth-storage"],
+      "@react-native-auth-google": ["libs/react-native-auth-google"],
+      "@react-native-auth-apple": ["libs/react-native-auth-apple"]
     }
   }
 }

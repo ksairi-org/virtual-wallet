@@ -24,7 +24,8 @@ const useAuthStore = createWithEqualityFn<AuthState>()(
   persist(
     (set, get) => ({
       ...INITIAL_TOKENS_STATE,
-      setTokens: (tokens: AuthTokens) => set({ ...tokens }),
+      //setTokens: (tokens: AuthTokens) => set({ ...tokens }),
+      setTokens: (tokens) => set({ ...tokens }),
       handleLogout: () => {
         const state = get();
 

@@ -3,6 +3,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { HomeStackNavigatorParamList } from "../types";
 
 type RootStackNavigatorParamList = {
+  WelcomeScreen: undefined;
   LoginScreen: undefined;
   HomeStackNavigator: NavigatorScreenParams<HomeStackNavigatorParamList>;
 };

@@ -12,7 +12,12 @@
           "package_name": "com.virtual_wallet"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "712595393023-psrrble3grvvgh17tlgrcn1sc3e4j5n5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBuMhbrpPVq9RqHzkEFrRayy2FzMPKNPVk"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712595393023-psrrble3grvvgh17tlgrcn1sc3e4j5n5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "712595393023-0799di0afa13khkjvdvpq95lqqmk5cqs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.virtual-wallet.staging"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +48,20 @@
           "package_name": "com.virtual_wallet.staging"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "712595393023-1uhhjjuvschjvagla1e53hfjt31bhojn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.virtual_wallet.staging",
+            "certificate_hash": "e1505abb64aad3140cd25fa4a3861f53cad04f86"
+          }
+        },
+        {
+          "client_id": "712595393023-psrrble3grvvgh17tlgrcn1sc3e4j5n5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBuMhbrpPVq9RqHzkEFrRayy2FzMPKNPVk"
@@ -39,7 +69,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712595393023-psrrble3grvvgh17tlgrcn1sc3e4j5n5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "712595393023-0799di0afa13khkjvdvpq95lqqmk5cqs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.virtual-wallet.staging"
+              }
+            }
+          ]
         }
       }
     }

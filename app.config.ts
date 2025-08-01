@@ -45,6 +45,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     entitlements: {
       "aps-environment": "production",
     },
+    usesAppleSignIn: true,
   },
   android: {
     adaptiveIcon: {
@@ -106,6 +107,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         organization: process.env.SENTRY_ORG,
       },
     ],
+    "@react-native-google-signin/google-signin",
   ],
   extra: {
     eas: {

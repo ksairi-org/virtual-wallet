@@ -3037,6 +3037,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@invertase/react-native-apple-authentication@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "@invertase/react-native-apple-authentication@npm:2.4.1"
+  checksum: 10c0/4508f96dd3fde8c5009db184c5697a4f9b63ce2856f05650ec71274fd50d96cca7088cc084e0bd88f13e801497036e40d529af150e750880448053bf74e9e540
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -3603,6 +3610,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-firebase/auth@npm:22.2.0":
+  version: 22.2.0
+  resolution: "@react-native-firebase/auth@npm:22.2.0"
+  dependencies:
+    plist: "npm:^3.1.0"
+  peerDependencies:
+    "@react-native-firebase/app": 22.2.0
+    expo: ">=47.0.0"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: 10c0/d58e7579d7531641eb57e0fbd4ac87eaa38902b200d219bc5c30ce1c496adf78e42b6a52bec0e39ea1f11958cf2f42a602f80cd0ba9e12ffd213e2751242f9a5
+  languageName: node
+  linkType: hard
+
 "@react-native-firebase/in-app-messaging@npm:22.2.0":
   version: 22.2.0
   resolution: "@react-native-firebase/in-app-messaging@npm:22.2.0"
@@ -3623,6 +3645,20 @@ __metadata:
     expo:
       optional: true
   checksum: 10c0/0a82cabf6d9e4b6a61b3df741b060ae24a53f1a93f81856112af4326d738ba5d48125eae926c71c259063091cf472cfd3295b9a440066717d95e5d5b28f37062
+  languageName: node
+  linkType: hard
+
+"@react-native-google-signin/google-signin@npm:^15.0.0":
+  version: 15.0.0
+  resolution: "@react-native-google-signin/google-signin@npm:15.0.0"
+  peerDependencies:
+    expo: ">=52.0.40"
+    react: "*"
+    react-native: "*"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: 10c0/e0a2100bab0a59d795e352986cbc7bd3ba5fea85346ac628c8c5c7583af66ed3faed9873e2a53c422b86d44c8e21e2c8a1e3c96e85dc1ea559c28fbb3c35ee42
   languageName: node
   linkType: hard
 
@@ -6154,6 +6190,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-native-get-random-values@npm:^1":
+  version: 1.8.2
+  resolution: "@types/react-native-get-random-values@npm:1.8.2"
+  checksum: 10c0/66c0268151d0673bff88828d82d4087aeabbe29a8ffe433f50e2593cd04872fc890f0d2660203435d13412b10d866d24a3ab72981cf481e5676ccf88de12c235
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:~19.0.10":
   version: 19.0.14
   resolution: "@types/react@npm:19.0.14"
@@ -6167,6 +6210,13 @@ __metadata:
   version: 2.0.3
   resolution: "@types/stack-utils@npm:2.0.3"
   checksum: 10c0/1f4658385ae936330581bcb8aa3a066df03867d90281cdf89cc356d404bd6579be0f11902304e1f775d92df22c6dd761d4451c804b0a4fba973e06211e9bd77c
+  languageName: node
+  linkType: hard
+
+"@types/uuid@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "@types/uuid@npm:10.0.0"
+  checksum: 10c0/9a1404bf287164481cb9b97f6bb638f78f955be57c40c6513b7655160beb29df6f84c915aaf4089a1559c216557dc4d2f79b48d978742d3ae10b937420ddac60
   languageName: node
   linkType: hard
 
@@ -13375,7 +13425,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plist@npm:^3.0.5":
+"plist@npm:^3.0.5, plist@npm:^3.1.0":
   version: 3.1.0
   resolution: "plist@npm:3.1.0"
   dependencies:
@@ -15944,13 +15994,16 @@ __metadata:
     "@commitlint/cli": "npm:^19.8.1"
     "@commitlint/config-conventional": "npm:^19.8.1"
     "@hookform/resolvers": "npm:^5.2.1"
+    "@invertase/react-native-apple-authentication": "npm:^2.4.1"
     "@react-native-community/datetimepicker": "npm:^8.4.3"
     "@react-native-community/hooks": "npm:^100.1.0"
     "@react-native-community/netinfo": "npm:^11.4.1"
     "@react-native-firebase/analytics": "npm:22.2.0"
     "@react-native-firebase/app": "npm:22.2.0"
+    "@react-native-firebase/auth": "npm:22.2.0"
     "@react-native-firebase/in-app-messaging": "npm:22.2.0"
     "@react-native-firebase/messaging": "npm:22.2.0"
+    "@react-native-google-signin/google-signin": "npm:^15.0.0"
     "@react-navigation/native": "npm:^7.1.14"
     "@react-navigation/native-stack": "npm:^7.3.21"
     "@sentry/react-native": "npm:~6.14.0"
@@ -15959,6 +16012,8 @@ __metadata:
     "@tanstack/react-query": "npm:^5.83.0"
     "@types/react": "npm:~19.0.10"
     "@types/react-dom": "npm:^19"
+    "@types/react-native-get-random-values": "npm:^1"
+    "@types/uuid": "npm:^10.0.0"
     axios: "npm:^1.11.0"
     babel-plugin-inline-import: "npm:^3.0.0"
     babel-preset-expo: "npm:~13.0.0"

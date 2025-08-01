@@ -55,23 +55,23 @@
         "appleTeamId": "A2PNRR8L9D",
         "ascAppId": "6748040218",
         "companyName": "Wana",
-        "bundleIdentifier": "com.kalbby.staging"
+        "bundleIdentifier": "com.virtual-wallet.staging"
       },
       "android": {
         "track": "internal",
         "releaseStatus": "completed",
-        "applicationId": "com.kalbby.staging"
+        "applicationId": "com.virtual_wallet.staging"
       }
     },
     "prod": {
       "extends": "stg",
       "ios": {
         "ascAppId": "1624774435",
-        "bundleIdentifier": "com.kalbby.Kalbby"
+        "bundleIdentifier": "com.virtual-wallet"
       },
       "android": {
         "track": "production",
-        "applicationId": "com.kalbby"
+        "applicationId": "com.virtual_wallet"
       }
     }
   },

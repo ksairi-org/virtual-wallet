@@ -1,46 +1,72 @@
-//import type { LoginOptions } from "@utility-nyc/react-query-sdk";
+import { firebase, FirebaseAuthTypes } from "@react-native-firebase/auth";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
-//import { useLogin } from "@utility-nyc/react-query-sdk";
 import { useAuthStore } from "@react-auth-storage";
 
-//type UseLoginReturn = ReturnType<typeof useLogin>;
-type MutationParams = Parameters<UseLoginReturn["mutateAsync"]>[0]["data"];
-
-type ExtraLoginData = Omit<MutationParams, "credential">;
-
 type LoginData = {
-  identifier: string;
+  email: string;
   password: string;
-  //options?: LoginOptions;
-} & ExtraLoginData;
+};
 
 /**
- * @returns function to be used to login either with username or email
+ * @returns functions to be used to login either with username or email or social networks.
  */
 const useLoginWithPersistence = () => {
-  const { mutateAsync, ...mutationMetadata } = {}; //useLogin();
   const setTokens = useAuthStore((state) => state.setTokens);
+  const [loading, setLoading] = useState(false);
 
-  const handleLogIn = useCallback(
-    async ({ identifier, password, options }: LoginData) => {
-      const { data } = await mutateAsync({
-        data: {
-          credential: password,
-          identifier,
-          options,
-        },
-      });
-
-      setTokens(data.tokens);
-
-      return data;
+  const saveCredentials = useCallback(
+    (credentials: FirebaseAuthTypes.UserCredential) => {
+      const token = credentials.user.getIdToken();
+      setTokens(token);
     },
-    [mutateAsync, setTokens],
+    [setTokens],
   );
 
-  return { handleLogIn, ...mutationMetadata };
+  const handleLogInSocialNetwork = useCallback(
+    async (credential: FirebaseAuthTypes.AuthCredential) => {
+      try {
+        setLoading(true);
+        const userCredential = await firebase
+          .auth()
+          .signInWithCredential(credential);
+
+        saveCredentials(userCredential);
+      } catch (error) {
+        console.error("Login failed with social:", error);
+        throw new Error("Login failed");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [saveCredentials],
+  );
+
+  const handleLogInWithEmail = useCallback(
+    async ({ email, password }: LoginData) => {
+      try {
+        setLoading(true);
+        const userCredential = await firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password);
+
+        saveCredentials(userCredential);
+      } catch (error) {
+        console.error("Login failed with email:", error);
+        throw new Error("Login failed");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [saveCredentials],
+  );
+
+  return {
+    handleLogInWithEmail,
+    handleLogInSocialNetwork,
+    loading,
+  };
 };
 
 export { useLoginWithPersistence };

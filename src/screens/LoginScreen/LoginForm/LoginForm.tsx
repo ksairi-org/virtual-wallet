@@ -19,6 +19,7 @@ import { BaseTextInput } from "src/components/molecules/inputs";
 import { CtaButton } from "src/components/molecules/buttons";
 import { useGlobalStore } from "@stores";
 import { useLoginWithPersistence } from "@react-auth-core";
+import { RootStackNavigation } from "src/navigation/types";
 
 const ON_CHANGE_TEXT_ERROR_DELAY = 2000;
 
@@ -39,8 +40,8 @@ const LoginForm = () => {
     state: isSecureTextEntryEnabled,
     toggleState: toggleSecureTextEntryEnabled,
   } = useBooleanState(true);
-  const navigation = useNavigation();
-  const { handleLogIn, status } = useLoginWithPersistence();
+  const navigation = useNavigation<RootStackNavigation>();
+  const { handleLogInWithEmail, loading } = useLoginWithPersistence();
   const hasSeenWelcomeScreen = useGlobalStore(
     (state) => state.hasSeenWelcomeScreen,
   );
@@ -55,20 +56,20 @@ const LoginForm = () => {
     },
   });
 
-  useLayoutAnimationOnChange(status);
+  useLayoutAnimationOnChange(loading);
 
   const handleSubmit: SubmitHandler<LoginFormSchema> = useCallback(
     async (data) => {
-      await handleLogIn({
-        identifier: data.email,
+      await handleLogInWithEmail({
+        email: data.email,
         password: data.password,
       });
 
       if (!hasSeenWelcomeScreen) {
-        navigation.navigate("WelcomeToClosetScreen");
+        navigation.navigate("WelcomeScreen");
       }
     },
-    [handleLogIn, hasSeenWelcomeScreen, navigation],
+    [handleLogInWithEmail, hasSeenWelcomeScreen, navigation],
   );
 
   const {
