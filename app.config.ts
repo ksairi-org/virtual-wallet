@@ -24,7 +24,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   ios: {
     bundleIdentifier: process.env.APP_IDENTIFIER_IOS,
-    googleServicesFile: process.env.GOOGLE_SERVICES_INFOPLIST_PATH,
+    googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICES_INFOPLIST_PATH,
     infoPlist: {
       UIBackgroundModes: ["fetch", "remote-notification"],
       NSAppTransportSecurity: {
@@ -107,7 +107,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         organization: process.env.SENTRY_ORG,
       },
     ],
-    "@react-native-google-signin/google-signin",
+    [
+      "@react-native-google-signin/google-signin",
+      {
+        iosUrlScheme: process.env.IOS_URL_SCHEME,
+      },
+    ],
   ],
   extra: {
     eas: {

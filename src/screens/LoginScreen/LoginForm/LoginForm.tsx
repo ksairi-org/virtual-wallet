@@ -41,7 +41,7 @@ const LoginForm = () => {
     toggleState: toggleSecureTextEntryEnabled,
   } = useBooleanState(true);
   const navigation = useNavigation<RootStackNavigation>();
-  const { handleLogInWithEmail, loading } = useLoginWithPersistence();
+  const { handleLogInWithEmail, status } = useLoginWithPersistence();
   const hasSeenWelcomeScreen = useGlobalStore(
     (state) => state.hasSeenWelcomeScreen,
   );
@@ -56,7 +56,7 @@ const LoginForm = () => {
     },
   });
 
-  useLayoutAnimationOnChange(loading);
+  useLayoutAnimationOnChange(status);
 
   const handleSubmit: SubmitHandler<LoginFormSchema> = useCallback(
     async (data) => {

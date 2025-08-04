@@ -9,12 +9,14 @@ type LoginData = {
   password: string;
 };
 
+type Status = "idle" | "loading" | "error" | "success";
+
 /**
  * @returns functions to be used to login either with username or email or social networks.
  */
 const useLoginWithPersistence = () => {
   const setTokens = useAuthStore((state) => state.setTokens);
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
   const saveCredentials = useCallback(
     (credentials: FirebaseAuthTypes.UserCredential) => {
@@ -27,17 +29,16 @@ const useLoginWithPersistence = () => {
   const handleLogInSocialNetwork = useCallback(
     async (credential: FirebaseAuthTypes.AuthCredential) => {
       try {
-        setLoading(true);
+        setStatus("loading");
         const userCredential = await firebase
           .auth()
           .signInWithCredential(credential);
 
         saveCredentials(userCredential);
+        setStatus("success");
       } catch (error) {
+        setStatus("error");
         console.error("Login failed with social:", error);
-        throw new Error("Login failed");
-      } finally {
-        setLoading(false);
       }
     },
     [saveCredentials],
@@ -46,17 +47,16 @@ const useLoginWithPersistence = () => {
   const handleLogInWithEmail = useCallback(
     async ({ email, password }: LoginData) => {
       try {
-        setLoading(true);
+        setStatus("loading");
         const userCredential = await firebase
           .auth()
           .signInWithEmailAndPassword(email, password);
 
         saveCredentials(userCredential);
+        setStatus("success");
       } catch (error) {
         console.error("Login failed with email:", error);
-        throw new Error("Login failed");
-      } finally {
-        setLoading(false);
+        setStatus("error");
       }
     },
     [saveCredentials],
@@ -65,7 +65,7 @@ const useLoginWithPersistence = () => {
   return {
     handleLogInWithEmail,
     handleLogInSocialNetwork,
-    loading,
+    status,
   };
 };
 

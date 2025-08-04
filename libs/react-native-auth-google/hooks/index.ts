@@ -1,2 +1,1 @@
-export * from './useSignInWithGoogle';
-export * from './useGoogleLoginWithPersistence';
+export * from "./useSignInWithGoogle";

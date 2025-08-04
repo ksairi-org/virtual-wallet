@@ -29,8 +29,8 @@ const useHandlerByPlatformAndroid = () =>
     const state = uuid();
 
     if (
-      !process.env.EXPO_PUBLIC_APPLE_CLIENT_ID ||
-      !process.env.EXPO_PUBLIC_APPLE_CALLBACK
+      !process.env.EXPO_PUBLIC_ANDROID_APPLE_SIGN_IN_CLIENT_ID ||
+      !process.env.EXPO_PUBLIC_ANDROID_APPLE_CALLBACK
     ) {
       throw new AppleSignInError(
         "CONFIGURATION_ERROR",
@@ -41,11 +41,11 @@ const useHandlerByPlatformAndroid = () =>
     // Configure the request
     appleAuthAndroid.configure({
       // The Service ID you registered with Apple
-      clientId: process.env.EXPO_PUBLIC_APPLE_CLIENT_ID,
+      clientId: process.env.EXPO_PUBLIC_ANDROID_APPLE_SIGN_IN_CLIENT_ID,
 
       // Return URL added to your Apple dev console. We intercept this redirect, but it must still match
       // the URL you provided to Apple. It can be an empty route on your backend as it's never called.
-      redirectUri: process.env.EXPO_PUBLIC_APPLE_CALLBACK,
+      redirectUri: process.env.EXPO_PUBLIC_ANDROID_APPLE_CALLBACK,
 
       // The type of response requested - code, id_token, or both.
       responseType: appleAuthAndroid.ResponseType.ALL,
