@@ -27,7 +27,8 @@
       "@react-auth-core": ["libs/react-auth-core"],
       "@react-auth-storage": ["libs/react-auth-storage"],
       "@react-native-auth-google": ["libs/react-native-auth-google"],
-      "@react-native-auth-apple": ["libs/react-native-auth-apple"]
+      "@react-native-auth-apple": ["libs/react-native-auth-apple"],
+      "@react-form": ["libs/react-form"]
     }
   }
 }

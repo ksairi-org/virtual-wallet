@@ -5,8 +5,7 @@ import type {
 import type { ImageLoadEventData } from "expo-image";
 import type { GetProps } from "tamagui";
 
-import type { ForwardedRef } from "react";
-import { forwardRef, useCallback, useState } from "react";
+import { ComponentRef, useCallback, useState } from "react";
 
 import type { ImageErrorEventData } from "react-native";
 
@@ -22,87 +21,82 @@ const StyledExpoImage = styled(UnstyledExpoImage, {});
 type StyledImageProps = GetProps<typeof StyledExpoImage>;
 
 type ImageProps = Omit<StyledImageProps, "width" | "height"> &
-  Omit<ExpoImageProps, "transition">;
+  Omit<ExpoImageProps, "transition"> & {
+    ref?: React.Ref<ComponentRef<typeof StyledExpoImage>>;
+  };
+const Image = ({
+  ErrorComponent,
+  errorImageSource,
+  onLoad: onLoadProp,
+  onError: onErrorProp,
+  width,
+  height,
+  autoScaleBasedOnScreenDimensions = true,
+  maxFontScaleToApply,
+  ref,
+  ...imageProps
+}: ImageProps) => {
+  const fontScale = useFontScale();
 
-const Image = forwardRef(
-  (
-    {
-      ErrorComponent,
-      errorImageSource,
-      onLoad: onLoadProp,
-      onError: onErrorProp,
+  const { width: maybeScaledWidth, height: maybeScaledHeight } =
+    getImageDimensions({
       width,
       height,
-      autoScaleBasedOnScreenDimensions = true,
+      autoScaleBasedOnScreenDimensions,
+      defaultSize: 30,
+      fontScale,
       maxFontScaleToApply,
-      ...imageProps
-    }: ImageProps,
-    ref: ForwardedRef<UnstyledExpoImage>,
-  ) => {
-    const fontScale = useFontScale();
+    });
 
-    const { width: maybeScaledWidth, height: maybeScaledHeight } =
-      getImageDimensions({
-        width,
-        height,
-        autoScaleBasedOnScreenDimensions,
-        defaultSize: 30,
-        fontScale,
-        maxFontScaleToApply,
-      });
+  const [status, setStatus] = useState<ImageSourceStateStatus>("loading");
 
-    const [status, setStatus] = useState<ImageSourceStateStatus>("loading");
+  const onError = useCallback(
+    (event: ImageErrorEventData) => {
+      onErrorProp?.(event);
 
-    const onError = useCallback(
-      (event: ImageErrorEventData) => {
-        onErrorProp?.(event);
+      setStatus("error");
+    },
+    [onErrorProp],
+  );
 
-        setStatus("error");
-      },
-      [onErrorProp],
-    );
-
-    const onRetryPress = useCallback(() => {
-      if (status === "error") {
-        setStatus("loading");
-      }
-    }, [status]);
-
-    const onLoad = useCallback(
-      (event: ImageLoadEventData) => {
-        onLoadProp?.(event);
-
-        setStatus("success");
-      },
-      [onLoadProp],
-    );
-
+  const onRetryPress = useCallback(() => {
     if (status === "error") {
-      return (
-        <Error
-          onRetryPress={onRetryPress}
-          ErrorComponent={ErrorComponent}
-          {...imageProps}
-          source={errorImageSource}
-          width={maybeScaledWidth}
-          height={maybeScaledHeight}
-        />
-      );
+      setStatus("loading");
     }
+  }, [status]);
 
+  const onLoad = useCallback(
+    (event: ImageLoadEventData) => {
+      onLoadProp?.(event);
+
+      setStatus("success");
+    },
+    [onLoadProp],
+  );
+
+  if (status === "error") {
     return (
-      <StyledExpoImage
-        ref={ref}
+      <Error
+        onRetryPress={onRetryPress}
+        ErrorComponent={ErrorComponent}
         {...imageProps}
-        onLoad={onLoad}
-        onError={onError}
+        source={errorImageSource}
         width={maybeScaledWidth}
         height={maybeScaledHeight}
       />
     );
-  },
-);
+  }
 
-Image.displayName = "Image";
+  return (
+    <StyledExpoImage
+      ref={ref}
+      {...imageProps}
+      onLoad={onLoad}
+      onError={onError}
+      width={maybeScaledWidth}
+      height={maybeScaledHeight}
+    />
+  );
+};
 
 export { Image };

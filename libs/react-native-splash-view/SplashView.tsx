@@ -5,13 +5,7 @@ import type {
 } from "./types";
 import type { RiveRef } from "rive-react-native";
 
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useImperativeHandle, useRef, useState } from "react";
 
 import { Platform, StyleSheet, Image } from "react-native";
 
@@ -112,162 +106,152 @@ const getRiveSource = (source: any): RiveSourceResult => {
   return { resourceName: uri };
 };
 
-const SplashView = forwardRef<RiveRef, SplashViewProps>(
-  (
-    {
-      source,
-      alignment = Alignment.Center,
-      fit = Fit.Contain,
-      animationViewStyle,
-      fadeOutDuration = 1500,
-      children,
-      launchScreenHideMs = 0,
-      style,
-      fadeOutDelay = 0,
-      loopMode = LoopMode.OneShot,
-      launchImageUrl,
-      ...rest
-    },
-    ref,
-  ) => {
-    const riveSource = getRiveSource(source); // { url } *or* { resourceName }
-    const riveRef = useRef<RiveRef>(null);
+const SplashView = ({
+  source,
+  alignment = Alignment.Center,
+  fit = Fit.Contain,
+  animationViewStyle,
+  fadeOutDuration = 1500,
+  children,
+  launchScreenHideMs = 0,
+  style,
+  fadeOutDelay = 0,
+  loopMode = LoopMode.OneShot,
+  launchImageUrl,
+  ref,
+  ...rest
+}: SplashViewProps) => {
+  const riveSource = getRiveSource(source); // { url } *or* { resourceName }
+  const riveRef = useRef<RiveRef>(null);
 
-    const hasNoAnimation = !source;
+  const hasNoAnimation = !source;
 
-    const [hasAnimationEnded, setHasAnimationEnded] = useState(false);
+  const [hasAnimationEnded, setHasAnimationEnded] = useState(false);
 
-    const opacity = useSharedValue(1);
+  const opacity = useSharedValue(1);
 
-    // // Android has a weird behavior - when autoplay is set to false, the Rive logo gets displaced momentarily and "jumps" around
-    // useEffect(() => {
-    //   if (Platform.OS === "android") {
-    //     riveRef.current?.stop();
-    //   }
-    // }, []);
+  // // Android has a weird behavior - when autoplay is set to false, the Rive logo gets displaced momentarily and "jumps" around
+  // useEffect(() => {
+  //   if (Platform.OS === "android") {
+  //     riveRef.current?.stop();
+  //   }
+  // }, []);
 
-    // Handles hiding the static native Launch screen
-    useEffect(() => {
-      const timeout = setTimeout(async () => {
-        await SplashScreen.hideAsync();
+  // Handles hiding the static native Launch screen
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      await SplashScreen.hideAsync();
 
-        if (hasNoAnimation) {
-          // No animation provided. Splash screen has been hidden!
+      if (hasNoAnimation) {
+        // No animation provided. Splash screen has been hidden!
 
-          return;
-        }
-
-        riveRef.current?.play(undefined, loopMode);
-      }, launchScreenHideMs);
-
-      return () => clearTimeout(timeout);
-    }, [hasNoAnimation, launchScreenHideMs, loopMode]);
-
-    // Handles fading out the SplashView, as we don't have access to the time of the animation
-    useEffect(() => {
-      function handleOnAnimationEnd() {
-        setHasAnimationEnded(true);
+        return;
       }
 
-      const timeout = setTimeout(() => {
-        opacity.value = withTiming(
-          0,
-          { duration: fadeOutDuration },
-          (isFinished) => {
-            if (isFinished) {
-              runOnJS(handleOnAnimationEnd)();
-            }
-          },
-        );
-      }, fadeOutDelay);
+      riveRef.current?.play(undefined, loopMode);
+    }, launchScreenHideMs);
 
-      return () => clearTimeout(timeout);
-    }, [fadeOutDelay, fadeOutDuration, opacity]);
+    return () => clearTimeout(timeout);
+  }, [hasNoAnimation, launchScreenHideMs, loopMode]);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        setInputState: (triggerStateMachineName, inputName, value) =>
-          riveRef.current?.setInputState(
-            triggerStateMachineName,
-            inputName,
-            value,
-          ),
-        play: () => riveRef.current?.play(),
-        pause: () => riveRef.current?.pause(),
-        stop: () => riveRef.current?.stop(),
-        reset: () => riveRef.current?.reset(),
-        fireState: (triggerStateMachineName, inputName) =>
-          riveRef.current?.fireState(triggerStateMachineName, inputName),
-        touchBegan: (x, y) => riveRef.current?.touchBegan(x, y),
-        touchEnded: (x, y) => riveRef.current?.touchEnded(x, y),
-        setTextRunValue: (name, value) =>
-          riveRef.current?.setTextRunValue(name, value),
-        getBooleanState: (inputName) =>
-          riveRef.current?.getBooleanState(inputName),
-        getNumberState: (inputName) =>
-          riveRef.current?.getNumberState(inputName),
-        getBooleanStateAtPath: (inputName, path) =>
-          riveRef.current?.getBooleanStateAtPath(inputName, path),
-        getNumberStateAtPath: (inputName, path) =>
-          riveRef.current?.getNumberStateAtPath(inputName, path),
-        fireStateAtPath: (inputName, path) =>
-          riveRef.current?.fireStateAtPath(inputName, path),
-        setInputStateAtPath: (inputName, path, value) =>
-          riveRef.current?.setInputStateAtPath(inputName, path, value),
-        setBoolean: (path, value) => riveRef.current?.setBoolean(path, value),
-        setTextRunValueAtPath: (textRunName, value, path) =>
-          riveRef.current?.setTextRunValueAtPath(textRunName, path, value),
-        setString: (path, value) => riveRef.current?.setString(path, value),
-        setNumber: (path, value) => riveRef.current?.setNumber(path, value),
-        setColor: (path, value) => riveRef.current?.setColor(path, value),
-        setEnum: (path, value) => riveRef.current?.setColor(path, value),
-        trigger: (path) => riveRef.current?.trigger(path),
-        internalNativeEmitter: () => riveRef.current?.internalNativeEmitter(),
-        viewTag: () => riveRef.current?.viewTag(),
-      }),
-      [],
-    );
-
-    if (hasAnimationEnded) {
-      return null;
+  // Handles fading out the SplashView, as we don't have access to the time of the animation
+  useEffect(() => {
+    function handleOnAnimationEnd() {
+      setHasAnimationEnded(true);
     }
 
-    if (hasNoAnimation) {
-      if (!launchImageUrl) {
-        throw new Error(
-          "launchImageUrl is required when no animation is provided",
-        );
-      }
+    const timeout = setTimeout(() => {
+      opacity.value = withTiming(
+        0,
+        { duration: fadeOutDuration },
+        (isFinished) => {
+          if (isFinished) {
+            runOnJS(handleOnAnimationEnd)();
+          }
+        },
+      );
+    }, fadeOutDelay);
 
-      return (
-        <AnimatedSplashImage
-          launchImageUrl={launchImageUrl}
-          opacity={opacity}
-        />
+    return () => clearTimeout(timeout);
+  }, [fadeOutDelay, fadeOutDuration, opacity]);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      setInputState: (triggerStateMachineName, inputName, value) =>
+        riveRef.current?.setInputState(
+          triggerStateMachineName,
+          inputName,
+          value,
+        ),
+      play: () => riveRef.current?.play(),
+      pause: () => riveRef.current?.pause(),
+      stop: () => riveRef.current?.stop(),
+      reset: () => riveRef.current?.reset(),
+      fireState: (triggerStateMachineName, inputName) =>
+        riveRef.current?.fireState(triggerStateMachineName, inputName),
+      touchBegan: (x, y) => riveRef.current?.touchBegan(x, y),
+      touchEnded: (x, y) => riveRef.current?.touchEnded(x, y),
+      setTextRunValue: (name, value) =>
+        riveRef.current?.setTextRunValue(name, value),
+      getBooleanState: (inputName) =>
+        riveRef.current?.getBooleanState(inputName),
+      getNumberState: (inputName) => riveRef.current?.getNumberState(inputName),
+      getBooleanStateAtPath: (inputName, path) =>
+        riveRef.current?.getBooleanStateAtPath(inputName, path),
+      getNumberStateAtPath: (inputName, path) =>
+        riveRef.current?.getNumberStateAtPath(inputName, path),
+      fireStateAtPath: (inputName, path) =>
+        riveRef.current?.fireStateAtPath(inputName, path),
+      setInputStateAtPath: (inputName, path, value) =>
+        riveRef.current?.setInputStateAtPath(inputName, path, value),
+      setBoolean: (path, value) => riveRef.current?.setBoolean(path, value),
+      setTextRunValueAtPath: (textRunName, value, path) =>
+        riveRef.current?.setTextRunValueAtPath(textRunName, path, value),
+      setString: (path, value) => riveRef.current?.setString(path, value),
+      setNumber: (path, value) => riveRef.current?.setNumber(path, value),
+      setColor: (path, value) => riveRef.current?.setColor(path, value),
+      setEnum: (path, value) => riveRef.current?.setColor(path, value),
+      trigger: (path) => riveRef.current?.trigger(path),
+      internalNativeEmitter: () => riveRef.current?.internalNativeEmitter(),
+      viewTag: () => riveRef.current?.viewTag(),
+    }),
+    [],
+  );
+
+  if (hasAnimationEnded) {
+    return null;
+  }
+
+  if (hasNoAnimation) {
+    if (!launchImageUrl) {
+      throw new Error(
+        "launchImageUrl is required when no animation is provided",
       );
     }
 
     return (
-      <Animated.View
-        pointerEvents={"none"}
-        style={[styles.animatedView, { opacity }, style]}
-      >
-        <Rive
-          ref={ref}
-          {...rest}
-          {...riveSource}
-          style={animationViewStyle}
-          autoplay={Platform.OS === "android"}
-          onError={(err) => {
-            console.error(`${err.type}: ${err.message}`);
-          }}
-        />
-      </Animated.View>
+      <AnimatedSplashImage launchImageUrl={launchImageUrl} opacity={opacity} />
     );
-  },
-);
+  }
 
-SplashView.displayName = "SplashView";
+  return (
+    <Animated.View
+      pointerEvents={"none"}
+      style={[styles.animatedView, { opacity }, style]}
+    >
+      <Rive
+        ref={ref}
+        {...rest}
+        {...riveSource}
+        style={animationViewStyle}
+        autoplay={Platform.OS === "android"}
+        onError={(err) => {
+          console.error(`${err.type}: ${err.message}`);
+        }}
+      />
+    </Animated.View>
+  );
+};
 
 export { SplashView };

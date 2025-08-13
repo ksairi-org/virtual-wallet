@@ -14,12 +14,12 @@ import { schema } from "./constants";
 import { LabelSemiboldLg, LabelSemiboldSm } from "@fonts";
 import { useBooleanState } from "@react-hooks";
 import { useLayoutAnimationOnChange } from "@react-native-hooks";
-import { createHandledFormElement } from "libs/react-form";
 import { BaseTextInput } from "src/components/molecules/inputs";
 import { CtaButton } from "src/components/molecules/buttons";
-import { useGlobalStore } from "@stores";
+import { useUserStore } from "@stores";
 import { useLoginWithPersistence } from "@react-auth-core";
 import { RootStackNavigation } from "src/navigation/types";
+import { createHandledFormElement } from "@react-form";
 
 const ON_CHANGE_TEXT_ERROR_DELAY = 2000;
 
@@ -42,7 +42,7 @@ const LoginForm = () => {
   } = useBooleanState(true);
   const navigation = useNavigation<RootStackNavigation>();
   const { handleLogInWithEmail, status } = useLoginWithPersistence();
-  const hasSeenWelcomeScreen = useGlobalStore(
+  const hasSeenWelcomeScreen = useUserStore(
     (state) => state.hasSeenWelcomeScreen,
   );
 

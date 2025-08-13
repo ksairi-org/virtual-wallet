@@ -1,8 +1,8 @@
 import type { HandledFormElementProps } from "./types";
 import type { FieldValues } from "react-hook-form";
 
-import { memo, forwardRef, isValidElement } from "react";
-import type { ForwardedRef, FC, ReactElement } from "react";
+import { memo, isValidElement } from "react";
+import type { FC, ReactElement } from "react";
 
 /**
  * Creates a component that will be auto-registered with `react-hook-form` via `name` prop
@@ -14,15 +14,16 @@ const createHandledFormElement = <
   SchemaType extends FieldValues,
 >(
   WrappedComponent: Component,
-) =>
-  memo(
-    forwardRef(
-      (
-        props: Parameters<Component>[0] & HandledFormElementProps<SchemaType>,
-        ref: ForwardedRef<Component>,
-      ) => <WrappedComponent ref={ref} {...props} />,
+) => {
+  const MemoizedComponent = memo(
+    (props: Parameters<Component>[0] & HandledFormElementProps<SchemaType>) => (
+      <WrappedComponent ref={props.ref} {...props} />
     ),
   );
+  MemoizedComponent.displayName = "MemoizedComponent";
+
+  return MemoizedComponent;
+};
 
 /**
  * Gets the name of the next input to focus

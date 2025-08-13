@@ -1,4 +1,4 @@
-import type { AppleLoginParameters } from "./hooks/useAppleLoginWithPersistence";
+import { AppleRequestResponse } from "@invertase/react-native-apple-authentication";
 
 type AppleSignInErrorType =
   | "CONFIGURATION_ERROR"
@@ -26,14 +26,24 @@ class AppleSignInError extends Error {
   }
 }
 
-type AppleSignInResponse = { idToken: string; nonce: string };
+type AppleHandledSignInResponse = {
+  identityToken: string;
+  nonce: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: AppleRequestResponse["email"];
+  message?: string;
+};
 
-type HandleByPlatformResponse = AppleLoginParameters;
+type AppleSignInResponse = Omit<
+  AppleHandledSignInResponse,
+  "identityToken" | "nonce"
+> & {};
 
 export type {
-  AppleSignInResponse,
   AppleSignInErrorType,
-  HandleByPlatformResponse,
+  AppleSignInResponse,
+  AppleHandledSignInResponse,
 };
 
 export { AppleSignInError };

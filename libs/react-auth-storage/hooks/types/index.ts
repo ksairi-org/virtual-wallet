@@ -1,4 +1,8 @@
-//import type { AuthTokens } from '@utility-nyc/react-query-sdk';
+type AuthTokens = {
+  accessToken: string;
+  refreshToken?: string;
+  idToken?: string;
+};
 
 type AuthFunctions = {
   setTokens: (tokens: AuthTokens) => void;
@@ -7,4 +11,4 @@ type AuthFunctions = {
 
 type AuthState = AuthFunctions & AuthTokens;
 
-export type { AuthState };
+export type { AuthState, AuthTokens };

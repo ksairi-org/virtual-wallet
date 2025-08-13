@@ -1,8 +1,12 @@
-import { firebase, FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { FirebaseAuthTypes, getAuth } from "@react-native-firebase/auth";
+
+import { getApp } from "@react-native-firebase/app";
 
 import { useCallback, useState } from "react";
 
 import { useAuthStore } from "@react-auth-storage";
+
+const auth = getAuth(getApp());
 
 type LoginData = {
   email: string;
@@ -18,48 +22,39 @@ const useLoginWithPersistence = () => {
   const setTokens = useAuthStore((state) => state.setTokens);
   const [status, setStatus] = useState<Status>("idle");
 
-  const saveCredentials = useCallback(
-    (credentials: FirebaseAuthTypes.UserCredential) => {
-      const token = credentials.user.getIdToken();
-      setTokens(token);
-    },
-    [setTokens],
-  );
-
   const handleLogInSocialNetwork = useCallback(
-    async (credential: FirebaseAuthTypes.AuthCredential) => {
+    async (credentials: FirebaseAuthTypes.AuthCredential) => {
       try {
         setStatus("loading");
-        const userCredential = await firebase
-          .auth()
-          .signInWithCredential(credential);
-
-        saveCredentials(userCredential);
+        const { user } = await auth.signInWithCredential(credentials);
+        setTokens({ accessToken: await user.getIdToken() });
         setStatus("success");
       } catch (error) {
+        console.error("error", error);
         setStatus("error");
-        console.error("Login failed with social:", error);
+        throw new Error(error);
       }
     },
-    [saveCredentials],
+    [setTokens],
   );
 
   const handleLogInWithEmail = useCallback(
     async ({ email, password }: LoginData) => {
       try {
         setStatus("loading");
-        const userCredential = await firebase
-          .auth()
-          .signInWithEmailAndPassword(email, password);
+        // const userCredential = await auth.signInWithEmailAndPassword(
+        //   email,
+        //   password,
+        // );
 
-        saveCredentials(userCredential);
+        //saveTokens(userCredential);
         setStatus("success");
       } catch (error) {
         console.error("Login failed with email:", error);
         setStatus("error");
       }
     },
-    [saveCredentials],
+    [],
   );
 
   return {

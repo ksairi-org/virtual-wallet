@@ -4,10 +4,8 @@ import type {
   DateTimePickerEvent,
   IOSNativeProps,
 } from "@react-native-community/datetimepicker";
-import type { Input } from "tamagui";
 
-import type { ForwardedRef } from "react";
-import { useMemo, useCallback, forwardRef } from "react";
+import { useMemo, useCallback, ComponentRef } from "react";
 
 import { Platform } from "react-native";
 
@@ -28,7 +26,9 @@ type DateTimePickerProps = DatePickerOptions & {
 type DateTimeInputProps = {
   labelText: string;
   dateTimePickerProps: DateTimePickerProps;
-} & BaseTextInputProps;
+} & BaseTextInputProps & {
+    ref?: React.Ref<ComponentRef<typeof BaseTextInput>>;
+  };
 
 const formatDateTime = (date: Date) => {
   const formattedDateTime = format(date, "MMMM do yyyy HH:mm");
@@ -46,112 +46,103 @@ const formatDateTime = (date: Date) => {
     );
 };
 
-const DateTimeInput = forwardRef(
-  (
-    {
-      labelText,
-      dateTimePickerProps,
-      ...baseTextInputProps
-    }: DateTimeInputProps,
-    ref: ForwardedRef<typeof Input> | undefined,
-  ) => {
-    const {
-      state: isPickerVisible,
-      toggleState: handleTogglePickerVisibility,
-    } = useBooleanState(false);
+const DateTimeInput = ({
+  labelText,
+  dateTimePickerProps,
+  ...baseTextInputProps
+}: DateTimeInputProps) => {
+  const { state: isPickerVisible, toggleState: handleTogglePickerVisibility } =
+    useBooleanState(false);
 
-    const isTimePicker = dateTimePickerProps.mode === "time";
+  const isTimePicker = dateTimePickerProps.mode === "time";
 
-    const isDatePicker = dateTimePickerProps.mode === "date";
+  const isDatePicker = dateTimePickerProps.mode === "date";
 
-    const onChangeDateOrTimePicker = useCallback(
-      (event: DateTimePickerEvent, date?: Date | undefined) => {
-        dateTimePickerProps.onChange?.(event, date);
+  const onChangeDateOrTimePicker = useCallback(
+    (event: DateTimePickerEvent, date?: Date | undefined) => {
+      dateTimePickerProps.onChange?.(event, date);
 
-        // Android uses the imperative API to open and dismiss the picker
-        if (Platform.OS === "android") {
-          DateTimePickerAndroid.dismiss(dateTimePickerProps.mode);
-        }
-      },
-      [dateTimePickerProps],
-    );
-
-    const handleToggleDateOrTimePicker = useCallback(() => {
-      if (Platform.OS === "ios") {
-        performLayoutAnimation();
-
-        handleTogglePickerVisibility();
-      } else {
-        // Android uses the imperative API to open and dismiss the picker
-        DateTimePickerAndroid.open({
-          value: dateTimePickerProps.value,
-          mode: dateTimePickerProps.mode,
-          onChange: onChangeDateOrTimePicker,
-        });
+      // Android uses the imperative API to open and dismiss the picker
+      if (Platform.OS === "android") {
+        DateTimePickerAndroid.dismiss(dateTimePickerProps.mode);
       }
-    }, [
-      dateTimePickerProps.mode,
-      dateTimePickerProps.value,
-      handleTogglePickerVisibility,
-      onChangeDateOrTimePicker,
-    ]);
+    },
+    [dateTimePickerProps],
+  );
 
-    const valueToShow = useMemo(() => {
-      if (isTimePicker) {
-        return format(dateTimePickerProps.value, "HH:mm");
-      }
+  const handleToggleDateOrTimePicker = useCallback(() => {
+    if (Platform.OS === "ios") {
+      performLayoutAnimation();
 
-      if (isDatePicker) {
-        return format(dateTimePickerProps.value, "MMMM do yyyy");
-      }
+      handleTogglePickerVisibility();
+    } else {
+      // Android uses the imperative API to open and dismiss the picker
+      DateTimePickerAndroid.open({
+        value: dateTimePickerProps.value,
+        mode: dateTimePickerProps.mode,
+        onChange: onChangeDateOrTimePicker,
+      });
+    }
+  }, [
+    dateTimePickerProps.mode,
+    dateTimePickerProps.value,
+    handleTogglePickerVisibility,
+    onChangeDateOrTimePicker,
+  ]);
 
-      return formatDateTime(dateTimePickerProps.value);
-    }, [dateTimePickerProps.value, isDatePicker, isTimePicker]);
+  const valueToShow = useMemo(() => {
+    if (isTimePicker) {
+      return format(dateTimePickerProps.value, "HH:mm");
+    }
 
-    const containerProps: BaseTextInputProps["containerProps"] = useMemo(
-      () => ({
-        onPress: handleToggleDateOrTimePicker,
-      }),
-      [handleToggleDateOrTimePicker],
-    );
+    if (isDatePicker) {
+      return format(dateTimePickerProps.value, "MMMM do yyyy");
+    }
 
-    const leftIconProps: BaseTextInputProps["leftIconProps"] = useMemo(
-      () => ({
-        width: 15,
-        height: 15,
-        iconName: isTimePicker ? "iconClock" : "iconCalendar",
-        color: "$background-brand",
-      }),
-      [isTimePicker],
-    );
+    return formatDateTime(dateTimePickerProps.value);
+  }, [dateTimePickerProps.value, isDatePicker, isTimePicker]);
 
-    return (
-      <YStack>
-        <BaseTextInput
-          ref={ref}
-          labelText={labelText}
-          leftIconProps={leftIconProps}
-          containerProps={containerProps}
-          value={valueToShow}
-          editable={false}
-          {...baseTextInputProps}
+  const containerProps: BaseTextInputProps["containerProps"] = useMemo(
+    () => ({
+      onPress: handleToggleDateOrTimePicker,
+    }),
+    [handleToggleDateOrTimePicker],
+  );
+
+  const leftIconProps: BaseTextInputProps["leftIconProps"] = useMemo(
+    () => ({
+      width: 15,
+      height: 15,
+      iconName: isTimePicker ? "iconClock" : "iconCalendar",
+      color: "$background-brand",
+    }),
+    [isTimePicker],
+  );
+
+  return (
+    <YStack>
+      <BaseTextInput
+        ref={baseTextInputProps.ref}
+        labelText={labelText}
+        leftIconProps={leftIconProps}
+        containerProps={containerProps}
+        value={valueToShow}
+        editable={false}
+        {...baseTextInputProps}
+      />
+      {isPickerVisible ? (
+        <DateOrTimePicker
+          display={Platform.select({
+            ios: isTimePicker ? "spinner" : "inline",
+            android: "default",
+          })}
+          onChange={onChangeDateOrTimePicker}
+          {...dateTimePickerProps}
         />
-        {isPickerVisible ? (
-          <DateOrTimePicker
-            display={Platform.select({
-              ios: isTimePicker ? "spinner" : "inline",
-              android: "default",
-            })}
-            onChange={onChangeDateOrTimePicker}
-            {...dateTimePickerProps}
-          />
-        ) : null}
-      </YStack>
-    );
-  },
-);
-
-DateTimeInput.displayName = "DateTimeInput";
+      ) : null}
+    </YStack>
+  );
+};
 
 export { DateTimeInput };
 export type { DateTimeInputProps };

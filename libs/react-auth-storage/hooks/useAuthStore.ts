@@ -1,5 +1,4 @@
 import type { AuthState } from "./types";
-//import type { AuthTokens } from '@utility-nyc/react-query-sdk';
 
 import { createJSONStorage, persist } from "zustand/middleware";
 import { shallow } from "zustand/shallow";

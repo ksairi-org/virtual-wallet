@@ -10,7 +10,7 @@ import type { ConfigContext, ExpoConfig } from "expo/config";
 // eslint-disable-next-line import/no-default-export
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: process.env.p,
+  name: process.env.DISPLAY_NAME,
   slug: "virtual-wallet",
   version: "1.0.0",
   orientation: "portrait",
@@ -44,6 +44,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     entitlements: {
       "aps-environment": "production",
+      "com.apple.developer.applesignin": ["Default"],
     },
     usesAppleSignIn: true,
   },

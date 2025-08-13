@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Spacer } from "tamagui";
@@ -6,22 +6,23 @@ import { Spacer } from "tamagui";
 import { LoginForm } from "./LoginForm";
 import { BaseIcon } from "@icons";
 import { Containers } from "@ui-containers";
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
 import { RootStackNavigatorScreenProps } from "src/navigation/types";
 import { HeadingBoldXl, BodyRegularXl } from "@fonts";
-import { AppleSignInButton } from "@react-native-auth-apple";
 import {
+  AppleSignInButton,
+  AppleSignInButtonHandle,
   AppleSignInError,
   AppleSignInResponse,
-} from "libs/react-native-auth-apple/types";
+} from "@react-native-auth-apple";
+
 import {
   GoogleSigninButton,
-  useSignInWithGoogle,
-} from "@react-native-auth-google";
-import {
   GoogleSignInError,
   GoogleSignInResponse,
-} from "libs/react-native-auth-google/types";
+} from "@react-native-auth-google";
+
+import { useAppState } from "@react-native-hooks";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -32,17 +33,27 @@ const styles = StyleSheet.create({
 type LoginScreenProps = RootStackNavigatorScreenProps<"LoginScreen">;
 
 const LoginScreen = (_props: LoginScreenProps) => {
-  const { handleSignOutWithGoogle } = useSignInWithGoogle();
-  useEffect(() => {
-    handleSignOutWithGoogle();
-  }, [handleSignOutWithGoogle]);
+  const appleSignInButtonRef = useRef<AppleSignInButtonHandle>(null);
+  const hasInitializedAppleSignIn = useRef(false);
+  const [prevState, appState] = useAppState();
+
+  if (
+    Platform.OS === "ios" &&
+    prevState === "background" &&
+    appState === "active" &&
+    hasInitializedAppleSignIn.current
+  ) {
+    // if user was not logged in in the iOS device and after being logged in
+    // we trigger the on press again
+    appleSignInButtonRef.current.press();
+  }
 
   const handleSignInWithAppleSuccess = (response: AppleSignInResponse) => {
     console.log(response);
   };
 
   const handleSignInWithAppleError = (response: AppleSignInError) => {
-    console.log(response);
+    console.log("response", response);
   };
 
   const handleSignInWithGoogleSuccess = (response: GoogleSignInResponse) => {
@@ -50,7 +61,11 @@ const LoginScreen = (_props: LoginScreenProps) => {
   };
 
   const handleSignInWithGoogleError = (response: GoogleSignInError) => {
-    console.log(response);
+    console.log("response", response);
+  };
+
+  const handleAppleSignInOnPress = () => {
+    hasInitializedAppleSignIn.current = true;
   };
 
   return (
@@ -86,11 +101,12 @@ const LoginScreen = (_props: LoginScreenProps) => {
           <LoginForm />
           <Containers.SubX>
             <AppleSignInButton
+              ref={appleSignInButtonRef}
+              onPress={handleAppleSignInOnPress}
               onSuccess={handleSignInWithAppleSuccess}
               onError={handleSignInWithAppleError}
             />
             <GoogleSigninButton
-              onPress={handleSignOutWithGoogle}
               onSuccess={handleSignInWithGoogleSuccess}
               onError={handleSignInWithGoogleError}
             />

@@ -10,10 +10,17 @@ import {
 } from "@react-native-google-signin/google-signin";
 
 import { GoogleSignInError } from "../types";
+import { useGoogleLoginWithPersistence } from "./useGoogleLoginWithPersistence";
+import { initializeGoogleSignin } from "../utils";
 
 type UseSignInWithGoogleOptions = {
   onGoogleSignInError?: (error: GoogleSignInError) => void;
 };
+
+const CANCELLED_BY_USER_ERROR = "Google sign in was cancelled by user";
+
+const isErrorOfCancelledByUser = (message: string) =>
+  message.includes(CANCELLED_BY_USER_ERROR);
 
 /**
  * This hook provides a way to sign in with Google on both Android and iOS devices.
@@ -33,6 +40,7 @@ type UseSignInWithGoogleOptions = {
 const useSignInWithGoogle = ({
   onGoogleSignInError,
 }: UseSignInWithGoogleOptions = {}) => {
+  const { handleGoogleLoginWithPersistence } = useGoogleLoginWithPersistence();
   const handleSignOutWithGoogle = useCallback(async () => {
     try {
       await GoogleSignin.signOut();
@@ -44,10 +52,7 @@ const useSignInWithGoogle = ({
   const handleSignInWithGoogle =
     useCallback(async (): Promise<GoogleSignInResponse | void> => {
       try {
-        GoogleSignin.configure({
-          webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
-          offlineAccess: true,
-        });
+        initializeGoogleSignin();
         const hasPlayService = await GoogleSignin.hasPlayServices();
 
         if (!hasPlayService) {
@@ -56,24 +61,29 @@ const useSignInWithGoogle = ({
             "Invalid hasPlayService",
           );
         }
-
         const googleData = await GoogleSignin.signIn();
-
-        console.log("Google user sign in", googleData);
-
+        await handleGoogleLoginWithPersistence(googleData);
         if (!isSuccessResponse(googleData)) {
           throw new GoogleSignInError(
             "SIGN_IN_CANCELLED",
-            "Google sign in was cancelled by user",
+            CANCELLED_BY_USER_ERROR,
           );
         }
+
+        return {
+          email: googleData.data.user.email,
+          fullName: googleData.data.user.name,
+        };
       } catch (error) {
-        console.error("GOOGLE SIGN IN ERROR--->", error);
+        if (!isErrorOfCancelledByUser) {
+          console.error("GOOGLE SIGN IN ERROR--->", error);
+        }
 
-        handleSignOutWithGoogle();
-
+        await handleSignOutWithGoogle();
         if (error instanceof GoogleSignInError) {
-          onGoogleSignInError?.(error);
+          if (!isErrorOfCancelledByUser(error.message)) {
+            onGoogleSignInError?.(error);
+          }
         } else if (isErrorWithCode(error)) {
           let errorCode: GoogleSignInErrorType = "UNKNOWN";
 
@@ -101,10 +111,11 @@ const useSignInWithGoogle = ({
             default:
               break;
           }
-
-          onGoogleSignInError?.(
-            new GoogleSignInError(errorCode, error.message, error),
-          );
+          if (!isErrorOfCancelledByUser(error.message)) {
+            onGoogleSignInError?.(
+              new GoogleSignInError(errorCode, error.message, error),
+            );
+          }
         } else if (error instanceof Error) {
           // an error that's not related to google sign in occurred
           onGoogleSignInError?.(
@@ -116,7 +127,11 @@ const useSignInWithGoogle = ({
           );
         }
       }
-    }, [handleSignOutWithGoogle, onGoogleSignInError]);
+    }, [
+      handleGoogleLoginWithPersistence,
+      handleSignOutWithGoogle,
+      onGoogleSignInError,
+    ]);
 
   return { handleSignInWithGoogle, handleSignOutWithGoogle };
 };

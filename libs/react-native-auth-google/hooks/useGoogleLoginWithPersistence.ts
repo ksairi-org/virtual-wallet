@@ -1,0 +1,38 @@
+import { useLoginWithPersistence } from "@react-auth-core";
+import { useCallback } from "react";
+import { useUserStore } from "@stores";
+import { SignInResponse } from "@react-native-google-signin/google-signin";
+
+/**
+ * @returns A function that logs in with a Google token and nonce and persists
+ *          the authentication tokens. If the login is successful, it
+ *          will persist the tokens and return the data.
+ * `identityToken` The idToken returned from Google
+ * `nonce` The nonce returned from Google
+ */
+const useGoogleLoginWithPersistence = () => {
+  const { handleLogInSocialNetwork } = useLoginWithPersistence();
+  const setKeyValue = useUserStore((state) => state.setKeyValue);
+
+  const handleGoogleLoginWithPersistence = useCallback(
+    async ({ data }: SignInResponse) => {
+      if (data) {
+        await handleLogInSocialNetwork({
+          providerId: "google.com",
+          token: data.idToken,
+          secret: null,
+        });
+
+        const { user } = data;
+        setKeyValue("firstName", user.givenName);
+        setKeyValue("lastName", user.familyName);
+        setKeyValue("email", user.email);
+      }
+    },
+    [handleLogInSocialNetwork, setKeyValue],
+  );
+
+  return { handleGoogleLoginWithPersistence };
+};
+
+export { useGoogleLoginWithPersistence };

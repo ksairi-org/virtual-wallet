@@ -14,14 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "712595393023-9cr903bv7odkcg0r08vf3n3fq7g5tjsk.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.virtual_wallet",
-            "certificate_hash": "e1505abb64aad3140cd25fa4a3861f53cad04f86"
-          }
-        },
-        {
           "client_id": "712595393023-psrrble3grvvgh17tlgrcn1sc3e4j5n5.apps.googleusercontent.com",
           "client_type": 3
         }

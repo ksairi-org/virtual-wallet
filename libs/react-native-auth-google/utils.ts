@@ -1,4 +1,4 @@
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 /**
  * Initializes the Google Signin library.
@@ -10,6 +10,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 const initializeGoogleSignin = () => {
   GoogleSignin.configure({
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+    offlineAccess: false,
   });
 };
 

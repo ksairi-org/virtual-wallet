@@ -2,7 +2,9 @@ import { useCallback } from "react";
 
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 
-import { AppleSignInError, AppleSignInResponse } from "../types";
+import { AppleSignInError, AppleHandledSignInResponse } from "../types";
+import { NO_USER_DATA_MESSAGE } from "../constants";
+import { decodeJWT } from "../utils";
 
 /**
  * Hook to handle Apple sign-in on iOS.
@@ -14,46 +16,33 @@ import { AppleSignInError, AppleSignInResponse } from "../types";
  *
  * If the user is not authenticated, it will throw an `AppleSignInError`.
  * @returns A promise that resolves to an object with the following properties:
- * - `idToken`: The authentication token returned by Apple.
+ * - `identityToken`: The authentication token returned by Apple.
  * - `nonce`: The nonce returned by Apple.
+ * - `fullName`: full name returned from Apple.
  */
 const useHandlerByPlatformIOS = () =>
-  useCallback(async (): Promise<AppleSignInResponse> => {
+  useCallback(async (): Promise<AppleHandledSignInResponse> => {
     // performs login request
     const appleAuthRequestResponse = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
-      // Note: it appears putting FULL_NAME first is important, see issue #293
-      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
 
-    console.log("appleAuthRequestResponse:", appleAuthRequestResponse);
-
-    // get current authentication state for user
-    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
-    const credentialState = await appleAuth.getCredentialStateForUser(
-      appleAuthRequestResponse.user,
-    );
-
-    console.log("credentialState:", credentialState);
-
-    // use credentialState response to ensure the user is authenticated
-    if (credentialState !== appleAuth.State.AUTHORIZED) {
-      throw new AppleSignInError("SIGN_IN_FAILED", "User is not authenticated");
-    }
-
-    // user is authenticated
-    console.log("user is authenticated");
-
-    const idToken = appleAuthRequestResponse.identityToken;
-    const nonce = appleAuthRequestResponse.nonce;
-
-    if (!idToken) {
+    if (!appleAuthRequestResponse.identityToken) {
       throw new AppleSignInError("SIGN_IN_FAILED", "no idToken");
     }
 
     return {
-      idToken,
-      nonce,
+      ...appleAuthRequestResponse,
+      email:
+        appleAuthRequestResponse.email ??
+        decodeJWT(appleAuthRequestResponse.identityToken).email, //email is encoded in token just in case is not being returned
+      firstName: appleAuthRequestResponse.fullName.givenName,
+      lastName: appleAuthRequestResponse.fullName.familyName,
+      message:
+        appleAuthRequestResponse.fullName === null
+          ? NO_USER_DATA_MESSAGE
+          : null,
     };
   }, []);
 

@@ -1,3 +1,3 @@
-export * from './useSignInWithApple';
-export * from './useCheckAppleCredentials';
-export * from './useAppleLoginWithPersistence';
+export * from "./useSignInWithApple";
+export * from "./useCheckAppleCredentials";
+export * from "./useAppleLoginWithPersistence";

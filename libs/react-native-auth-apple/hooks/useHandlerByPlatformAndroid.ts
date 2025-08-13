@@ -1,11 +1,11 @@
-import type { HandleByPlatformResponse } from "../types";
-
 import { useCallback } from "react";
-
+import "react-native-get-random-values";
 import { appleAuthAndroid } from "@invertase/react-native-apple-authentication";
 import { v4 as uuid } from "uuid";
 
-import { AppleSignInError } from "../types";
+import { AppleSignInError, AppleHandledSignInResponse } from "../types";
+import { NO_USER_DATA_MESSAGE } from "../constants";
+import { decodeJWT } from "../utils";
 /**
  * Hook to handle Apple sign-in on Android.
  *
@@ -23,7 +23,7 @@ import { AppleSignInError } from "../types";
  * - `email`: The user's email address.
  */
 const useHandlerByPlatformAndroid = () =>
-  useCallback(async (): Promise<HandleByPlatformResponse> => {
+  useCallback(async (): Promise<AppleHandledSignInResponse> => {
     // Generate secure, random values for state and nonce
     const rawNonce = uuid();
     const state = uuid();
@@ -37,7 +37,6 @@ const useHandlerByPlatformAndroid = () =>
         "No APPLE_CLIENT_ID or APPLE_CALLBACK",
       );
     }
-
     // Configure the request
     appleAuthAndroid.configure({
       // The Service ID you registered with Apple
@@ -63,17 +62,17 @@ const useHandlerByPlatformAndroid = () =>
     // Open the browser window for user sign in
     const response = await appleAuthAndroid.signIn();
 
-    console.log("response", response);
-
-    const idToken = response.id_token;
-    const nonce = response.nonce;
-
-    if (!idToken || !nonce) {
+    if (!response.id_token || !response.nonce) {
       throw new AppleSignInError("SIGN_IN_FAILED", "no idToken or nonce");
     }
+
     return {
-      idToken,
-      nonce,
+      identityToken: response.id_token,
+      nonce: response.nonce,
+      email: response.user?.email ?? decodeJWT(response.id_token).email, //email is encoded in token just in case is not being returned
+      firstName: response.user?.name.firstName ?? null,
+      lastName: response.user?.name.lastName ?? null,
+      message: !response.user ? NO_USER_DATA_MESSAGE : null,
     };
   }, []);
 

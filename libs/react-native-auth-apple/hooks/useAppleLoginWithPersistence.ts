@@ -1,35 +1,44 @@
 import { useLoginWithPersistence } from "@react-auth-core";
-import { firebase } from "@react-native-firebase/auth";
 import { useCallback } from "react";
-
-type AppleLoginParameters = {
-  idToken: string;
-  nonce: string;
-};
+import { AppleHandledSignInResponse } from "../types";
+import { useUserStore } from "@stores";
 
 /**
  * @returns A function that logs in with a Apple token and nonce and persists
  *          the authentication tokens. If the login is successful, it
  *          will persist the tokens and return the data.
- * `idToken` The idToken returned from Apple
+ * `identityToken` The idToken returned from Apple
  * `nonce` The nonce returned from Apple
  */
 const useAppleLoginWithPersistence = () => {
   const { handleLogInSocialNetwork } = useLoginWithPersistence();
+  const setKeyValue = useUserStore((state) => state.setKeyValue);
 
   const handleAppleLoginWithPersistence = useCallback(
-    async ({ idToken, nonce }: AppleLoginParameters) => {
-      const appleCredential = firebase.auth.AppleAuthProvider.credential(
-        idToken,
-        nonce,
-      );
-      handleLogInSocialNetwork(appleCredential);
+    async ({
+      identityToken,
+      nonce,
+      firstName,
+      lastName,
+      email,
+    }: AppleHandledSignInResponse) => {
+      await handleLogInSocialNetwork({
+        providerId: "apple.com",
+        token: identityToken,
+        secret: nonce,
+      });
+
+      if (firstName) {
+        // fullName and email props are set only the first time the user logs in
+        setKeyValue("firstName", firstName);
+        setKeyValue("lastName", lastName);
+        setKeyValue("email", email);
+      }
     },
-    [handleLogInSocialNetwork],
+    [handleLogInSocialNetwork, setKeyValue],
   );
 
   return { handleAppleLoginWithPersistence };
 };
 
-export type { AppleLoginParameters };
 export { useAppleLoginWithPersistence };

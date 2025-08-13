@@ -1,7 +1,7 @@
 import type { AppleSignInError, AppleSignInResponse } from "./types";
 import type { AppleButtonProps } from "@invertase/react-native-apple-authentication";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useImperativeHandle } from "react";
 
 import { StyleSheet } from "react-native";
 
@@ -9,10 +9,15 @@ import { AppleButton } from "@invertase/react-native-apple-authentication";
 
 import { useSignInWithApple } from "./hooks";
 
+export interface AppleSignInButtonHandle {
+  press: () => void;
+}
+
 type AppleSignInButtonProps = Omit<AppleButtonProps, "onPress"> & {
   onPress?: (...params: Parameters<AppleButtonProps["onPress"]>) => void;
   onSuccess?: (response: AppleSignInResponse) => void;
   onError?: (error: AppleSignInError) => void;
+  ref?: React.Ref<AppleSignInButtonHandle>;
 };
 
 /**
@@ -22,12 +27,14 @@ type AppleSignInButtonProps = Omit<AppleButtonProps, "onPress"> & {
  * @param root0.onPress - called when the user presses the button.
  * @param root0.onSuccess - called when the user is successfully signed in.
  * @param root0.onError - called when the user is not successfully signed in.
+ * @param root0.ref - ref to access imperative methods like press()
  * @returns AppleSignInButton
  */
 const AppleSignInButton = ({
   onPress,
   onError,
   onSuccess,
+  ref,
   ...rest
 }: AppleSignInButtonProps) => {
   const { handleSignInWithApple } = useSignInWithApple({
@@ -47,14 +54,22 @@ const AppleSignInButton = ({
     [handleSignInWithApple, onPress, onSuccess],
   );
 
+  useImperativeHandle(
+    ref,
+    () => ({
+      press: () => {
+        // Create a mock event object since handleOnPress expects it
+        const mockEvent = {} as Parameters<AppleButtonProps["onPress"]>[0];
+        handleOnPress(mockEvent);
+      },
+    }),
+    [handleOnPress],
+  );
+
   return (
     <AppleButton style={styles.appleButton} {...rest} onPress={handleOnPress} />
   );
 };
-
-AppleSignInButton.Type = AppleButton.Type;
-
-AppleSignInButton.Style = AppleButton.Style;
 
 const styles = StyleSheet.create({
   appleButton: {

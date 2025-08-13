@@ -6,16 +6,16 @@ import { useCallback } from "react";
 import { useAuthStore } from "@react-auth-storage";
 
 //type UseSignUpReturn = ReturnType<typeof useSignUp>;
-type MutationParams = Parameters<UseSignUpReturn["mutateAsync"]>[0]["data"];
+//type MutationParams = Parameters<UseSignUpReturn["mutateAsync"]>[0]["data"];
 
-type ExtraSignUpData = Omit<MutationParams, "credential" | "confirmCredential">;
+//type ExtraSignUpData = Omit<MutationParams, "credential" | "confirmCredential">;
 
 type SignUpData = {
   identifier: string;
   password: string;
   identifierType: "email" | "username";
   //profile: Profile;
-} & ExtraSignUpData;
+}; //& ExtraSignUpData;
 
 const REGEX_LOWER_CASE_UP2_NUMBERS = /^[a-z]*(?:\d[a-z]*){0,2}$/;
 const REGEX_VALID_EMAIL = /\S+@\S+\.\S+/;

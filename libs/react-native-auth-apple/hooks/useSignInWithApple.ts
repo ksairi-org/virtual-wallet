@@ -13,6 +13,13 @@ type UseSignInWithAppleOptions = {
   onAppleSignInError?: (error: AppleSignInError) => void;
 };
 
+const ERROR_TITLE = "APPLE SIGN IN ERROR--->";
+
+const isErrorOfCancelledByUser = (message: string) =>
+  message.includes(
+    "(com.apple.AuthenticationServices.AuthorizationError error 1001.)",
+  ) || message.includes("E_SIGNIN_CANCELLED_ERROR");
+
 /**
  * This hook provides a way to sign in with Apple on both Android and iOS devices.
  * The hook returns an object with a function:
@@ -38,27 +45,32 @@ const useSignInWithApple = ({
   const handleSignInWithApple =
     useCallback(async (): Promise<AppleSignInResponse | void> => {
       try {
-        const { nonce, idToken } = await handlerByPlatform();
-
-        if (!idToken || !nonce) {
+        const response = await handlerByPlatform();
+        if (!response.identityToken || !response.nonce) {
           throw new AppleSignInError(
             "SIGN_IN_FAILED",
-            "Something went wrong on handle by platform. No Email",
+            "Something went wrong on handle by platform",
           );
         }
-
-        await handleAppleLoginWithPersistence({
-          idToken,
-          nonce,
-        });
+        await handleAppleLoginWithPersistence(response);
+        return {
+          email: response.email,
+          firstName: response.firstName,
+          lastName: response.lastName,
+          message: response.message,
+        };
       } catch (error) {
-        console.error("APPLE SIGN IN ERROR--->", error);
-
         if (error instanceof AppleSignInError) {
+          if (!isErrorOfCancelledByUser(error.message)) {
+            console.error(ERROR_TITLE, error);
+          }
+
           onAppleSignInError?.(error);
         } else if (isErrorWithCode(error)) {
+          if (!isErrorOfCancelledByUser(error.message)) {
+            console.error(ERROR_TITLE, error);
+          }
           let errorCode: AppleSignInErrorType = "UNKNOWN";
-
           switch (error.code) {
             case appleAuth.Error.CANCELED:
               errorCode = "SIGN_IN_CANCELLED";
@@ -81,10 +93,11 @@ const useSignInWithApple = ({
 
               break;
           }
-
-          onAppleSignInError?.(
-            new AppleSignInError(errorCode, error.message, error),
-          );
+          if (!isErrorOfCancelledByUser(error.message)) {
+            onAppleSignInError?.(
+              new AppleSignInError(errorCode, error.message, error),
+            );
+          }
         } else if (error instanceof Error) {
           // an error that's not related to google sign in occurred
           onAppleSignInError?.(
