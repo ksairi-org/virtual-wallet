@@ -5,7 +5,6 @@ import { Children, createElement } from "react";
 
 import { Controller } from "react-hook-form";
 
-import { IS_WEB } from "./SignUpForm/constants";
 import { useCheckForProperFormUsage } from "./hooks";
 import { getNextInputName, isReactElementWithProps } from "./utils";
 
@@ -49,16 +48,10 @@ const Form = <Schema extends RequiredSchema>({
           currentChildName,
         ) as Path<Schema>;
 
-        const nextInputToFocus = IS_WEB
-          ? undefined
-          : (child.props.nextInputToFocus ?? nextInputName);
-
         // React Native only for automatically focusing the next registered input
         const onSubmitEditing = (data?: unknown) => {
           if (child.props?.onSubmitEditing) {
             child.props.onSubmitEditing(data);
-          } else if (nextInputToFocus && shouldAutoFocusNextRegisteredInput) {
-            methods.setFocus(nextInputToFocus);
           }
         };
 
@@ -67,7 +60,7 @@ const Form = <Schema extends RequiredSchema>({
         // Otherwise, set to `next` if there is a next input to focus
         const returnKeyType =
           child.props.returnKeyType ??
-          (!nextInputName || IS_WEB || !shouldAutoFocusNextRegisteredInput
+          (!nextInputName || !shouldAutoFocusNextRegisteredInput
             ? undefined
             : "next");
 
@@ -81,19 +74,18 @@ const Form = <Schema extends RequiredSchema>({
             control={methods.control}
             name={currentChildName}
             render={({ field: { name, onBlur, onChange, ...rest } }) => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const handleOnBlur = (e: any) => {
                 child.props?.onBlur?.(e);
 
                 onBlur();
               };
 
-              const reactNativeProps = !IS_WEB
-                ? {
-                    onSubmitEditing,
-                    onChangeText: onChange,
-                    returnKeyType,
-                  }
-                : {};
+              const reactNativeProps = {
+                onSubmitEditing,
+                onChangeText: onChange,
+                returnKeyType,
+              };
 
               return createElement(child.type, {
                 ...child.props,

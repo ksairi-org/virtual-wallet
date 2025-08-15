@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const schema = z.object({
+const baseSchema = {
   email: z.string().email("Please enter a valid email address"),
   password: z
     .string()
@@ -12,6 +12,22 @@ const schema = z.object({
       /[^A-Za-z0-9]/,
       "Password must contain at least one special character",
     ),
+};
+
+const loginSchema = z.object({
+  ...baseSchema,
 });
 
-export { schema };
+const signUpSchema = z
+  .object({
+    ...baseSchema,
+    firstName: z.string().min(5, "Enter a valid name"),
+    lastName: z.string().min(6, "Enter a valid last name"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export { loginSchema, signUpSchema };

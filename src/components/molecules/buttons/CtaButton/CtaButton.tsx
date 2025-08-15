@@ -1,17 +1,17 @@
-import type { GenericButtonProps } from '../GenericButton/GenericButton';
-import type { ColorTokens } from 'tamagui';
+import type { GenericButtonProps } from "../GenericButton/GenericButton";
+import type { ColorTokens } from "tamagui";
 
-import { StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet } from "react-native";
 
-import { GenericButton } from '../GenericButton';
+import { GenericButton } from "../GenericButton";
 
-const pressedBackgroundColor: ColorTokens = '$button-background-active-cta';
-const inactiveBackgroundColor: ColorTokens = '$button-background-inactive-cta';
+const pressedBackgroundColor: ColorTokens = "$button-background-active-cta";
+const inactiveBackgroundColor: ColorTokens = "$button-background-inactive-cta";
 
 type CtaButtonProps = Omit<
   GenericButtonProps,
-  'backgroundColor' | 'pressStyle' | 'color'
->;
+  "backgroundColor" | "pressStyle" | "color"
+> & { loading?: boolean };
 
 const styles = StyleSheet.create({
   inactivePress: {
@@ -22,17 +22,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const CtaButton = ({ children, disabled, ...props }: CtaButtonProps) => (
+const CtaButton = ({
+  children,
+  disabled,
+  loading,
+  ...props
+}: CtaButtonProps) => (
   <GenericButton
     {...props}
     disabled={disabled}
     backgroundColor={
-      disabled ? inactiveBackgroundColor : '$button-background-default-cta'
+      disabled ? inactiveBackgroundColor : "$button-background-default-cta"
     }
     pressStyle={disabled ? styles.inactivePress : styles.activePress}
-    color={disabled ? '$text-inactive' : '$text-action'}
+    color={disabled ? "$text-inactive" : "$text-action"}
   >
-    {children}
+    {loading ? <ActivityIndicator size={"small"} /> : children}
   </GenericButton>
 );
 

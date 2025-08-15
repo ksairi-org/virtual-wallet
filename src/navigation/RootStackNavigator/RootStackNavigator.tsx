@@ -2,9 +2,10 @@ import { SafeAreaView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RootStackNavigatorParamList } from "./types";
 import { HomeStackNavigator } from "../HomeStackNavigator";
-import { LoginScreen } from "@screens";
+import { SignUpScreen, LoginScreen } from "@screens";
 import { createStackNavigator } from "../createNavigator";
 import { styled } from "tamagui";
+import { WelcomeScreen } from "src/screens/WelcomeScreen";
 
 const Stack = createStackNavigator<RootStackNavigatorParamList>();
 
@@ -28,6 +29,18 @@ const RootStackNavigator = () => {
           <Stack.Screen
             name={"LoginScreen"}
             component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={"SignUpScreen"}
+            component={SignUpScreen}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={"WelcomeScreen"}
+            component={WelcomeScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

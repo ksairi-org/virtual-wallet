@@ -6,6 +6,8 @@ type RootStackNavigatorParamList = {
   WelcomeScreen: undefined;
   LoginScreen: undefined;
   HomeStackNavigator: NavigatorScreenParams<HomeStackNavigatorParamList>;
+  SignUpScreen: undefined;
+  SetPasswordScreen: { email?: string; fullName?: string };
 };
 
 type RootStackNavigatorScreenProps<

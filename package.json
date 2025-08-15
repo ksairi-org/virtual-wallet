@@ -36,6 +36,7 @@
     "@tamagui/config": "^1.132.15",
     "@tanstack/react-query": "^5.83.0",
     "axios": "^1.11.0",
+    "burnt": "^0.13.0",
     "date-fns": "^4.1.0",
     "expo": "~53.0.20",
     "expo-build-properties": "~0.14.8",

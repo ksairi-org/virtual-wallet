@@ -5,17 +5,18 @@ import { createZustandMmkvStorage } from "../utils";
 const STORAGE_NAME = "user-storage";
 
 type UserStoreState = {
-  hasSeenWelcomeScreen: boolean;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
+  hasSeenWelcomeScreen: boolean;
 };
 
 type UserStoreFunctions = {
   setKeyValue: <
     Key extends keyof Pick<
       UserStoreState,
-      "hasSeenWelcomeScreen" | "firstName" | "lastName" | "email"
+      "hasSeenWelcomeScreen" | "firstName" | "lastName" | "email" | "id"
     >,
   >(
     key: Key,
@@ -26,6 +27,7 @@ type UserStoreFunctions = {
 type GlobalStore = UserStoreState & UserStoreFunctions;
 
 const INITIAL_STATE: UserStoreState = {
+  id: "",
   hasSeenWelcomeScreen: false,
   firstName: "",
   lastName: "",

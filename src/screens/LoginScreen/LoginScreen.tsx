@@ -8,7 +8,7 @@ import { BaseIcon } from "@icons";
 import { Containers } from "@ui-containers";
 import React, { useRef } from "react";
 import { RootStackNavigatorScreenProps } from "src/navigation/types";
-import { HeadingBoldXl, BodyRegularXl } from "@fonts";
+import { HeadingBoldXl, BodyRegularXl, LabelSemiboldLg } from "@fonts";
 import {
   AppleSignInButton,
   AppleSignInButtonHandle,
@@ -23,6 +23,7 @@ import {
 } from "@react-native-auth-google";
 
 import { useAppState } from "@react-native-hooks";
+import { BaseTouchable } from "@ui-touchables";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
 
 type LoginScreenProps = RootStackNavigatorScreenProps<"LoginScreen">;
 
-const LoginScreen = (_props: LoginScreenProps) => {
+const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const appleSignInButtonRef = useRef<AppleSignInButtonHandle>(null);
   const hasInitializedAppleSignIn = useRef(false);
   const [prevState, appState] = useAppState();
@@ -111,6 +112,12 @@ const LoginScreen = (_props: LoginScreenProps) => {
               onError={handleSignInWithGoogleError}
             />
           </Containers.SubX>
+          <Spacer height={"$md"} />
+          <BaseTouchable onPress={() => navigation.navigate("SignUpScreen")}>
+            <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>
+              {"Don't have account? Sign up"}
+            </LabelSemiboldLg>
+          </BaseTouchable>
         </Containers.SubY>
       </KeyboardAwareScrollView>
     </Containers.Screen>

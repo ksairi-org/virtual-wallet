@@ -1,17 +1,14 @@
 import type { LoginFormSchema } from "./types";
 import type { SubmitHandler } from "react-hook-form";
 
-import React, { useCallback } from "react";
-
-import { ActivityIndicator } from "react-native";
+import { useCallback } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigation } from "@react-navigation/native";
-import { useForm, FormProvider } from "react-hook-form";
-import { Form, Spacer, styled } from "tamagui";
+import { useForm } from "react-hook-form";
+import { Spacer } from "tamagui";
 
-import { schema } from "./constants";
-import { LabelSemiboldLg, LabelSemiboldSm } from "@fonts";
+import { LabelSemiboldLg } from "@fonts";
 import { useBooleanState } from "@react-hooks";
 import { useLayoutAnimationOnChange } from "@react-native-hooks";
 import { BaseTextInput } from "src/components/molecules/inputs";
@@ -19,7 +16,9 @@ import { CtaButton } from "src/components/molecules/buttons";
 import { useUserStore } from "@stores";
 import { useLoginWithPersistence } from "@react-auth-core";
 import { RootStackNavigation } from "src/navigation/types";
-import { createHandledFormElement } from "@react-form";
+import { createHandledFormElement, Form } from "@react-form";
+import { loginSchema } from "src/constants";
+import * as Burnt from "burnt";
 
 const ON_CHANGE_TEXT_ERROR_DELAY = 2000;
 
@@ -27,10 +26,6 @@ const FormInput = createHandledFormElement<
   typeof BaseTextInput,
   LoginFormSchema
 >(BaseTextInput);
-
-const StyledForm = styled(Form, {
-  style: { width: "100%" },
-});
 
 /**
  * @returns Form
@@ -49,7 +44,7 @@ const LoginForm = () => {
   const methods = useForm<LoginFormSchema>({
     mode: "onChange",
     delayError: ON_CHANGE_TEXT_ERROR_DELAY, // delay errors for 2 seconds onChangeText
-    resolver: zodResolver(schema),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -60,13 +55,20 @@ const LoginForm = () => {
 
   const handleSubmit: SubmitHandler<LoginFormSchema> = useCallback(
     async (data) => {
-      await handleLogInWithEmail({
-        email: data.email,
-        password: data.password,
-      });
-
-      if (!hasSeenWelcomeScreen) {
-        navigation.navigate("WelcomeScreen");
+      try {
+        await handleLogInWithEmail({
+          email: data.email,
+          password: data.password,
+        });
+        if (!hasSeenWelcomeScreen) {
+          navigation.navigate("WelcomeScreen");
+        }
+      } catch (e) {
+        Burnt.toast({
+          title: e.message,
+          preset: "error",
+        });
+        console.log(e);
       }
     },
     [handleLogInWithEmail, hasSeenWelcomeScreen, navigation],
@@ -77,63 +79,47 @@ const LoginForm = () => {
   } = methods;
   return (
     <>
-      <FormProvider {...methods}>
-        <StyledForm>
-          <FormInput
-            autoCapitalize={"none"}
-            placeholder={"Email"}
-            name={"email"}
-            fontSize={"$2"}
-            keyboardType={"email-address"}
-            textContentType={"emailAddress"}
-            autoFocus={true}
-          />
-          <Spacer size={"$md"} />
-          <FormInput
-            secureTextEntry={isSecureTextEntryEnabled}
-            textContentType={"password"}
-            name={"password"}
-            placeholder={"Password"}
-            fontSize={"$2"}
-            returnKeyType={"done"}
-            rightIconProps={{
-              iconName: isSecureTextEntryEnabled ? "iconEye" : "iconEyeSlash",
-              width: 16,
-              height: 16,
-              color: "$text-subtle",
-              onPress: toggleSecureTextEntryEnabled,
-            }}
-            onSubmitEditing={methods.handleSubmit(handleSubmit)}
-          />
-        </StyledForm>
-        <Spacer size={"$3xl"} />
-        <CtaButton
-          onPress={methods.handleSubmit(handleSubmit)}
-          width={"$full"}
-          borderRadius={"$radius.xl"}
-          padding={"$md"}
-          disabled={!isValid}
-        >
-          {status === "loading" ? (
-            <ActivityIndicator size={"small"} />
-          ) : (
-            <LabelSemiboldLg
-              textAlign={"center"}
-              color={"$text-action-inverse"}
-            >
-              {"Login"}
-            </LabelSemiboldLg>
-          )}
-        </CtaButton>
-        {status === "error" ? (
-          <>
-            <Spacer size={"$sm"} />
-            <LabelSemiboldSm color={"$text-error"}>
-              {"There was an error with your credentials. Please try again."}
-            </LabelSemiboldSm>
-          </>
-        ) : null}
-      </FormProvider>
+      <Form methods={methods}>
+        <FormInput
+          autoCapitalize={"none"}
+          placeholder={"Email"}
+          name={"email"}
+          fontSize={"$2"}
+          keyboardType={"email-address"}
+          textContentType={"emailAddress"}
+          autoFocus={true}
+        />
+        <Spacer size={"$md"} />
+        <FormInput
+          secureTextEntry={isSecureTextEntryEnabled}
+          textContentType={"password"}
+          name={"password"}
+          placeholder={"Password"}
+          fontSize={"$2"}
+          returnKeyType={"done"}
+          rightIconProps={{
+            iconName: isSecureTextEntryEnabled ? "iconEye" : "iconEyeSlash",
+            width: 16,
+            height: 16,
+            color: "$text-subtle",
+            onPress: toggleSecureTextEntryEnabled,
+          }}
+          onSubmitEditing={methods.handleSubmit(handleSubmit)}
+        />
+      </Form>
+      <Spacer size={"$3xl"} />
+      <CtaButton
+        onPress={methods.handleSubmit(handleSubmit)}
+        width={"$full"}
+        borderRadius={"$radius.xl"}
+        padding={"$md"}
+        disabled={!isValid}
+        loading={status === "loading"}
+      >
+        <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
+          {"Login"}
+        </LabelSemiboldLg>
+      </CtaButton>
     </>
   );
 };

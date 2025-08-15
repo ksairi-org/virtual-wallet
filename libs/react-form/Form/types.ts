@@ -3,9 +3,9 @@ import type {
   FieldPath,
   UseFormReturn,
   Path,
-} from 'react-hook-form';
+} from "react-hook-form";
 
-import type { ReactElement } from 'react';
+import type { ReactElement } from "react";
 
 /**
  * @param name One of the registered names of the form
@@ -32,7 +32,7 @@ type RequiredSchema = Record<string, ValidInputValue>;
 type FormProps<Schema extends RequiredSchema> = {
   methods: UseFormReturn<Schema>;
   children: ReactElement | ReactElement[];
-  loggingMode?: 'always' | 'only first render' | 'never';
+  loggingMode?: "always" | "only first render" | "never";
   shouldAutoFocusNextRegisteredInput?: boolean;
 };
 

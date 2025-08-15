@@ -23,13 +23,10 @@ const useAuthStore = createWithEqualityFn<AuthState>()(
   persist(
     (set, get) => ({
       ...INITIAL_TOKENS_STATE,
-      //setTokens: (tokens: AuthTokens) => set({ ...tokens }),
       setTokens: (tokens) => set({ ...tokens }),
       handleLogout: () => {
         const state = get();
-
         const keys = Object.keys(state) as (keyof AuthState)[];
-
         const wipedState = keys.reduce((acc, nextKey) => {
           // We want to wipe all tokens
           if (typeof state[nextKey] === "string") {
