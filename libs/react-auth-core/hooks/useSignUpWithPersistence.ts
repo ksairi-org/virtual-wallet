@@ -1,8 +1,11 @@
 import { useCallback, useState } from "react";
-import { getApp } from "@react-native-firebase/app";
-import { FirebaseAuthTypes, getAuth } from "@react-native-firebase/auth";
 import { useAuthStore } from "@react-auth-storage";
 import { useUserStore } from "@stores";
+import { supabase } from "@backend";
+import {
+  SignUpWithPasswordCredentials,
+  User as SupaBaseUser,
+} from "@supabase/supabase-js";
 
 type SignUpData = {
   firstName?: string;
@@ -11,12 +14,10 @@ type SignUpData = {
   password?: string;
 };
 
-type User = Pick<FirebaseAuthTypes.User, "email" | "uid"> &
+type User = Pick<SupaBaseUser, "id" | "email"> &
   Pick<SignUpData, "firstName" | "lastName">;
 
 type Status = "idle" | "loading" | "error" | "success";
-
-const auth = getAuth(getApp());
 
 const isDuplicateError = (message: string) =>
   message.includes("The email address is already in use by another account");
@@ -31,7 +32,7 @@ const useSignUpWithPersistence = () => {
 
   const setLoggedUserData = useCallback(
     (user: User) => {
-      setKeyValue("id", user.uid);
+      setKeyValue("id", user.id);
       setKeyValue("email", user.email);
       setKeyValue("firstName", user.firstName);
       setKeyValue("lastName", user.lastName);
@@ -40,20 +41,27 @@ const useSignUpWithPersistence = () => {
   );
 
   const handleSignUp = useCallback(
-    async ({ email, password, firstName, lastName }: SignUpData) => {
+    async (data: SignUpWithPasswordCredentials) => {
       try {
         setStatus("loading");
-        const { user } = await auth.createUserWithEmailAndPassword(
-          email,
-          password,
-        );
+        const {
+          data: { user, session },
+          error,
+        } = await supabase.auth.signUp(data);
+        if (error) {
+          throw error;
+        }
+        setTokens({
+          accessToken: session.access_token,
+          refreshToken: session.refresh_token,
+        });
+
         const newUser = {
-          uid: user.uid,
+          id: user.id,
           email: user.email,
-          firstName,
-          lastName,
+          firstName: data.options.data["firstName"],
+          lastName: data.options.data["lastName"],
         };
-        setTokens({ accessToken: await user.getIdToken() });
         setLoggedUserData(newUser);
         setStatus("success");
         return newUser;

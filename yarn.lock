@@ -3545,6 +3545,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-async-storage/async-storage@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@react-native-async-storage/async-storage@npm:2.2.0"
+  dependencies:
+    merge-options: "npm:^3.0.4"
+  peerDependencies:
+    react-native: ^0.0.0-0 || >=0.65 <1.0
+  checksum: 10c0/84900eba46a40225c4ac9bf5eb58885200dc1e789d873ecda46a2a213870cc7110536ed1fd7a74b873071f3603c093958fbd84c635d6f6d4f94bfbb616ffa0ef
+  languageName: node
+  linkType: hard
+
 "@react-native-community/datetimepicker@npm:^8.4.3":
   version: 8.4.3
   resolution: "@react-native-community/datetimepicker@npm:8.4.3"
@@ -3607,21 +3618,6 @@ __metadata:
     expo:
       optional: true
   checksum: 10c0/6be96617c12062e74e36ff39f61b32acc9cf4b520ecc407f7cbda5a977f912c2b89aa75f204a10c175529773710ff5b304f2b00ca9afd64883c266a2c5996229
-  languageName: node
-  linkType: hard
-
-"@react-native-firebase/auth@npm:22.2.0":
-  version: 22.2.0
-  resolution: "@react-native-firebase/auth@npm:22.2.0"
-  dependencies:
-    plist: "npm:^3.1.0"
-  peerDependencies:
-    "@react-native-firebase/app": 22.2.0
-    expo: ">=47.0.0"
-  peerDependenciesMeta:
-    expo:
-      optional: true
-  checksum: 10c0/d58e7579d7531641eb57e0fbd4ac87eaa38902b200d219bc5c30ce1c496adf78e42b6a52bec0e39ea1f11958cf2f42a602f80cd0ba9e12ffd213e2751242f9a5
   languageName: node
   linkType: hard
 
@@ -4307,6 +4303,77 @@ __metadata:
   version: 0.3.0
   resolution: "@standard-schema/utils@npm:0.3.0"
   checksum: 10c0/6eb74cd13e52d5fc74054df51e37d947ef53f3ab9e02c085665dcca3c38c60ece8d735cebbdf18fbb13c775fbcb9becb3f53109b0e092a63f0f7389ce0993fd0
+  languageName: node
+  linkType: hard
+
+"@supabase/auth-js@npm:2.71.1":
+  version: 2.71.1
+  resolution: "@supabase/auth-js@npm:2.71.1"
+  dependencies:
+    "@supabase/node-fetch": "npm:^2.6.14"
+  checksum: 10c0/970966525119dea83067ff3b87a219e5b357ffad3c22e19b00ceb83fc30dd485815a7ceb78eeedf9436f8c1674b5a9ac96929f3a82a50091d3ad66d1bc3215d4
+  languageName: node
+  linkType: hard
+
+"@supabase/functions-js@npm:2.4.5":
+  version: 2.4.5
+  resolution: "@supabase/functions-js@npm:2.4.5"
+  dependencies:
+    "@supabase/node-fetch": "npm:^2.6.14"
+  checksum: 10c0/43d0a40e863e20cadae38de65930c203f50c625bad91736bf78c095e347131ea3328716a43dad58fb8d058c69b901b41fdc062e77221196d8dfc93ad772519b5
+  languageName: node
+  linkType: hard
+
+"@supabase/node-fetch@npm:2.6.15, @supabase/node-fetch@npm:^2.6.13, @supabase/node-fetch@npm:^2.6.14":
+  version: 2.6.15
+  resolution: "@supabase/node-fetch@npm:2.6.15"
+  dependencies:
+    whatwg-url: "npm:^5.0.0"
+  checksum: 10c0/98d25cab2eba53c93c59e730d52d50065b1a7fe216c65224471e83e2064ebd45ae51ad09cb39ec263c3cb59e3d41870fc2e789ea2e9587480d7ba212b85daf38
+  languageName: node
+  linkType: hard
+
+"@supabase/postgrest-js@npm:1.19.4":
+  version: 1.19.4
+  resolution: "@supabase/postgrest-js@npm:1.19.4"
+  dependencies:
+    "@supabase/node-fetch": "npm:^2.6.14"
+  checksum: 10c0/1d14adc841f720e0035045f8b06cf2cb9f3b0a83ac903e268d5afb80b64d240ae64cb24372e0e9c857420b07010bfdb9a806f024fe60ac13468fd791ada2eb7f
+  languageName: node
+  linkType: hard
+
+"@supabase/realtime-js@npm:2.15.1":
+  version: 2.15.1
+  resolution: "@supabase/realtime-js@npm:2.15.1"
+  dependencies:
+    "@supabase/node-fetch": "npm:^2.6.13"
+    "@types/phoenix": "npm:^1.6.6"
+    "@types/ws": "npm:^8.18.1"
+    ws: "npm:^8.18.2"
+  checksum: 10c0/69c5b2a253da8e3b7cef689ad6196cba7b992d274fe11aa19352f713180c80e01e912c2220ffad6acf718e599f5f4d26c0d2cc517bad2abec4c0a9393da5a7cd
+  languageName: node
+  linkType: hard
+
+"@supabase/storage-js@npm:^2.10.4":
+  version: 2.11.0
+  resolution: "@supabase/storage-js@npm:2.11.0"
+  dependencies:
+    "@supabase/node-fetch": "npm:^2.6.14"
+  checksum: 10c0/353f8cbca29e385692796ffb1a6e08fb0d71c7f7fa5f6c4564a79dbf6a4fc8123c6883b7ed3b5c5f5c02c10a60a8403569816a775ff2c11561b139e51c82d9ca
+  languageName: node
+  linkType: hard
+
+"@supabase/supabase-js@npm:^2.55.0":
+  version: 2.55.0
+  resolution: "@supabase/supabase-js@npm:2.55.0"
+  dependencies:
+    "@supabase/auth-js": "npm:2.71.1"
+    "@supabase/functions-js": "npm:2.4.5"
+    "@supabase/node-fetch": "npm:2.6.15"
+    "@supabase/postgrest-js": "npm:1.19.4"
+    "@supabase/realtime-js": "npm:2.15.1"
+    "@supabase/storage-js": "npm:^2.10.4"
+  checksum: 10c0/89ed4ffbe288ec8e5155be421f61ba8e5b9766a7a0173b06954f293736c34ca0fd40c41e0ab3913aa08ee551f8705a6016d4c38aeceb8c5f7af74c78aa7ce9e5
   languageName: node
   linkType: hard
 
@@ -6035,6 +6102,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/aes-js@npm:^3":
+  version: 3.1.4
+  resolution: "@types/aes-js@npm:3.1.4"
+  checksum: 10c0/622b63b751d5bc3f1666b90078f72f7a5063f9762612fccceba54ff8277ad20b148676bfdf1a54450133f62aaf52f53bbaece686cfc648237fc4b2ac4f81c9df
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.14":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
@@ -6181,6 +6255,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/phoenix@npm:^1.6.6":
+  version: 1.6.6
+  resolution: "@types/phoenix@npm:1.6.6"
+  checksum: 10c0/4dfcb3fd36341ed5500de030291af14163c599857e00d2d4ff065d4c4600317d5d20aa170913fb9609747a09436e3add44db7d0c709bdf80f36cddcc67a42021
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:^19":
   version: 19.1.6
   resolution: "@types/react-dom@npm:19.1.6"
@@ -6217,6 +6298,15 @@ __metadata:
   version: 10.0.0
   resolution: "@types/uuid@npm:10.0.0"
   checksum: 10c0/9a1404bf287164481cb9b97f6bb638f78f955be57c40c6513b7655160beb29df6f84c915aaf4089a1559c216557dc4d2f79b48d978742d3ae10b937420ddac60
+  languageName: node
+  linkType: hard
+
+"@types/ws@npm:^8.18.1":
+  version: 8.18.1
+  resolution: "@types/ws@npm:8.18.1"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/61aff1129143fcc4312f083bc9e9e168aa3026b7dd6e70796276dcfb2c8211c4292603f9c4864fae702f2ed86e4abd4d38aa421831c2fd7f856c931a481afbab
   languageName: node
   linkType: hard
 
@@ -6626,6 +6716,13 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: 10c0/dec73ff59b7d6628a01eebaece7f2bdb8bb62b9b5926dcad0f8931f2b8b79c2be21f6c68ac095592adb5adb15831a3635d9343e6a91d028bbe85d564875ec3ec
+  languageName: node
+  linkType: hard
+
+"aes-js@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "aes-js@npm:3.1.2"
+  checksum: 10c0/2568cc67af66fd9d41de25dc73d49ae810269c7648bbb1928b9f84d8fd6ddb4e39ed506d1be6794f5ffd567aadea75fc6895ef34d2b70b764f539f72a6a2baeb
   languageName: node
   linkType: hard
 
@@ -9571,6 +9668,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-secure-store@npm:~14.2.3":
+  version: 14.2.3
+  resolution: "expo-secure-store@npm:14.2.3"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/c1414e2a0a470a4531ae8b6f04e355184e29f61c41c988f9c9f6a3fa2a3f563382a7d44976d8ed560165288993971d295d4071e4921fe17105f3b807180e6f06
+  languageName: node
+  linkType: hard
+
 "expo-splash-screen@npm:~0.30.10":
   version: 0.30.10
   resolution: "expo-splash-screen@npm:0.30.10"
@@ -11093,6 +11199,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-plain-obj@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "is-plain-obj@npm:2.1.0"
+  checksum: 10c0/e5c9814cdaa627a9ad0a0964ded0e0491bfd9ace405c49a5d63c88b30a162f1512c069d5b80997893c4d0181eadc3fed02b4ab4b81059aba5620bfcdfdeb9c53
+  languageName: node
+  linkType: hard
+
 "is-plain-object@npm:^2.0.4":
   version: 2.0.4
   resolution: "is-plain-object@npm:2.0.4"
@@ -12190,6 +12303,15 @@ __metadata:
   version: 12.1.1
   resolution: "meow@npm:12.1.1"
   checksum: 10c0/a125ca99a32e2306e2f4cbe651a0d27f6eb67918d43a075f6e80b35e9bf372ebf0fc3a9fbc201cbbc9516444b6265fb3c9f80c5b7ebd32f548aa93eb7c28e088
+  languageName: node
+  linkType: hard
+
+"merge-options@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "merge-options@npm:3.0.4"
+  dependencies:
+    is-plain-obj: "npm:^2.1.0"
+  checksum: 10c0/02b5891ceef09b0b497b5a0154c37a71784e68ed71b14748f6fd4258ffd3fe4ecd5cb0fd6f7cae3954fd11e7686c5cb64486daffa63c2793bbe8b614b61c7055
   languageName: node
   linkType: hard
 
@@ -13446,7 +13568,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plist@npm:^3.0.5, plist@npm:^3.1.0":
+"plist@npm:^3.0.5":
   version: 3.1.0
   resolution: "plist@npm:3.1.0"
   dependencies:
@@ -13958,6 +14080,17 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10c0/040f3a298db80f4a282f9616c9550d7978beebc518de523eb417106afd7f5cb1d021424ea287cedba705f0c48aa15631056c42a79c4b46edcafa34cba71aed63
+  languageName: node
+  linkType: hard
+
+"react-native-url-polyfill@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "react-native-url-polyfill@npm:2.0.0"
+  dependencies:
+    whatwg-url-without-unicode: "npm:8.0.0-3"
+  peerDependencies:
+    react-native: "*"
+  checksum: 10c0/a48e6978f5a2c9e225bb93cc5f9985a8ac0fe7d8122105bcd88ef8d8420a3b33a67ce5d2bda2b606bf5fa94af9f6d04efce354580b60900e7c967fd2ebdc42cf
   languageName: node
   linkType: hard
 
@@ -16044,25 +16177,28 @@ __metadata:
     "@commitlint/config-conventional": "npm:^19.8.1"
     "@hookform/resolvers": "npm:^5.2.1"
     "@invertase/react-native-apple-authentication": "npm:^2.4.1"
+    "@react-native-async-storage/async-storage": "npm:^2.2.0"
     "@react-native-community/datetimepicker": "npm:^8.4.3"
     "@react-native-community/hooks": "npm:^100.1.0"
     "@react-native-community/netinfo": "npm:^11.4.1"
     "@react-native-firebase/analytics": "npm:22.2.0"
     "@react-native-firebase/app": "npm:22.2.0"
-    "@react-native-firebase/auth": "npm:22.2.0"
     "@react-native-firebase/in-app-messaging": "npm:22.2.0"
     "@react-native-firebase/messaging": "npm:22.2.0"
     "@react-native-google-signin/google-signin": "npm:^15.0.0"
     "@react-navigation/native": "npm:^7.1.14"
     "@react-navigation/native-stack": "npm:^7.3.21"
     "@sentry/react-native": "npm:~6.14.0"
+    "@supabase/supabase-js": "npm:^2.55.0"
     "@tamagui/babel-plugin": "npm:1.132.15"
     "@tamagui/config": "npm:^1.132.15"
     "@tanstack/react-query": "npm:^5.83.0"
+    "@types/aes-js": "npm:^3"
     "@types/react": "npm:~19.0.10"
     "@types/react-dom": "npm:^19"
     "@types/react-native-get-random-values": "npm:^1"
     "@types/uuid": "npm:^10.0.0"
+    aes-js: "npm:^3.1.2"
     axios: "npm:^1.11.0"
     babel-plugin-inline-import: "npm:^3.0.0"
     babel-preset-expo: "npm:~13.0.0"
@@ -16080,6 +16216,7 @@ __metadata:
     expo-font: "npm:~13.3.2"
     expo-image: "npm:~2.4.0"
     expo-notifications: "npm:~0.31.4"
+    expo-secure-store: "npm:~14.2.3"
     expo-splash-screen: "npm:~0.30.10"
     expo-status-bar: "npm:~2.2.3"
     husky: "npm:^9.1.7"
@@ -16097,6 +16234,7 @@ __metadata:
     react-native-screens: "npm:~4.11.1"
     react-native-svg: "npm:15.11.2"
     react-native-svg-transformer: "npm:^1.5.1"
+    react-native-url-polyfill: "npm:^2.0.0"
     rive-react-native: "npm:9.3.4"
     tamagui: "npm:1.132.15"
     typescript: "npm:~5.8.3"
@@ -16404,7 +16542,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.12.1":
+"ws@npm:^8.12.1, ws@npm:^8.18.2":
   version: 8.18.3
   resolution: "ws@npm:8.18.3"
   peerDependencies:

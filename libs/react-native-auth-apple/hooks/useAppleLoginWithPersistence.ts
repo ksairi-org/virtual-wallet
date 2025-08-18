@@ -23,9 +23,8 @@ const useAppleLoginWithPersistence = () => {
       email,
     }: AppleHandledSignInResponse) => {
       await handleLogInSocialNetwork({
-        providerId: "apple.com",
+        provider: "apple.com",
         token: identityToken,
-        secret: nonce,
       });
 
       if (firstName) {

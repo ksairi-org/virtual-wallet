@@ -17,6 +17,7 @@ import { useBooleanState } from "@react-hooks";
 import { signUpSchema } from "src/constants";
 import * as Burnt from "burnt";
 import { useSignUpWithPersistence } from "@react-auth-core";
+import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
 
 const ON_CHANGE_TEXT_ERROR_DELAY = 2000;
 
@@ -54,9 +55,16 @@ const SignUpForm = () => {
   });
 
   const handleSubmit: SubmitHandler<SignUpFormSchema> = useCallback(
-    async (data) => {
+    async ({ email, password, firstName, lastName }) => {
+      const signUpData: SignUpWithPasswordCredentials = {
+        email,
+        password,
+        options: {
+          data: { firstName, lastName },
+        },
+      };
       try {
-        await handleSignUp(data);
+        await handleSignUp(signUpData);
         navigation.navigate("WelcomeScreen");
 
         Burnt.toast({

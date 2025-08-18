@@ -114,6 +114,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         iosUrlScheme: process.env.IOS_URL_SCHEME,
       },
     ],
+    "expo-secure-store",
   ],
   extra: {
     eas: {

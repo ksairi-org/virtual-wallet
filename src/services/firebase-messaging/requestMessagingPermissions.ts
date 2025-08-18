@@ -1,15 +1,21 @@
-import { PermissionsAndroid, Platform } from 'react-native';
+import { PermissionsAndroid, Platform } from "react-native";
 
-import messaging from '@react-native-firebase/messaging';
+import {
+  AuthorizationStatus,
+  getMessaging,
+} from "@react-native-firebase/messaging";
+import { getApp } from "@react-native-firebase/app";
+
+const messaging = getMessaging(getApp());
 
 const requestIOSPermissions = async () => {
-  const authStatus = await messaging().requestPermission();
+  const authStatus = await messaging.requestPermission();
   const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    authStatus === AuthorizationStatus.AUTHORIZED ||
+    authStatus === AuthorizationStatus.PROVISIONAL;
 
   if (enabled) {
-    console.log('Authorization status:', authStatus);
+    console.log("Authorization status:", authStatus);
   }
 };
 
@@ -23,12 +29,12 @@ const requestAndroidPermissions = async () => {
 
 const requestMessagingPermissions = async () => {
   switch (Platform.OS) {
-    case 'android':
+    case "android":
       await requestAndroidPermissions();
 
       break;
 
-    case 'ios':
+    case "ios":
       await requestIOSPermissions();
 
       break;

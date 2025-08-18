@@ -1,18 +1,14 @@
-import { FirebaseAuthTypes, getAuth } from "@react-native-firebase/auth";
-
-import { getApp } from "@react-native-firebase/app";
+import {
+  AuthTokenResponse,
+  SignInWithIdTokenCredentials,
+  SignInWithPasswordCredentials,
+} from "@supabase/supabase-js";
 
 import { useCallback, useState } from "react";
 
 import { useAuthStore } from "@react-auth-storage";
 import { useUserStore } from "@stores";
-
-const auth = getAuth(getApp());
-
-type LoginData = {
-  email: string;
-  password: string;
-};
+import { supabase } from "@backend";
 
 type Status = "idle" | "loading" | "error" | "success";
 
@@ -25,21 +21,27 @@ const useLoginWithPersistence = () => {
   const [status, setStatus] = useState<Status>("idle");
 
   const setLoggedUserData = useCallback(
-    async (user: FirebaseAuthTypes.User) => {
-      setTokens({ accessToken: await user.getIdToken() });
-      setKeyValue("id", user.uid);
+    ({ data }: AuthTokenResponse) => {
+      setTokens({
+        accessToken: data.session.access_token,
+        refreshToken: data.session.refresh_token,
+      });
+      setKeyValue("id", data.user.id);
     },
     [setKeyValue, setTokens],
   );
 
   const handleLogInSocialNetwork = useCallback(
-    async (credentials: FirebaseAuthTypes.AuthCredential) => {
+    async (credentials: SignInWithIdTokenCredentials) => {
       try {
         setStatus("loading");
-        const { user } = await auth.signInWithCredential(credentials);
-        setLoggedUserData(user);
+        const response = await supabase.auth.signInWithIdToken(credentials);
+        setLoggedUserData(response);
         setStatus("success");
-        return user;
+        if (response.error) {
+          throw response.error;
+        }
+        return response.data.user;
       } catch (error) {
         console.error("Login failed with social", error);
         setStatus("error");
@@ -50,13 +52,14 @@ const useLoginWithPersistence = () => {
   );
 
   const handleLogInWithEmail = useCallback(
-    async ({ email, password }: LoginData) => {
+    async (credentials: SignInWithPasswordCredentials) => {
       try {
         setStatus("loading");
-        const { user } = await auth.signInWithEmailAndPassword(email, password);
-        setLoggedUserData(user);
+        const response = await supabase.auth.signInWithPassword(credentials);
+
+        setLoggedUserData(response);
         setStatus("success");
-        return user;
+        return response.data.user;
       } catch (error) {
         console.error("Login failed with email:", error);
         setStatus("error");
