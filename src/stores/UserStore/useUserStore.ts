@@ -7,6 +7,7 @@ const STORAGE_NAME = "user-storage";
 type UserStoreState = {
   id: string;
   firstName: string;
+  middleName: string;
   lastName: string;
   email: string;
   hasSeenWelcomeScreen: boolean;
@@ -16,7 +17,12 @@ type UserStoreFunctions = {
   setKeyValue: <
     Key extends keyof Pick<
       UserStoreState,
-      "hasSeenWelcomeScreen" | "firstName" | "lastName" | "email" | "id"
+      | "hasSeenWelcomeScreen"
+      | "firstName"
+      | "middleName"
+      | "lastName"
+      | "email"
+      | "id"
     >,
   >(
     key: Key,
@@ -30,6 +36,7 @@ const INITIAL_STATE: UserStoreState = {
   id: "",
   hasSeenWelcomeScreen: false,
   firstName: "",
+  middleName: "",
   lastName: "",
   email: "",
 };

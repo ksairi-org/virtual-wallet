@@ -22,17 +22,21 @@ const useAppleLoginWithPersistence = () => {
       lastName,
       email,
     }: AppleHandledSignInResponse) => {
-      await handleLogInSocialNetwork({
-        provider: "apple.com",
+      const { id: userId } = await handleLogInSocialNetwork({
+        provider: "apple",
         token: identityToken,
+        nonce,
       });
 
       if (firstName) {
-        // fullName and email props are set only the first time the user logs in
+        // fullName is set only the first time the user logs in
         setKeyValue("firstName", firstName);
         setKeyValue("lastName", lastName);
-        setKeyValue("email", email);
       }
+      setKeyValue("id", userId);
+      setKeyValue("email", email);
+
+      return { userId, firstName, lastName, email };
     },
     [handleLogInSocialNetwork, setKeyValue],
   );

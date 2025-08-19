@@ -62,7 +62,7 @@ const useSignInWithGoogle = ({
           );
         }
         const googleData = await GoogleSignin.signIn();
-        await handleGoogleLoginWithPersistence(googleData);
+        const response = await handleGoogleLoginWithPersistence(googleData);
         if (!isSuccessResponse(googleData)) {
           throw new GoogleSignInError(
             "SIGN_IN_CANCELLED",
@@ -70,10 +70,7 @@ const useSignInWithGoogle = ({
           );
         }
 
-        return {
-          email: googleData.data.user.email,
-          fullName: googleData.data.user.name,
-        };
+        return response;
       } catch (error) {
         if (!isErrorOfCancelledByUser) {
           console.error("GOOGLE SIGN IN ERROR--->", error);

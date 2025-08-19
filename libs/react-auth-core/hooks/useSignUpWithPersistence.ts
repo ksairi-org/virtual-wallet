@@ -45,25 +45,21 @@ const useSignUpWithPersistence = () => {
       try {
         setStatus("loading");
         const {
-          data: { user, session },
+          data: { user },
           error,
         } = await supabase.auth.signUp(data);
         if (error) {
           throw error;
         }
-        setTokens({
-          accessToken: session.access_token,
-          refreshToken: session.refresh_token,
-        });
-
         const newUser = {
           id: user.id,
           email: user.email,
-          firstName: data.options.data["firstName"],
-          lastName: data.options.data["lastName"],
+          firstName: user.user_metadata.firstName,
+          lastName: user.user_metadata.lastName,
         };
         setLoggedUserData(newUser);
         setStatus("success");
+        // todo need to confirm email in order to login in
         return newUser;
       } catch (e) {
         console.error(e);
@@ -75,7 +71,7 @@ const useSignUpWithPersistence = () => {
         );
       }
     },
-    [setLoggedUserData, setTokens],
+    [setLoggedUserData],
   );
 
   return { handleSignUp, status };

@@ -7,6 +7,7 @@
       "@default-tamagui-config": ["src/theme/tamagui.config.ts"],
       "@screens": ["src/screens"],
       "@navigation": ["src/navigation"],
+      "@navigation/types": ["src/navigation/types"],
       "@utils": ["src/utils"],
       "@organisms": ["src/components/organisms"],
       "@theme": ["src/theme/index.ts"],

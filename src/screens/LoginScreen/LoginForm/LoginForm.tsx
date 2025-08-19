@@ -15,10 +15,10 @@ import { BaseTextInput } from "src/components/molecules/inputs";
 import { CtaButton } from "src/components/molecules/buttons";
 import { useUserStore } from "@stores";
 import { useLoginWithPersistence } from "@react-auth-core";
-import { RootStackNavigation } from "src/navigation/types";
 import { createHandledFormElement, Form } from "@react-form";
 import { loginSchema } from "src/constants";
 import * as Burnt from "burnt";
+import { RootStackNavigation } from "@navigation/types";
 
 const ON_CHANGE_TEXT_ERROR_DELAY = 2000;
 

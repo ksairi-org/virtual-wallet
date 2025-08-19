@@ -7,7 +7,6 @@ import { LoginForm } from "./LoginForm";
 import { BaseIcon } from "@icons";
 import { Containers } from "@ui-containers";
 import React, { useRef } from "react";
-import { RootStackNavigatorScreenProps } from "src/navigation/types";
 import { HeadingBoldXl, BodyRegularXl, LabelSemiboldLg } from "@fonts";
 import {
   AppleSignInButton,
@@ -24,6 +23,7 @@ import {
 
 import { useAppState } from "@react-native-hooks";
 import { BaseTouchable } from "@ui-touchables";
+import { RootStackNavigatorScreenProps } from "@navigation/types";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {

@@ -18,7 +18,11 @@ const ERROR_TITLE = "APPLE SIGN IN ERROR--->";
 const isErrorOfCancelledByUser = (message: string) =>
   message.includes(
     "(com.apple.AuthenticationServices.AuthorizationError error 1001.)",
-  ) || message.includes("E_SIGNIN_CANCELLED_ERROR");
+  ) ||
+  message.includes(
+    "(com.apple.AuthenticationServices.AuthorizationError error 1000.)",
+  ) ||
+  message.includes("E_SIGNIN_CANCELLED_ERROR");
 
 /**
  * This hook provides a way to sign in with Apple on both Android and iOS devices.
@@ -52,13 +56,8 @@ const useSignInWithApple = ({
             "Something went wrong on handle by platform",
           );
         }
-        await handleAppleLoginWithPersistence(response);
-        return {
-          email: response.email,
-          firstName: response.firstName,
-          lastName: response.lastName,
-          message: response.message,
-        };
+        const loginResponse = await handleAppleLoginWithPersistence(response);
+        return loginResponse;
       } catch (error) {
         if (error instanceof AppleSignInError) {
           if (!isErrorOfCancelledByUser(error.message)) {

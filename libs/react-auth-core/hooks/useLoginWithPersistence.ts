@@ -27,6 +27,7 @@ const useLoginWithPersistence = () => {
         refreshToken: data.session.refresh_token,
       });
       setKeyValue("id", data.user.id);
+      setKeyValue("email", data.user.email);
     },
     [setKeyValue, setTokens],
   );
@@ -56,7 +57,6 @@ const useLoginWithPersistence = () => {
       try {
         setStatus("loading");
         const response = await supabase.auth.signInWithPassword(credentials);
-
         setLoggedUserData(response);
         setStatus("success");
         return response.data.user;

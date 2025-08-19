@@ -38,7 +38,7 @@ type AppleHandledSignInResponse = {
 type AppleSignInResponse = Omit<
   AppleHandledSignInResponse,
   "identityToken" | "nonce"
-> & {};
+> & { userId: string };
 
 export type {
   AppleSignInErrorType,

@@ -7,8 +7,8 @@ import { Spacer } from "tamagui";
 import { SignUpForm } from "./SignUpForm";
 import { HeadingBoldXl } from "@fonts";
 import { Containers } from "@ui-containers";
-import { RootStackNavigatorScreenProps } from "src/navigation/types";
 import { images } from "@images";
+import { RootStackNavigatorScreenProps } from "@navigation/types";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {

@@ -17,16 +17,22 @@ const useGoogleLoginWithPersistence = () => {
   const handleGoogleLoginWithPersistence = useCallback(
     async ({ data }: SignInResponse) => {
       if (data) {
-        await handleLogInSocialNetwork({
-          providerId: "google.com",
+        const { id: userId } = await handleLogInSocialNetwork({
+          provider: "google",
           token: data.idToken,
-          secret: null,
         });
 
         const { user } = data;
+        setKeyValue("id", userId);
         setKeyValue("firstName", user.givenName);
         setKeyValue("lastName", user.familyName);
         setKeyValue("email", user.email);
+        return {
+          userId,
+          firstName: user.givenName,
+          lastName: user.familyName,
+          email: user.email,
+        };
       }
     },
     [handleLogInSocialNetwork, setKeyValue],

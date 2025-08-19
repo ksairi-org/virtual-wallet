@@ -24,7 +24,12 @@ class GoogleSignInError extends Error {
   }
 }
 
-type GoogleSignInResponse = { email: string; fullName: string };
+type GoogleSignInResponse = {
+  userId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+};
 
 export type { GoogleSignInResponse, GoogleSignInErrorType };
 
