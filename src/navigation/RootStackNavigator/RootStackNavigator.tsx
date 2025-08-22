@@ -11,6 +11,7 @@ import {
 import { createStackNavigator } from "../createNavigator";
 import { styled } from "tamagui";
 import { ForgotPasswordScreen } from "src/screens/ForgotPasswordScreen";
+import { useAuthenticationStatus } from "@react-auth-core";
 
 const Stack = createStackNavigator<RootStackNavigatorParamList>();
 
@@ -19,45 +20,50 @@ const StyledSafeAreaView = styled(SafeAreaView, {
 });
 
 const RootStackNavigator = () => {
-  const isLoggedIn = false;
+  const status = useAuthenticationStatus();
+  const isLoggedIn = status === "logged in";
+
   return (
     <SafeAreaProvider>
       <StyledSafeAreaView>
-        <Stack.Navigator
-          initialRouteName={isLoggedIn ? "HomeStackNavigator" : "LoginScreen"}
-        >
-          <Stack.Screen
-            name={"HomeStackNavigator"}
-            component={HomeStackNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name={"LoginScreen"}
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
+        <Stack.Navigator>
+          {isLoggedIn ? (
+            <Stack.Screen
+              name={"HomeStackNavigator"}
+              component={HomeStackNavigator}
+              options={{ headerShown: false }}
+            />
+          ) : (
+            <>
+              <Stack.Screen
+                name={"LoginScreen"}
+                component={LoginScreen}
+                options={{ headerShown: false }}
+              />
 
-          <Stack.Screen
-            name={"SignUpScreen"}
-            component={SignUpScreen}
-            options={{ headerShown: false }}
-          />
+              <Stack.Screen
+                name={"SignUpScreen"}
+                component={SignUpScreen}
+                options={{ headerShown: false }}
+              />
 
-          <Stack.Screen
-            name={"WelcomeScreen"}
-            component={WelcomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name={"ForgotPasswordScreen"}
-            component={ForgotPasswordScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name={"ResetPasswordScreen"}
-            component={ResetPasswordScreen}
-            options={{ headerShown: false }}
-          />
+              <Stack.Screen
+                name={"WelcomeScreen"}
+                component={WelcomeScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name={"ForgotPasswordScreen"}
+                component={ForgotPasswordScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name={"ResetPasswordScreen"}
+                component={ResetPasswordScreen}
+                options={{ headerShown: false }}
+              />
+            </>
+          )}
         </Stack.Navigator>
       </StyledSafeAreaView>
     </SafeAreaProvider>

@@ -13,11 +13,11 @@ import { useLoginWithPersistence } from "@react-auth-core";
 import { createHandledFormElement, Form } from "@react-form";
 import { RootStackNavigation } from "@navigation/types";
 import { BaseTouchable } from "@ui-touchables";
-import { BaseTextInput, CtaButton } from "@molecules";
+import { BaseTextInput, SubmitButton } from "@molecules";
 import { loginSchema } from "@constants";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useGetFormMethods } from "@hooks";
-import { showToast } from "@utils";
+import { showAlert } from "@utils";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
@@ -57,9 +57,11 @@ const LoginForm = () => {
         });
         if (!hasSeenWelcomeScreen) {
           navigation.navigate("WelcomeScreen");
+        } else {
+          navigation.navigate("HomeStackNavigator");
         }
       } catch (e) {
-        showToast({
+        showAlert({
           title: e.message,
           preset: "error",
         });
@@ -112,18 +114,15 @@ const LoginForm = () => {
         </BodyRegularSm>
       </BaseTouchable>
       <Spacer size={"$3xl"} />
-      <CtaButton
+      <SubmitButton
         onPress={methods.handleSubmit(handleSubmit)}
-        width={"$full"}
-        borderRadius={"$radius.xl"}
-        padding={"$md"}
         disabled={!isValid}
         loading={status === "loading"}
       >
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
           {"Login"}
         </LabelSemiboldLg>
-      </CtaButton>
+      </SubmitButton>
     </>
   );
 };

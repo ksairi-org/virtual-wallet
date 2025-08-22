@@ -11,7 +11,7 @@ import { BaseTouchable } from "@ui-touchables";
 import { useBooleanState } from "@react-hooks";
 import { useSignUpWithPersistence } from "@react-auth-core";
 import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
-import { BaseTextInput, CtaButton } from "@molecules";
+import { BaseTextInput, SubmitButton } from "@molecules";
 import { CONFIRM_EMAIL_URL, signUpSchema } from "@constants";
 import { LabelSemiboldLg } from "@fonts";
 import { useGetFormMethods } from "@hooks";
@@ -164,18 +164,15 @@ const SignUpForm = () => {
       </Form>
 
       <Spacer size={"$3xl"} />
-      <CtaButton
+      <SubmitButton
         onPress={methods.handleSubmit(handleSubmit)}
-        width={"$full"}
-        borderRadius={"$radius.xl"}
-        padding={"$md"}
         disabled={!isValid}
         loading={status === "loading"}
       >
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
           {"Create Account"}
         </LabelSemiboldLg>
-      </CtaButton>
+      </SubmitButton>
       <Spacer height={"$md"} />
       <BaseTouchable onPress={() => navigation.navigate("LoginScreen")}>
         <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>
