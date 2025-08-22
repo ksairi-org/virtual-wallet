@@ -1,4 +1,4 @@
-import type { SignUpFormSchema } from "./types";
+import type { ResetPasswordFormSchema } from "./types";
 import type { SubmitHandler } from "react-hook-form";
 
 import { useCallback } from "react";
@@ -7,22 +7,21 @@ import { useNavigation } from "@react-navigation/native";
 import { Spacer } from "tamagui";
 
 import { createHandledFormElement, Form } from "@react-form";
-import { BaseTouchable } from "@ui-touchables";
 import { useBooleanState } from "@react-hooks";
-import * as Burnt from "burnt";
-import { useSignUpWithPersistence } from "@react-auth-core";
-import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
+import { BaseTouchable } from "@ui-touchables";
 import { BaseTextInput, CtaButton } from "@molecules";
-import { signUpSchema } from "@constants";
 import { LabelSemiboldLg } from "@fonts";
+import { resetPasswordSchema } from "@constants";
+import { supabase } from "@backend";
+import * as Burnt from "burnt";
 import { useGetFormMethods } from "@hooks";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
-  SignUpFormSchema
+  ResetPasswordFormSchema
 >(BaseTextInput);
 
-const SignUpForm = () => {
+const ResetPasswordForm = () => {
   const {
     state: isPasswordSecureTextEntryEnabled,
     toggleState: togglePasswordSecureTextEntryEnabled,
@@ -32,49 +31,37 @@ const SignUpForm = () => {
     state: isConfPasswordSecureTextEntryEnabled,
     toggleState: toggleConfPasswordSecureTextEntryEnabled,
   } = useBooleanState(true);
-
   const navigation = useNavigation();
 
-  const { handleSignUp, status } = useSignUpWithPersistence();
+  const { state: isLoading, toggleState: toggleIsLoading } =
+    useBooleanState(false);
 
-  const methods = useGetFormMethods<SignUpFormSchema>(
-    {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    signUpSchema,
+  const methods = useGetFormMethods<ResetPasswordFormSchema>(
+    { password: "", confirmPassword: "" },
+    resetPasswordSchema,
   );
 
-  const handleSubmit: SubmitHandler<SignUpFormSchema> = useCallback(
-    async ({ email, password, firstName, lastName }) => {
-      const signUpData: SignUpWithPasswordCredentials = {
-        email,
-        password,
-        options: {
-          data: { firstName, lastName },
-        },
-      };
+  const handleSubmit: SubmitHandler<ResetPasswordFormSchema> = useCallback(
+    async (data) => {
       try {
-        await handleSignUp(signUpData);
-        //TODO will need to validate email and make user to log in.
-        // Login in user for now
-        navigation.navigate("WelcomeScreen");
-
+        toggleIsLoading();
+        await supabase.auth.updateUser({ password: data.password });
         Burnt.toast({
-          title: "User created successfully!",
+          title:
+            "Password reset successfully! Please log in with your new password.",
           preset: "done",
         });
+        navigation.navigate("LoginScreen");
       } catch (e) {
         Burnt.toast({
           title: e.message,
           preset: "error",
         });
+      } finally {
+        toggleIsLoading();
       }
     },
-    [handleSignUp, navigation],
+    [navigation, toggleIsLoading],
   );
 
   const {
@@ -84,40 +71,6 @@ const SignUpForm = () => {
   return (
     <>
       <Form methods={methods}>
-        <FormInput
-          autoCapitalize={"words"}
-          placeholder={"Name"}
-          name={"firstName"}
-          fontSize={"$2"}
-          keyboardType={"default"}
-          textContentType={"name"}
-          autoFocus={true}
-        />
-
-        <Spacer size={"$md"} />
-
-        <FormInput
-          autoCapitalize={"words"}
-          placeholder={"Last Name"}
-          name={"lastName"}
-          fontSize={"$2"}
-          keyboardType={"default"}
-          textContentType={"name"}
-        />
-
-        <Spacer size={"$md"} />
-
-        <FormInput
-          autoCapitalize={"none"}
-          placeholder={"Email"}
-          name={"email"}
-          fontSize={"$2"}
-          keyboardType={"email-address"}
-          textContentType={"emailAddress"}
-        />
-
-        <Spacer size={"$md"} />
-
         <FormInput
           secureTextEntry={isPasswordSecureTextEntryEnabled}
           textContentType={"password"}
@@ -166,10 +119,10 @@ const SignUpForm = () => {
         borderRadius={"$radius.xl"}
         padding={"$md"}
         disabled={!isValid}
-        loading={status === "loading"}
+        loading={isLoading}
       >
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
-          {"Create Account"}
+          {"Submit"}
         </LabelSemiboldLg>
       </CtaButton>
       <Spacer height={"$md"} />
@@ -182,4 +135,4 @@ const SignUpForm = () => {
   );
 };
 
-export { SignUpForm };
+export { ResetPasswordForm };

@@ -17,13 +17,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   userInterfaceStyle: "light",
   icon: "./assets/app-icon.png",
   newArchEnabled: true,
+  scheme: process.env.EXPO_PUBLIC_APP_SCHEMA,
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",
     backgroundColor: "#dce9ed",
   },
   ios: {
-    bundleIdentifier: process.env.APP_IDENTIFIER_IOS,
+    bundleIdentifier: process.env.EXPO_PUBLIC_APP_IDENTIFIER,
     googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICES_INFOPLIST_PATH,
     infoPlist: {
       UIBackgroundModes: ["fetch", "remote-notification"],
@@ -35,10 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       CFBundleURLTypes: [
         {
           CFBundleURLName: "virtual-wallet-deeplink",
-          CFBundleURLSchemes: ["virtual-wallet"],
-        },
-        {
-          CFBundleURLSchemes: [],
+          CFBundleURLSchemes: [process.env.EXPO_PUBLIC_APP_SCHEMA],
         },
       ],
     },
@@ -53,7 +51,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#000000",
     },
-    package: process.env.APP_IDENTIFIER_ANDROID,
+    package: process.env.EXPO_PUBLIC_APP_IDENTIFIER,
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON_PATH,
     permissions: ["android.permission.POST_NOTIFICATIONS"],
   },

@@ -1,4 +1,4 @@
-import { loginSchema } from "src/constants";
+import { loginSchema } from "@constants";
 import type * as z from "zod";
 
 type LoginFormSchema = z.infer<typeof loginSchema>;

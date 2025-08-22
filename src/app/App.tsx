@@ -1,7 +1,10 @@
 import { RootStackNavigator } from "@navigation";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  NavigationContainerRef,
+} from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import React from "react";
+import React, { useRef } from "react";
 import { StatusBar, StyleSheet, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { TamaguiProvider } from "tamagui";
@@ -9,6 +12,7 @@ import tamaguiConfig from "../../tamagui.config";
 import { SplashView } from "@react-native-splash-view";
 import { useCustomFonts } from "./hooks";
 import { themes } from "@theme";
+import { useDetectDeepLinkingWithHash } from "@hooks";
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const splash = require("../../assets/splash.riv");
@@ -40,6 +44,10 @@ export default function App() {
   const colorScheme = useColorScheme();
   const isAppReady = fontsLoaded;
   const isOSThemeDark = colorScheme === "dark";
+  const navigationRef =
+    useRef<NavigationContainerRef<ReactNavigation.RootParamList>>(null);
+
+  const { handleNavigationReady } = useDetectDeepLinkingWithHash(navigationRef);
 
   return (
     <>
@@ -50,7 +58,10 @@ export default function App() {
               config={tamaguiConfig}
               defaultTheme={isOSThemeDark ? "dark" : "light"}
             >
-              <NavigationContainer>
+              <NavigationContainer
+                ref={navigationRef}
+                onReady={handleNavigationReady}
+              >
                 <StatusBar barStyle={"default"} />
                 <RootStackNavigator />
               </NavigationContainer>

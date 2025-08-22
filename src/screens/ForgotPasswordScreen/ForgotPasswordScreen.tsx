@@ -3,11 +3,10 @@ import { StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Spacer } from "tamagui";
 
-import { SetPasswordForm } from "./SetPasswordForm";
+import { ForgotPasswordForm } from "./ForgotPasswordForm";
 import { Containers } from "@ui-containers";
-import { HeadingBoldXl, BodyRegularXl } from "@fonts";
+import { BodyRegularXl } from "@fonts";
 import { BaseIcon } from "@icons";
-import { RootStackNavigatorScreenProps } from "@navigation/types";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -15,14 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type SetPasswordScreenProps =
-  RootStackNavigatorScreenProps<"SetPasswordScreen">;
-
-const SetPasswordScreen = ({
-  route: {
-    params: { email, fullName },
-  },
-}: SetPasswordScreenProps) => (
+const ForgotPasswordScreen = () => (
   <Containers.Screen shouldAutoResize={false}>
     <KeyboardAwareScrollView
       extraHeight={250}
@@ -40,8 +32,6 @@ const SetPasswordScreen = ({
           maxFontScaleToApply={1.2}
           color={"$text-subtle"}
         />
-        <Spacer height={"$2xl"} />
-        <HeadingBoldXl>{"Set a Password"}</HeadingBoldXl>
         <Spacer height={"$md"} />
         <BodyRegularXl
           opacity={0.5}
@@ -49,13 +39,13 @@ const SetPasswordScreen = ({
           paddingHorizontal={"$2xl"}
           color={"$text-body"}
         >
-          {"Choose a strong password for your account."}
+          {"Reset your password for your account."}
         </BodyRegularXl>
         <Spacer height={"$2xl"} />
-        <SetPasswordForm email={email} fullName={fullName} />
+        <ForgotPasswordForm />
       </Containers.SubY>
     </KeyboardAwareScrollView>
   </Containers.Screen>
 );
 
-export { SetPasswordScreen };
+export { ForgotPasswordScreen };

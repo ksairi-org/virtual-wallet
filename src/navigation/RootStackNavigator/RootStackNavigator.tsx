@@ -2,10 +2,15 @@ import { SafeAreaView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { RootStackNavigatorParamList } from "./types";
 import { HomeStackNavigator } from "../HomeStackNavigator";
-import { SignUpScreen, LoginScreen } from "@screens";
+import {
+  SignUpScreen,
+  LoginScreen,
+  ResetPasswordScreen,
+  WelcomeScreen,
+} from "@screens";
 import { createStackNavigator } from "../createNavigator";
 import { styled } from "tamagui";
-import { WelcomeScreen } from "src/screens/WelcomeScreen";
+import { ForgotPasswordScreen } from "src/screens/ForgotPasswordScreen";
 
 const Stack = createStackNavigator<RootStackNavigatorParamList>();
 
@@ -41,6 +46,16 @@ const RootStackNavigator = () => {
           <Stack.Screen
             name={"WelcomeScreen"}
             component={WelcomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={"ForgotPasswordScreen"}
+            component={ForgotPasswordScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={"ResetPasswordScreen"}
+            component={ResetPasswordScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

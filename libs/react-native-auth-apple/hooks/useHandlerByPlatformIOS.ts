@@ -27,7 +27,6 @@ const useHandlerByPlatformIOS = () =>
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
-
     if (!appleAuthRequestResponse.identityToken) {
       throw new AppleSignInError("SIGN_IN_FAILED", "no idToken");
     }

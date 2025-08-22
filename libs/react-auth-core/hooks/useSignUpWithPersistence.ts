@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { useAuthStore } from "@react-auth-storage";
 import { useUserStore } from "@stores";
 import { supabase } from "@backend";
 import {
@@ -27,7 +26,6 @@ const isDuplicateError = (message: string) =>
  */
 const useSignUpWithPersistence = () => {
   const [status, setStatus] = useState<Status>("idle");
-  const setTokens = useAuthStore((state) => state.setTokens);
   const setKeyValue = useUserStore((state) => state.setKeyValue);
 
   const setLoggedUserData = useCallback(
@@ -51,15 +49,16 @@ const useSignUpWithPersistence = () => {
         if (error) {
           throw error;
         }
+
         const newUser = {
           id: user.id,
           email: user.email,
-          firstName: user.user_metadata.firstName,
-          lastName: user.user_metadata.lastName,
+          firstName: user.user_metadata["firstName"],
+          lastName: user.user_metadata["lastName"],
         };
+        //TODO: need to confirm email before setting user data, will set smtp server in supabase for this
         setLoggedUserData(newUser);
         setStatus("success");
-        // todo need to confirm email in order to login in
         return newUser;
       } catch (e) {
         console.error(e);

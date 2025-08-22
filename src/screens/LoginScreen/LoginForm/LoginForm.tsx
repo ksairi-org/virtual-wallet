@@ -3,24 +3,21 @@ import type { SubmitHandler } from "react-hook-form";
 
 import { useCallback } from "react";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigation } from "@react-navigation/native";
-import { useForm } from "react-hook-form";
 import { Spacer } from "tamagui";
 
-import { LabelSemiboldLg } from "@fonts";
 import { useBooleanState } from "@react-hooks";
 import { useLayoutAnimationOnChange } from "@react-native-hooks";
-import { BaseTextInput } from "src/components/molecules/inputs";
-import { CtaButton } from "src/components/molecules/buttons";
 import { useUserStore } from "@stores";
 import { useLoginWithPersistence } from "@react-auth-core";
 import { createHandledFormElement, Form } from "@react-form";
-import { loginSchema } from "src/constants";
 import * as Burnt from "burnt";
 import { RootStackNavigation } from "@navigation/types";
-
-const ON_CHANGE_TEXT_ERROR_DELAY = 2000;
+import { BaseTouchable } from "@ui-touchables";
+import { BaseTextInput, CtaButton } from "@molecules";
+import { loginSchema } from "@constants";
+import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
+import { useGetFormMethods } from "@hooks";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
@@ -41,15 +38,13 @@ const LoginForm = () => {
     (state) => state.hasSeenWelcomeScreen,
   );
 
-  const methods = useForm<LoginFormSchema>({
-    mode: "onChange",
-    delayError: ON_CHANGE_TEXT_ERROR_DELAY, // delay errors for 2 seconds onChangeText
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
+  const methods = useGetFormMethods<LoginFormSchema>(
+    {
       email: "",
       password: "",
     },
-  });
+    loginSchema,
+  );
 
   useLayoutAnimationOnChange(status);
 
@@ -107,6 +102,15 @@ const LoginForm = () => {
           onSubmitEditing={methods.handleSubmit(handleSubmit)}
         />
       </Form>
+      <Spacer size={"$button-lg"} />
+      <BaseTouchable>
+        <BodyRegularSm
+          color={"$text-body"}
+          onPress={() => navigation.navigate("ForgotPasswordScreen")}
+        >
+          {"Forgot Password?"}
+        </BodyRegularSm>
+      </BaseTouchable>
       <Spacer size={"$3xl"} />
       <CtaButton
         onPress={methods.handleSubmit(handleSubmit)}

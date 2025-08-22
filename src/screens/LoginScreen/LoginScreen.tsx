@@ -4,10 +4,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Spacer } from "tamagui";
 
 import { LoginForm } from "./LoginForm";
-import { BaseIcon } from "@icons";
 import { Containers } from "@ui-containers";
 import React, { useRef } from "react";
-import { HeadingBoldXl, BodyRegularXl, LabelSemiboldLg } from "@fonts";
+
 import {
   AppleSignInButton,
   AppleSignInButtonHandle,
@@ -24,6 +23,8 @@ import {
 import { useAppState } from "@react-native-hooks";
 import { BaseTouchable } from "@ui-touchables";
 import { RootStackNavigatorScreenProps } from "@navigation/types";
+import { HeadingBoldXl, BodyRegularXl, LabelSemiboldLg } from "@fonts";
+import { BaseIcon } from "@icons";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {

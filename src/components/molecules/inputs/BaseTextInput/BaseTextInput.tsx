@@ -3,10 +3,10 @@ import type { ColorTokens, InputProps, XStackProps } from "tamagui";
 import type { ForwardedRef, Ref } from "react";
 
 import { Input, Spacer } from "tamagui";
-import { BodyRegularMd, BodyRegularSm } from "@fonts";
-import { BaseIconProps, BaseIcon } from "@icons";
 import { useColorTokenValue } from "@react-native-ui-config";
 import { BaseTouchable } from "@ui-touchables";
+import { BodyRegularMd, BodyRegularSm } from "@fonts";
+import { BaseIcon, BaseIconProps } from "@icons";
 
 type BaseTextInputProps = {
   labelText?: string;

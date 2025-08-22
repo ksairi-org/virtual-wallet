@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:712595393023:android:854d0a92c0c328b76bffca",
+        "mobilesdk_app_id": "1:712595393023:android:2a40dd6ebb257f396bffca",
         "android_client_info": {
-          "package_name": "com.virtual_wallet"
+          "package_name": "com.virtual.wallet"
         }
       },
       "oauth_client": [
@@ -43,9 +43,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:712595393023:android:e4c7fc967e23237b6bffca",
+        "mobilesdk_app_id": "1:712595393023:android:d3fa00403d7e49f66bffca",
         "android_client_info": {
-          "package_name": "com.virtual_wallet.staging"
+          "package_name": "com.virtual.wallet.staging"
         }
       },
       "oauth_client": [

@@ -5,10 +5,10 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Spacer } from "tamagui";
 
 import { SignUpForm } from "./SignUpForm";
-import { HeadingBoldXl } from "@fonts";
 import { Containers } from "@ui-containers";
-import { images } from "@images";
 import { RootStackNavigatorScreenProps } from "@navigation/types";
+import { HeadingBoldXl } from "@fonts";
+import { images } from "@images";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {

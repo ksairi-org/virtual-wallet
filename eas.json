@@ -60,7 +60,7 @@
       "android": {
         "track": "internal",
         "releaseStatus": "completed",
-        "applicationId": "com.virtual_wallet.staging"
+        "applicationId": "com.virtual.wallet.staging"
       }
     },
     "prod": {
@@ -71,7 +71,7 @@
       },
       "android": {
         "track": "production",
-        "applicationId": "com.virtual_wallet"
+        "applicationId": "com.virtual.wallet"
       }
     }
   },

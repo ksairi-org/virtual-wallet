@@ -1,5 +1,5 @@
-import { LabelSemiboldLg } from "@fonts";
 //import { useUserStore } from "@stores";
+import { LabelSemiboldLg } from "@fonts";
 import { Containers } from "@ui-containers";
 
 const WelcomeScreen = () => {

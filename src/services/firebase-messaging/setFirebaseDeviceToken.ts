@@ -1,8 +1,8 @@
 import * as Sentry from "@sentry/react";
 
 //import { saveRegisterDevice } from "@utility-nyc/react-query-sdk"; TODO: ADD THIS TO BACKEND
-import { getFirebaseDeviceToken } from "./getFirebaseDeviceToken";
-import { getIosIdForVendorAsync, getAndroidId } from "expo-application";
+// import { getFirebaseDeviceToken } from "./getFirebaseDeviceToken";
+// import { getIosIdForVendorAsync, getAndroidId } from "expo-application";
 
 const setFirebaseDeviceToken = async (employeeId?: string) => {
   try {
@@ -10,8 +10,8 @@ const setFirebaseDeviceToken = async (employeeId?: string) => {
       return;
     }
 
-    const deviceId = (await getIosIdForVendorAsync()) || getAndroidId();
-    const deviceToken = await getFirebaseDeviceToken();
+    // const deviceId = (await getIosIdForVendorAsync()) || getAndroidId();
+    // const deviceToken = await getFirebaseDeviceToken();
 
     // saveRegisterDevice(employeeId, {
     //   device_id: deviceId,
