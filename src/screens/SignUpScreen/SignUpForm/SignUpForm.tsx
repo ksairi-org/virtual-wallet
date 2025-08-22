@@ -12,15 +12,21 @@ import { useBooleanState } from "@react-hooks";
 import { useSignUpWithPersistence } from "@react-auth-core";
 import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
 import { BaseTextInput, CtaButton } from "@molecules";
-import { signUpSchema } from "@constants";
+import { CONFIRM_EMAIL_URL, signUpSchema } from "@constants";
 import { LabelSemiboldLg } from "@fonts";
 import { useGetFormMethods } from "@hooks";
-import { showToast } from "@utils";
+import { showAlert } from "@utils";
+import { makeRedirectUri } from "expo-auth-session";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
   SignUpFormSchema
 >(BaseTextInput);
+
+const emailRedirectTo = makeRedirectUri({
+  scheme: process.env.EXPO_PUBLIC_APP_SCHEMA,
+  path: CONFIRM_EMAIL_URL,
+});
 
 const SignUpForm = () => {
   const {
@@ -55,20 +61,18 @@ const SignUpForm = () => {
         password,
         options: {
           data: { firstName, lastName },
+          emailRedirectTo,
         },
       };
       try {
         await handleSignUp(signUpData);
-        //TODO will need to validate email and make user to log in.
-        // Login in user for now
-        navigation.navigate("WelcomeScreen");
-
-        showToast({
-          title: "User created successfully!",
+        navigation.navigate("LoginScreen");
+        showAlert({
+          title: "Please check you inbox in order to confirm your email!",
           preset: "done",
         });
       } catch (e) {
-        showToast({
+        showAlert({
           title: e.message,
           preset: "error",
         });

@@ -30,7 +30,7 @@ const ResetPasswordScreen = ({
       accessToken: string,
       refreshToken: string,
     ) => {
-      const { data, error } = await supabase.auth.setSession({
+      const { error } = await supabase.auth.setSession({
         access_token: accessToken,
         refresh_token: refreshToken,
       });
@@ -38,13 +38,11 @@ const ResetPasswordScreen = ({
       if (error) {
         throw error;
       }
-      console.log("Session set successfully:", data.session);
     };
     const handleDeepLinkAuth = async () => {
       try {
         if (url) {
           const { errorCode, params } = QueryParams.getQueryParams(url);
-          console.log("Deep link params:", params);
           if (errorCode) {
             throw new Error(errorCode);
           }

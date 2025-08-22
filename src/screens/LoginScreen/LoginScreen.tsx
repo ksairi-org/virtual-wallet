@@ -1,11 +1,11 @@
-import { Platform, StyleSheet } from "react-native";
+import { AppState, Platform, StyleSheet } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Spacer } from "tamagui";
 
 import { LoginForm } from "./LoginForm";
 import { Containers } from "@ui-containers";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import {
   AppleSignInButton,
@@ -25,6 +25,9 @@ import { BaseTouchable } from "@ui-touchables";
 import { RootStackNavigatorScreenProps } from "@navigation/types";
 import { HeadingBoldXl, BodyRegularXl, LabelSemiboldLg } from "@fonts";
 import { BaseIcon } from "@icons";
+import { supabase } from "@backend";
+import * as QueryParams from "expo-auth-session/build/QueryParams";
+import { showAlert } from "@utils";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -34,10 +37,31 @@ const styles = StyleSheet.create({
 
 type LoginScreenProps = RootStackNavigatorScreenProps<"LoginScreen">;
 
-const LoginScreen = ({ navigation }: LoginScreenProps) => {
+AppState.addEventListener("change", (state) => {
+  if (state === "active") {
+    supabase.auth.startAutoRefresh();
+  } else {
+    supabase.auth.stopAutoRefresh();
+  }
+});
+
+const LoginScreen = ({ navigation, route }: LoginScreenProps) => {
   const appleSignInButtonRef = useRef<AppleSignInButtonHandle>(null);
   const hasInitializedAppleSignIn = useRef(false);
   const [prevState, appState] = useAppState();
+  const { url } = route.params || {};
+
+  useEffect(() => {
+    if (url) {
+      const { params } = QueryParams.getQueryParams(url);
+      if (params.type === "signup") {
+        showAlert({
+          title: "Email address confirmed",
+          message: "You can now login with your email and password.",
+        });
+      }
+    }
+  }, [url, navigation]);
 
   if (
     Platform.OS === "ios" &&

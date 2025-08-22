@@ -4,7 +4,7 @@ import { HomeStackNavigatorParamList } from "../types";
 
 type RootStackNavigatorParamList = {
   WelcomeScreen: undefined;
-  LoginScreen: undefined;
+  LoginScreen: { url?: string } | undefined;
   HomeStackNavigator: NavigatorScreenParams<HomeStackNavigatorParamList>;
   SignUpScreen: undefined;
   ResetPasswordScreen: {
