@@ -10,9 +10,9 @@ import { BaseIcon } from "@icons";
 import { supabase } from "@backend";
 import { RootStackNavigatorScreenProps } from "@navigation/types";
 import { useEffect } from "react";
-import * as Burnt from "burnt";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { useNavigation } from "@react-navigation/native";
+import { showAlert } from "@utils";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -58,7 +58,7 @@ const ResetPasswordScreen = ({
         }
       } catch (error) {
         console.error("Error handling deep link:", error);
-        Burnt.alert({
+        showAlert({
           title: "Failed to authenticate from email link",
           preset: "error",
         });

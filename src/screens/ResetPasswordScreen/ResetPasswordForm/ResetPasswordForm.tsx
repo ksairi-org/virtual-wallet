@@ -13,8 +13,8 @@ import { BaseTextInput, CtaButton } from "@molecules";
 import { LabelSemiboldLg } from "@fonts";
 import { resetPasswordSchema } from "@constants";
 import { supabase } from "@backend";
-import * as Burnt from "burnt";
 import { useGetFormMethods } from "@hooks";
+import { showToast } from "@utils";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
@@ -46,14 +46,14 @@ const ResetPasswordForm = () => {
       try {
         toggleIsLoading();
         await supabase.auth.updateUser({ password: data.password });
-        Burnt.toast({
+        showToast({
           title:
             "Password reset successfully! Please log in with your new password.",
           preset: "done",
         });
         navigation.navigate("LoginScreen");
       } catch (e) {
-        Burnt.toast({
+        showToast({
           title: e.message,
           preset: "error",
         });

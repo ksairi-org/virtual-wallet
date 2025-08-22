@@ -11,13 +11,13 @@ import { useLayoutAnimationOnChange } from "@react-native-hooks";
 import { useUserStore } from "@stores";
 import { useLoginWithPersistence } from "@react-auth-core";
 import { createHandledFormElement, Form } from "@react-form";
-import * as Burnt from "burnt";
 import { RootStackNavigation } from "@navigation/types";
 import { BaseTouchable } from "@ui-touchables";
 import { BaseTextInput, CtaButton } from "@molecules";
 import { loginSchema } from "@constants";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useGetFormMethods } from "@hooks";
+import { showToast } from "@utils";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
@@ -59,7 +59,7 @@ const LoginForm = () => {
           navigation.navigate("WelcomeScreen");
         }
       } catch (e) {
-        Burnt.toast({
+        showToast({
           title: e.message,
           preset: "error",
         });

@@ -9,13 +9,13 @@ import { Spacer } from "tamagui";
 import { createHandledFormElement, Form } from "@react-form";
 import { BaseTouchable } from "@ui-touchables";
 import { useBooleanState } from "@react-hooks";
-import * as Burnt from "burnt";
 import { useSignUpWithPersistence } from "@react-auth-core";
 import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
 import { BaseTextInput, CtaButton } from "@molecules";
 import { signUpSchema } from "@constants";
 import { LabelSemiboldLg } from "@fonts";
 import { useGetFormMethods } from "@hooks";
+import { showToast } from "@utils";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
@@ -63,12 +63,12 @@ const SignUpForm = () => {
         // Login in user for now
         navigation.navigate("WelcomeScreen");
 
-        Burnt.toast({
+        showToast({
           title: "User created successfully!",
           preset: "done",
         });
       } catch (e) {
-        Burnt.toast({
+        showToast({
           title: e.message,
           preset: "error",
         });

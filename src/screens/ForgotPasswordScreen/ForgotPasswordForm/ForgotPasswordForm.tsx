@@ -14,8 +14,8 @@ import { BaseTextInput, CtaButton } from "@molecules";
 import { LabelSemiboldLg } from "@fonts";
 import { RESET_PASSWORD_URL, forgotPasswordSchema } from "@constants";
 import { supabase } from "@backend";
-import * as Burnt from "burnt";
 import { useGetFormMethods } from "@hooks";
+import { showAlert } from "@utils";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
@@ -45,14 +45,14 @@ const ForgotPasswordForm = () => {
         await supabase.auth.resetPasswordForEmail(data.email, {
           redirectTo,
         });
-        Burnt.alert({
+        showAlert({
           title:
             "An email has been sent with instructions to reset your password.",
           preset: "done",
         });
         navigation.navigate("LoginScreen");
       } catch (e) {
-        Burnt.alert({
+        showAlert({
           title: e.message,
           preset: "error",
         });
