@@ -7,21 +7,16 @@ import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useUserStore } from "@stores";
 import { useAuthStore } from "@react-auth-storage";
 import { useBooleanState } from "@react-hooks";
+import { useGetCurrencies } from "@react-query-sdk";
 
 const AccountScreen = () => {
   const { firstName, lastName, email } = useUserStore((state) => state);
   const handleLogout = useAuthStore((state) => state.handleLogout);
   const { state: isLoading, toggleState: toggleIsLoading } =
     useBooleanState(false);
+  const { data, error } = useGetCurrencies();
 
-  useEffect(() => {
-    const a = async () => {
-      const { data, error } = await supabase.from("Currencies").select();
-      console.log("Currencies data:", data, "Error:", error);
-    };
-
-    a();
-  });
+  console.log("Currencies Hook data:", data, "Error:", error);
 
   const handleOnPressLogout = async () => {
     try {
