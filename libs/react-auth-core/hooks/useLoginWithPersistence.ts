@@ -8,7 +8,7 @@ import { useCallback, useState } from "react";
 
 import { useAuthStore } from "@react-auth-storage";
 import { useUserStore } from "@stores";
-import { supabase } from "@backend";
+import { supabase } from "@react-auth-client";
 
 type Status = "idle" | "loading" | "error" | "success";
 
@@ -38,11 +38,12 @@ const useLoginWithPersistence = () => {
         setStatus("loading");
         const { data, error } =
           await supabase.auth.signInWithIdToken(credentials);
-        setLoggedUserData(data);
-        setStatus("success");
         if (error) {
           throw error;
         }
+        setLoggedUserData(data);
+        setStatus("success");
+
         return data.user;
       } catch (error) {
         console.error("Login failed with social", error);

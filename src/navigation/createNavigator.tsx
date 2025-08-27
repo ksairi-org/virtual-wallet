@@ -9,7 +9,7 @@ const createStackNavigator = <T extends ParamListBase>() => {
     props: Omit<ComponentProps<typeof Stack.Navigator>, "id">,
   ) => <Stack.Navigator id={undefined} {...props} />;
 
-  return { Navigator, Screen: Stack.Screen };
+  return { Navigator, Screen: Stack.Screen, Group: Stack.Group };
 };
 
 export { createStackNavigator };

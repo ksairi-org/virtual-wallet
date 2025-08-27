@@ -23,6 +23,7 @@
       "@react-native-splash-view": ["libs/react-native-splash-view"],
       "@ui-containers": ["libs/ui-containers"],
       "@ui-touchables": ["libs/ui-touchables"],
+      "@react-auth-client": ["libs/react-auth-client"],
       "@react-auth-core": ["libs/react-auth-core"],
       "@react-auth-setup": ["libs/react-auth-setup"],
       "@react-auth-storage": ["libs/react-auth-storage"],
@@ -36,7 +37,6 @@
       "@icons": ["src/components/atoms/icons"],
       "@images": ["src/components/atoms/images"],
       "@stores": ["src/stores/index.ts"],
-      "@backend": ["src/backend"],
       "@constants": ["src/constants"],
       "@hooks": ["src/hooks"]
     }

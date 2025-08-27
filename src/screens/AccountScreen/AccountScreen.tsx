@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { supabase } from "@backend";
 import { Containers } from "@ui-containers";
 import { Spacer } from "tamagui";
 import { BaseTextInput, SubmitButton } from "@molecules";
@@ -7,15 +6,15 @@ import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useUserStore } from "@stores";
 import { useAuthStore } from "@react-auth-storage";
 import { useBooleanState } from "@react-hooks";
-import { useGetCurrencies } from "@react-query-sdk";
+import { useGetUser } from "@react-query-sdk";
+import { supabase } from "@react-auth-client";
 
 const AccountScreen = () => {
   const { firstName, lastName, email } = useUserStore((state) => state);
   const handleLogout = useAuthStore((state) => state.handleLogout);
   const { state: isLoading, toggleState: toggleIsLoading } =
     useBooleanState(false);
-  const { data, error } = useGetCurrencies();
-
+  const { data, error } = useGetUser();
   console.log("Currencies Hook data:", data, "Error:", error);
 
   const handleOnPressLogout = async () => {

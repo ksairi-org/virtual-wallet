@@ -16,10 +16,8 @@ const operationOverrides = infiniteQueryOperationNames.reduce(
   {},
 );
 
-if (typeof process.env.EXPO_PUBLIC_SUPABASE_OPENAPI_SPEC_URL !== "string") {
-  throw new Error(
-    "EXPO_PUBLIC_SUPABASE_OPENAPI_SPEC_URL is not defined in the process",
-  );
+if (typeof process.env.EXPO_PUBLIC_SERVER_URL !== "string") {
+  throw new Error("EXPO_PUBLIC_SERVER_URL is not defined in the process");
 }
 export default defineConfig({
   "react-sdk": {

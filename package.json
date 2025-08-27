@@ -18,7 +18,6 @@
     "lint": "expo lint --fix",
     "check:tsc": "tsc --noEmit",
     "generate:spec": "node libs/react-query-sdk/download-spec.js",
-    "sync-be-types": "supabase gen types typescript --project-id icftqbzrrsqwzsuqgmxd --schema virtual_wallet_db_$0  > src/backend/database.types.ts",
     "generate:hooks": "yarn generate:spec && yarn orval --config libs/react-query-sdk/orval.config.ts"
   },
   "dependencies": {

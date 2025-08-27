@@ -5,7 +5,7 @@
     "title": "PostgREST API",
     "version": "13.0.4"
   },
-  "host": "icftqbzrrsqwzsuqgmxd.supabase.co:443",
+  "host": "oidpaoqsngnydihqkgok.supabase.co:443",
   "basePath": "/",
   "schemes": [
     "https"
@@ -40,26 +40,26 @@
         ]
       }
     },
-    "/Transactions": {
+    "/wallet": {
       "get": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Transactions.transaction_id"
+            "$ref": "#/parameters/rowFilter.wallet.wallet_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.wallet_id"
+            "$ref": "#/parameters/rowFilter.wallet.balance"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.transaction_type_id"
+            "$ref": "#/parameters/rowFilter.wallet.created_at"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.amount"
+            "$ref": "#/parameters/rowFilter.wallet.updated_at"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.transaction_date"
+            "$ref": "#/parameters/rowFilter.wallet.currency_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.description"
+            "$ref": "#/parameters/rowFilter.wallet.user_id"
           },
           {
             "$ref": "#/parameters/select"
@@ -88,7 +88,7 @@
             "description": "OK",
             "schema": {
               "items": {
-                "$ref": "#/definitions/Transactions"
+                "$ref": "#/definitions/wallet"
               },
               "type": "array"
             }
@@ -98,13 +98,13 @@
           }
         },
         "tags": [
-          "Transactions"
+          "wallet"
         ]
       },
       "post": {
         "parameters": [
           {
-            "$ref": "#/parameters/body.Transactions"
+            "$ref": "#/parameters/body.wallet"
           },
           {
             "$ref": "#/parameters/select"
@@ -119,28 +119,28 @@
           }
         },
         "tags": [
-          "Transactions"
+          "wallet"
         ]
       },
       "delete": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Transactions.transaction_id"
+            "$ref": "#/parameters/rowFilter.wallet.wallet_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.wallet_id"
+            "$ref": "#/parameters/rowFilter.wallet.balance"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.transaction_type_id"
+            "$ref": "#/parameters/rowFilter.wallet.created_at"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.amount"
+            "$ref": "#/parameters/rowFilter.wallet.updated_at"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.transaction_date"
+            "$ref": "#/parameters/rowFilter.wallet.currency_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.description"
+            "$ref": "#/parameters/rowFilter.wallet.user_id"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -152,31 +152,31 @@
           }
         },
         "tags": [
-          "Transactions"
+          "wallet"
         ]
       },
       "patch": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Transactions.transaction_id"
+            "$ref": "#/parameters/rowFilter.wallet.wallet_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.wallet_id"
+            "$ref": "#/parameters/rowFilter.wallet.balance"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.transaction_type_id"
+            "$ref": "#/parameters/rowFilter.wallet.created_at"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.amount"
+            "$ref": "#/parameters/rowFilter.wallet.updated_at"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.transaction_date"
+            "$ref": "#/parameters/rowFilter.wallet.currency_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Transactions.description"
+            "$ref": "#/parameters/rowFilter.wallet.user_id"
           },
           {
-            "$ref": "#/parameters/body.Transactions"
+            "$ref": "#/parameters/body.wallet"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -188,18 +188,18 @@
           }
         },
         "tags": [
-          "Transactions"
+          "wallet"
         ]
       }
     },
-    "/TransactionTypes": {
+    "/user": {
       "get": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.TransactionTypes.transaction_type_id"
+            "$ref": "#/parameters/rowFilter.user.photo_url"
           },
           {
-            "$ref": "#/parameters/rowFilter.TransactionTypes.name"
+            "$ref": "#/parameters/rowFilter.user.user_id"
           },
           {
             "$ref": "#/parameters/select"
@@ -228,7 +228,7 @@
             "description": "OK",
             "schema": {
               "items": {
-                "$ref": "#/definitions/TransactionTypes"
+                "$ref": "#/definitions/user"
               },
               "type": "array"
             }
@@ -238,13 +238,13 @@
           }
         },
         "tags": [
-          "TransactionTypes"
+          "user"
         ]
       },
       "post": {
         "parameters": [
           {
-            "$ref": "#/parameters/body.TransactionTypes"
+            "$ref": "#/parameters/body.user"
           },
           {
             "$ref": "#/parameters/select"
@@ -259,16 +259,16 @@
           }
         },
         "tags": [
-          "TransactionTypes"
+          "user"
         ]
       },
       "delete": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.TransactionTypes.transaction_type_id"
+            "$ref": "#/parameters/rowFilter.user.photo_url"
           },
           {
-            "$ref": "#/parameters/rowFilter.TransactionTypes.name"
+            "$ref": "#/parameters/rowFilter.user.user_id"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -280,19 +280,19 @@
           }
         },
         "tags": [
-          "TransactionTypes"
+          "user"
         ]
       },
       "patch": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.TransactionTypes.transaction_type_id"
+            "$ref": "#/parameters/rowFilter.user.photo_url"
           },
           {
-            "$ref": "#/parameters/rowFilter.TransactionTypes.name"
+            "$ref": "#/parameters/rowFilter.user.user_id"
           },
           {
-            "$ref": "#/parameters/body.TransactionTypes"
+            "$ref": "#/parameters/body.user"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -304,33 +304,30 @@
           }
         },
         "tags": [
-          "TransactionTypes"
+          "user"
         ]
       }
     },
-    "/Users": {
+    "/transaction": {
       "get": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Users.user_id"
+            "$ref": "#/parameters/rowFilter.transaction.transaction_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.email"
+            "$ref": "#/parameters/rowFilter.transaction.wallet_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.password"
+            "$ref": "#/parameters/rowFilter.transaction.transaction_type_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.google_id"
+            "$ref": "#/parameters/rowFilter.transaction.amount"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.apple_id"
+            "$ref": "#/parameters/rowFilter.transaction.transaction_date"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.created_at"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Users.updated_at"
+            "$ref": "#/parameters/rowFilter.transaction.description"
           },
           {
             "$ref": "#/parameters/select"
@@ -359,7 +356,7 @@
             "description": "OK",
             "schema": {
               "items": {
-                "$ref": "#/definitions/Users"
+                "$ref": "#/definitions/transaction"
               },
               "type": "array"
             }
@@ -369,13 +366,13 @@
           }
         },
         "tags": [
-          "Users"
+          "transaction"
         ]
       },
       "post": {
         "parameters": [
           {
-            "$ref": "#/parameters/body.Users"
+            "$ref": "#/parameters/body.transaction"
           },
           {
             "$ref": "#/parameters/select"
@@ -390,31 +387,28 @@
           }
         },
         "tags": [
-          "Users"
+          "transaction"
         ]
       },
       "delete": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Users.user_id"
+            "$ref": "#/parameters/rowFilter.transaction.transaction_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.email"
+            "$ref": "#/parameters/rowFilter.transaction.wallet_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.password"
+            "$ref": "#/parameters/rowFilter.transaction.transaction_type_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.google_id"
+            "$ref": "#/parameters/rowFilter.transaction.amount"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.apple_id"
+            "$ref": "#/parameters/rowFilter.transaction.transaction_date"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.created_at"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Users.updated_at"
+            "$ref": "#/parameters/rowFilter.transaction.description"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -426,34 +420,31 @@
           }
         },
         "tags": [
-          "Users"
+          "transaction"
         ]
       },
       "patch": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Users.user_id"
+            "$ref": "#/parameters/rowFilter.transaction.transaction_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.email"
+            "$ref": "#/parameters/rowFilter.transaction.wallet_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.password"
+            "$ref": "#/parameters/rowFilter.transaction.transaction_type_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.google_id"
+            "$ref": "#/parameters/rowFilter.transaction.amount"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.apple_id"
+            "$ref": "#/parameters/rowFilter.transaction.transaction_date"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.created_at"
+            "$ref": "#/parameters/rowFilter.transaction.description"
           },
           {
-            "$ref": "#/parameters/rowFilter.Users.updated_at"
-          },
-          {
-            "$ref": "#/parameters/body.Users"
+            "$ref": "#/parameters/body.transaction"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -465,18 +456,18 @@
           }
         },
         "tags": [
-          "Users"
+          "transaction"
         ]
       }
     },
-    "/Currencies": {
+    "/currency": {
       "get": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Currencies.currency_id"
+            "$ref": "#/parameters/rowFilter.currency.currency_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Currencies.name"
+            "$ref": "#/parameters/rowFilter.currency.name"
           },
           {
             "$ref": "#/parameters/select"
@@ -505,7 +496,7 @@
             "description": "OK",
             "schema": {
               "items": {
-                "$ref": "#/definitions/Currencies"
+                "$ref": "#/definitions/currency"
               },
               "type": "array"
             }
@@ -515,13 +506,13 @@
           }
         },
         "tags": [
-          "Currencies"
+          "currency"
         ]
       },
       "post": {
         "parameters": [
           {
-            "$ref": "#/parameters/body.Currencies"
+            "$ref": "#/parameters/body.currency"
           },
           {
             "$ref": "#/parameters/select"
@@ -536,16 +527,16 @@
           }
         },
         "tags": [
-          "Currencies"
+          "currency"
         ]
       },
       "delete": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Currencies.currency_id"
+            "$ref": "#/parameters/rowFilter.currency.currency_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Currencies.name"
+            "$ref": "#/parameters/rowFilter.currency.name"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -557,19 +548,19 @@
           }
         },
         "tags": [
-          "Currencies"
+          "currency"
         ]
       },
       "patch": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Currencies.currency_id"
+            "$ref": "#/parameters/rowFilter.currency.currency_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Currencies.name"
+            "$ref": "#/parameters/rowFilter.currency.name"
           },
           {
-            "$ref": "#/parameters/body.Currencies"
+            "$ref": "#/parameters/body.currency"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -581,30 +572,18 @@
           }
         },
         "tags": [
-          "Currencies"
+          "currency"
         ]
       }
     },
-    "/Wallets": {
+    "/transactionType": {
       "get": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Wallets.wallet_id"
+            "$ref": "#/parameters/rowFilter.transactionType.transaction_type_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Wallets.user_id"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.balance"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.created_at"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.updated_at"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.currency_id"
+            "$ref": "#/parameters/rowFilter.transactionType.name"
           },
           {
             "$ref": "#/parameters/select"
@@ -633,7 +612,7 @@
             "description": "OK",
             "schema": {
               "items": {
-                "$ref": "#/definitions/Wallets"
+                "$ref": "#/definitions/transactionType"
               },
               "type": "array"
             }
@@ -643,13 +622,13 @@
           }
         },
         "tags": [
-          "Wallets"
+          "transactionType"
         ]
       },
       "post": {
         "parameters": [
           {
-            "$ref": "#/parameters/body.Wallets"
+            "$ref": "#/parameters/body.transactionType"
           },
           {
             "$ref": "#/parameters/select"
@@ -664,28 +643,16 @@
           }
         },
         "tags": [
-          "Wallets"
+          "transactionType"
         ]
       },
       "delete": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Wallets.wallet_id"
+            "$ref": "#/parameters/rowFilter.transactionType.transaction_type_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Wallets.user_id"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.balance"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.created_at"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.updated_at"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.currency_id"
+            "$ref": "#/parameters/rowFilter.transactionType.name"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -697,31 +664,19 @@
           }
         },
         "tags": [
-          "Wallets"
+          "transactionType"
         ]
       },
       "patch": {
         "parameters": [
           {
-            "$ref": "#/parameters/rowFilter.Wallets.wallet_id"
+            "$ref": "#/parameters/rowFilter.transactionType.transaction_type_id"
           },
           {
-            "$ref": "#/parameters/rowFilter.Wallets.user_id"
+            "$ref": "#/parameters/rowFilter.transactionType.name"
           },
           {
-            "$ref": "#/parameters/rowFilter.Wallets.balance"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.created_at"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.updated_at"
-          },
-          {
-            "$ref": "#/parameters/rowFilter.Wallets.currency_id"
-          },
-          {
-            "$ref": "#/parameters/body.Wallets"
+            "$ref": "#/parameters/body.transactionType"
           },
           {
             "$ref": "#/parameters/preferReturn"
@@ -733,148 +688,22 @@
           }
         },
         "tags": [
-          "Wallets"
+          "transactionType"
         ]
       }
     }
   },
   "definitions": {
-    "Transactions": {
-      "required": [
-        "transaction_id",
-        "wallet_id",
-        "transaction_type_id",
-        "amount"
-      ],
-      "properties": {
-        "transaction_id": {
-          "description": "Note:\nThis is a Primary Key.<pk/>",
-          "format": "integer",
-          "type": "integer"
-        },
-        "wallet_id": {
-          "description": "Note:\nThis is a Foreign Key to `Wallets.wallet_id`.<fk table='Wallets' column='wallet_id'/>",
-          "format": "integer",
-          "type": "integer"
-        },
-        "transaction_type_id": {
-          "description": "Note:\nThis is a Foreign Key to `TransactionTypes.transaction_type_id`.<fk table='TransactionTypes' column='transaction_type_id'/>",
-          "format": "integer",
-          "type": "integer"
-        },
-        "amount": {
-          "format": "numeric",
-          "type": "number"
-        },
-        "transaction_date": {
-          "default": "CURRENT_TIMESTAMP",
-          "format": "timestamp with time zone",
-          "type": "string"
-        },
-        "description": {
-          "format": "text",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "TransactionTypes": {
-      "required": [
-        "transaction_type_id",
-        "name"
-      ],
-      "properties": {
-        "transaction_type_id": {
-          "description": "Note:\nThis is a Primary Key.<pk/>",
-          "format": "integer",
-          "type": "integer"
-        },
-        "name": {
-          "format": "character varying",
-          "maxLength": 50,
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Users": {
-      "required": [
-        "user_id",
-        "email"
-      ],
-      "properties": {
-        "user_id": {
-          "description": "Note:\nThis is a Primary Key.<pk/>",
-          "format": "integer",
-          "type": "integer"
-        },
-        "email": {
-          "format": "character varying",
-          "maxLength": 255,
-          "type": "string"
-        },
-        "password": {
-          "format": "character varying",
-          "maxLength": 255,
-          "type": "string"
-        },
-        "google_id": {
-          "format": "character varying",
-          "maxLength": 255,
-          "type": "string"
-        },
-        "apple_id": {
-          "format": "character varying",
-          "maxLength": 255,
-          "type": "string"
-        },
-        "created_at": {
-          "default": "CURRENT_TIMESTAMP",
-          "format": "timestamp with time zone",
-          "type": "string"
-        },
-        "updated_at": {
-          "default": "CURRENT_TIMESTAMP",
-          "format": "timestamp with time zone",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Currencies": {
-      "required": [
-        "currency_id",
-        "name"
-      ],
-      "properties": {
-        "currency_id": {
-          "description": "Note:\nThis is a Primary Key.<pk/>",
-          "format": "integer",
-          "type": "integer"
-        },
-        "name": {
-          "format": "character varying",
-          "maxLength": 10,
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Wallets": {
+    "wallet": {
       "required": [
         "wallet_id",
-        "user_id",
         "balance",
-        "currency_id"
+        "currency_id",
+        "user_id"
       ],
       "properties": {
         "wallet_id": {
           "description": "Note:\nThis is a Primary Key.<pk/>",
-          "format": "integer",
-          "type": "integer"
-        },
-        "user_id": {
-          "description": "Note:\nThis is a Foreign Key to `Users.user_id`.<fk table='Users' column='user_id'/>",
           "format": "integer",
           "type": "integer"
         },
@@ -894,9 +723,109 @@
           "type": "string"
         },
         "currency_id": {
-          "description": "Note:\nThis is a Foreign Key to `Currencies.currency_id`.<fk table='Currencies' column='currency_id'/>",
+          "description": "Note:\nThis is a Foreign Key to `currency.currency_id`.<fk table='currency' column='currency_id'/>",
           "format": "integer",
           "type": "integer"
+        },
+        "user_id": {
+          "default": "gen_random_uuid()",
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "user": {
+      "required": [
+        "user_id"
+      ],
+      "properties": {
+        "photo_url": {
+          "format": "character varying",
+          "maxLength": 255,
+          "type": "string"
+        },
+        "user_id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "transaction": {
+      "required": [
+        "transaction_id",
+        "wallet_id",
+        "transaction_type_id",
+        "amount"
+      ],
+      "properties": {
+        "transaction_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "wallet_id": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "transaction_type_id": {
+          "description": "Note:\nThis is a Foreign Key to `transactionType.transaction_type_id`.<fk table='transactionType' column='transaction_type_id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "amount": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "transaction_date": {
+          "default": "CURRENT_TIMESTAMP",
+          "format": "timestamp with time zone",
+          "type": "string"
+        },
+        "description": {
+          "format": "text",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "currency": {
+      "required": [
+        "currency_id",
+        "name"
+      ],
+      "properties": {
+        "currency_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "name": {
+          "format": "character varying",
+          "maxLength": 10,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "transactionType": {
+      "required": [
+        "transaction_type_id",
+        "name"
+      ],
+      "properties": {
+        "transaction_type_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "name": {
+          "format": "character varying",
+          "maxLength": 50,
+          "type": "string"
         }
       },
       "type": "object"
@@ -997,185 +926,155 @@
       "in": "query",
       "type": "string"
     },
-    "body.Transactions": {
-      "name": "Transactions",
-      "description": "Transactions",
+    "body.wallet": {
+      "name": "wallet",
+      "description": "wallet",
       "required": false,
       "in": "body",
       "schema": {
-        "$ref": "#/definitions/Transactions"
+        "$ref": "#/definitions/wallet"
       }
     },
-    "rowFilter.Transactions.transaction_id": {
-      "name": "transaction_id",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Transactions.wallet_id": {
+    "rowFilter.wallet.wallet_id": {
       "name": "wallet_id",
       "required": false,
       "in": "query",
       "type": "string"
     },
-    "rowFilter.Transactions.transaction_type_id": {
-      "name": "transaction_type_id",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Transactions.amount": {
-      "name": "amount",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Transactions.transaction_date": {
-      "name": "transaction_date",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Transactions.description": {
-      "name": "description",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "body.TransactionTypes": {
-      "name": "TransactionTypes",
-      "description": "TransactionTypes",
-      "required": false,
-      "in": "body",
-      "schema": {
-        "$ref": "#/definitions/TransactionTypes"
-      }
-    },
-    "rowFilter.TransactionTypes.transaction_type_id": {
-      "name": "transaction_type_id",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.TransactionTypes.name": {
-      "name": "name",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "body.Users": {
-      "name": "Users",
-      "description": "Users",
-      "required": false,
-      "in": "body",
-      "schema": {
-        "$ref": "#/definitions/Users"
-      }
-    },
-    "rowFilter.Users.user_id": {
-      "name": "user_id",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Users.email": {
-      "name": "email",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Users.password": {
-      "name": "password",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Users.google_id": {
-      "name": "google_id",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Users.apple_id": {
-      "name": "apple_id",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Users.created_at": {
-      "name": "created_at",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Users.updated_at": {
-      "name": "updated_at",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "body.Currencies": {
-      "name": "Currencies",
-      "description": "Currencies",
-      "required": false,
-      "in": "body",
-      "schema": {
-        "$ref": "#/definitions/Currencies"
-      }
-    },
-    "rowFilter.Currencies.currency_id": {
-      "name": "currency_id",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Currencies.name": {
-      "name": "name",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "body.Wallets": {
-      "name": "Wallets",
-      "description": "Wallets",
-      "required": false,
-      "in": "body",
-      "schema": {
-        "$ref": "#/definitions/Wallets"
-      }
-    },
-    "rowFilter.Wallets.wallet_id": {
-      "name": "wallet_id",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Wallets.user_id": {
-      "name": "user_id",
-      "required": false,
-      "in": "query",
-      "type": "string"
-    },
-    "rowFilter.Wallets.balance": {
+    "rowFilter.wallet.balance": {
       "name": "balance",
       "required": false,
       "in": "query",
       "type": "string"
     },
-    "rowFilter.Wallets.created_at": {
+    "rowFilter.wallet.created_at": {
       "name": "created_at",
       "required": false,
       "in": "query",
       "type": "string"
     },
-    "rowFilter.Wallets.updated_at": {
+    "rowFilter.wallet.updated_at": {
       "name": "updated_at",
       "required": false,
       "in": "query",
       "type": "string"
     },
-    "rowFilter.Wallets.currency_id": {
+    "rowFilter.wallet.currency_id": {
       "name": "currency_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.wallet.user_id": {
+      "name": "user_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.user": {
+      "name": "user",
+      "description": "user",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/user"
+      }
+    },
+    "rowFilter.user.photo_url": {
+      "name": "photo_url",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.user.user_id": {
+      "name": "user_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.transaction": {
+      "name": "transaction",
+      "description": "transaction",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/transaction"
+      }
+    },
+    "rowFilter.transaction.transaction_id": {
+      "name": "transaction_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.transaction.wallet_id": {
+      "name": "wallet_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.transaction.transaction_type_id": {
+      "name": "transaction_type_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.transaction.amount": {
+      "name": "amount",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.transaction.transaction_date": {
+      "name": "transaction_date",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.transaction.description": {
+      "name": "description",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.currency": {
+      "name": "currency",
+      "description": "currency",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/currency"
+      }
+    },
+    "rowFilter.currency.currency_id": {
+      "name": "currency_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.currency.name": {
+      "name": "name",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.transactionType": {
+      "name": "transactionType",
+      "description": "transactionType",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/transactionType"
+      }
+    },
+    "rowFilter.transactionType.transaction_type_id": {
+      "name": "transaction_type_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.transactionType.name": {
+      "name": "name",
       "required": false,
       "in": "query",
       "type": "string"

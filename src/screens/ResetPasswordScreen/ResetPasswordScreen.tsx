@@ -7,12 +7,12 @@ import { ResetPasswordForm } from "./ResetPasswordForm";
 import { Containers } from "@ui-containers";
 import { BodyRegularXl } from "@fonts";
 import { BaseIcon } from "@icons";
-import { supabase } from "@backend";
 import { RootStackNavigatorScreenProps } from "@navigation/types";
 import { useEffect } from "react";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { useNavigation } from "@react-navigation/native";
 import { showAlert } from "@utils";
+import { supabase } from "@react-auth-client";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {

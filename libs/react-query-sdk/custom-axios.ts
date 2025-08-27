@@ -4,7 +4,7 @@ import axios from "axios";
 
 const apiAxiosInstance = axios.create({
   paramsSerializer: { indexes: null },
-  baseURL: process.env.EXPO_PUBLIC_SUPABASE_OPENAPI_SPEC_URL,
+  baseURL: process.env.EXPO_PUBLIC_SERVER_URL + "/rest/v1/",
   headers: {
     apikey: process.env.EXPO_PUBLIC_SUPABASE_API_KEY,
   },
@@ -12,8 +12,6 @@ const apiAxiosInstance = axios.create({
 
 setupAxiosInterceptors({
   axiosInstance: apiAxiosInstance,
-  shouldAutoLogoutOnFailedSessionRefresh: true,
-  isAuthServer: true,
 });
 
 // add a second `options` argument here if you want to pass extra options to each generated query

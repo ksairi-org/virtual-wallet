@@ -7,12 +7,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const downloadSpec = async () => {
-  const specUrl = process.env.EXPO_PUBLIC_SUPABASE_OPENAPI_SPEC_URL;
+  const specUrl = process.env.EXPO_PUBLIC_SERVER_URL + "/rest/v1/";
   const apiKey = process.env.EXPO_PUBLIC_SUPABASE_API_KEY;
 
-  if (!specUrl || !apiKey) {
+  if (!process.env.EXPO_PUBLIC_SERVER_URL || !apiKey) {
     console.error(
-      "❌ Missing required environment variables: EXPO_PUBLIC_SUPABASE_OPENAPI_SPEC_URL and EXPO_PUBLIC_SUPABASE_API_KEY",
+      "❌ Missing required environment variables: process.env.EXPO_PUBLIC_SERVER_URL and EXPO_PUBLIC_SUPABASE_API_KEY",
     );
     process.exit(1);
   }

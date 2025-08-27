@@ -25,9 +25,9 @@ import { BaseTouchable } from "@ui-touchables";
 import { RootStackNavigatorScreenProps } from "@navigation/types";
 import { HeadingBoldXl, BodyRegularXl, LabelSemiboldLg } from "@fonts";
 import { BaseIcon } from "@icons";
-import { supabase } from "@backend";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { showAlert } from "@utils";
+import { supabase } from "@react-auth-client";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {

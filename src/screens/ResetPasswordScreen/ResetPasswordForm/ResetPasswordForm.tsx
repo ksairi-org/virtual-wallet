@@ -12,9 +12,9 @@ import { BaseTouchable } from "@ui-touchables";
 import { BaseTextInput, SubmitButton } from "@molecules";
 import { LabelSemiboldLg } from "@fonts";
 import { resetPasswordSchema } from "@constants";
-import { supabase } from "@backend";
 import { useGetFormMethods } from "@hooks";
 import { showToast } from "@utils";
+import { supabase } from "@react-auth-client";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,

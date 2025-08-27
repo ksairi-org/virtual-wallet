@@ -13,9 +13,9 @@ import { BaseTouchable } from "@ui-touchables";
 import { BaseTextInput, SubmitButton } from "@molecules";
 import { LabelSemiboldLg } from "@fonts";
 import { RESET_PASSWORD_URL, forgotPasswordSchema } from "@constants";
-import { supabase } from "@backend";
 import { useGetFormMethods } from "@hooks";
 import { showAlert } from "@utils";
+import { supabase } from "@react-auth-client";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
