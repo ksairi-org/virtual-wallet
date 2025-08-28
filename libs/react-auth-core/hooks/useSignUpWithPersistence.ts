@@ -1,9 +1,5 @@
 import { useCallback, useState } from "react";
-import { useUserStore } from "@stores";
-import {
-  SignUpWithPasswordCredentials,
-  User as SupaBaseUser,
-} from "@supabase/supabase-js";
+import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
 import { supabase } from "@react-auth-client";
 
 type SignUpData = {
@@ -12,9 +8,6 @@ type SignUpData = {
   email?: string;
   password?: string;
 };
-
-type User = Pick<SupaBaseUser, "id" | "email"> &
-  Pick<SignUpData, "firstName" | "lastName">;
 
 type Status = "idle" | "loading" | "error" | "success";
 
@@ -26,17 +19,6 @@ const isDuplicateError = (message: string) =>
  */
 const useSignUpWithPersistence = () => {
   const [status, setStatus] = useState<Status>("idle");
-  const setKeyValue = useUserStore((state) => state.setKeyValue);
-
-  const setLoggedUserData = useCallback(
-    (user: User) => {
-      setKeyValue("id", user.id);
-      setKeyValue("email", user.email);
-      setKeyValue("firstName", user.firstName);
-      setKeyValue("lastName", user.lastName);
-    },
-    [setKeyValue],
-  );
 
   const handleSignUp = useCallback(
     async (data: SignUpWithPasswordCredentials) => {
@@ -56,8 +38,6 @@ const useSignUpWithPersistence = () => {
           firstName: user.user_metadata["firstName"],
           lastName: user.user_metadata["lastName"],
         };
-        //TODO: need to confirm email before setting user data, will set smtp server in supabase for this
-        setLoggedUserData(newUser);
         setStatus("success");
         return newUser;
       } catch (e) {
@@ -70,7 +50,7 @@ const useSignUpWithPersistence = () => {
         );
       }
     },
-    [setLoggedUserData],
+    [],
   );
 
   return { handleSignUp, status };

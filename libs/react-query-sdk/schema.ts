@@ -8,7 +8,40 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { DataTag, DefinedInitialDataOptions, DefinedUseQueryResult, MutationFunction, QueryClient, QueryFunction, QueryKey, UndefinedInitialDataOptions, UseMutationOptions, UseMutationResult, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { customAxios } from './custom-axios';
-export interface Wallet {
+export interface Transactions {
+    /** Note:
+  This is a Primary Key.<pk/> */
+    transaction_id: number;
+    wallet_id: number;
+    /** Note:
+  This is a Foreign Key to `transaction_types.transaction_type_id`.<fk table='transaction_types' column='transaction_type_id'/> */
+    transaction_type_id: number;
+    amount: number;
+    transaction_date?: string;
+    description?: string;
+}
+export interface TransactionTypes {
+    /** Note:
+  This is a Primary Key.<pk/> */
+    transaction_type_id: number;
+    /** @maxLength 50 */
+    name: string;
+}
+export interface Profiles {
+    /** @maxLength 255 */
+    photo_url?: string;
+    /** Note:
+  This is a Primary Key.<pk/> */
+    user_id: string;
+}
+export interface Currencies {
+    /** Note:
+  This is a Primary Key.<pk/> */
+    currency_id: number;
+    /** @maxLength 10 */
+    name: string;
+}
+export interface Wallets {
     /** Note:
   This is a Primary Key.<pk/> */
     wallet_id: number;
@@ -16,63 +49,30 @@ export interface Wallet {
     created_at?: string;
     updated_at?: string;
     /** Note:
-  This is a Foreign Key to `currency.currency_id`.<fk table='currency' column='currency_id'/> */
+  This is a Foreign Key to `currencies.currency_id`.<fk table='currencies' column='currency_id'/> */
     currency_id: number;
     user_id: string;
 }
-export interface User {
-    /** @maxLength 255 */
-    photo_url?: string;
-    /** Note:
-  This is a Primary Key.<pk/> */
-    user_id: string;
-}
-export interface Transaction {
-    /** Note:
-  This is a Primary Key.<pk/> */
-    transaction_id: number;
-    wallet_id: number;
-    /** Note:
-  This is a Foreign Key to `transactionType.transaction_type_id`.<fk table='transactionType' column='transaction_type_id'/> */
-    transaction_type_id: number;
-    amount: number;
-    transaction_date?: string;
-    description?: string;
-}
-export interface Currency {
-    /** Note:
-  This is a Primary Key.<pk/> */
-    currency_id: number;
-    /** @maxLength 10 */
-    name: string;
-}
-export interface TransactionType {
-    /** Note:
-  This is a Primary Key.<pk/> */
-    transaction_type_id: number;
-    /** @maxLength 50 */
-    name: string;
-}
 /**
- * wallet
+ * transactions
  */
-export type WalletBody = Wallet;
+export type TransactionsBody = Transactions;
 /**
- * user
+ * transaction_types
  */
-export type UserBody = User;
+export type TransactionTypesBody = TransactionTypes;
 /**
- * transaction
+ * profiles
  */
-export type TransactionBody = Transaction;
+export type ProfilesBody = Profiles;
 /**
- * currency
+ * currencies
  */
-export type CurrencyBody = Currency;
+export type CurrenciesBody = Currencies;
 /**
- * transactionType
+ * wallets
  */
-export type TransactionTypeBody = TransactionType;
+export type WalletsBody = Wallets;
 export type PreferParamsParameter = typeof PreferParamsParameter[keyof typeof PreferParamsParameter];
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PreferParamsParameter = {} as const;
@@ -125,31 +125,31 @@ export type OffsetParameter = string;
  * Limiting and Pagination
  */
 export type LimitParameter = string;
-export type RowFilterWalletWalletIdParameter = string;
-export type RowFilterWalletBalanceParameter = string;
-export type RowFilterWalletCreatedAtParameter = string;
-export type RowFilterWalletUpdatedAtParameter = string;
-export type RowFilterWalletCurrencyIdParameter = string;
-export type RowFilterWalletUserIdParameter = string;
-export type RowFilterUserPhotoUrlParameter = string;
-export type RowFilterUserUserIdParameter = string;
-export type RowFilterTransactionTransactionIdParameter = string;
-export type RowFilterTransactionWalletIdParameter = string;
-export type RowFilterTransactionTransactionTypeIdParameter = string;
-export type RowFilterTransactionAmountParameter = string;
-export type RowFilterTransactionTransactionDateParameter = string;
-export type RowFilterTransactionDescriptionParameter = string;
-export type RowFilterCurrencyCurrencyIdParameter = string;
-export type RowFilterCurrencyNameParameter = string;
-export type RowFilterTransactionTypeTransactionTypeIdParameter = string;
-export type RowFilterTransactionTypeNameParameter = string;
-export type GetWalletParams = {
-    wallet_id?: RowFilterWalletWalletIdParameter;
-    balance?: RowFilterWalletBalanceParameter;
-    created_at?: RowFilterWalletCreatedAtParameter;
-    updated_at?: RowFilterWalletUpdatedAtParameter;
-    currency_id?: RowFilterWalletCurrencyIdParameter;
-    user_id?: RowFilterWalletUserIdParameter;
+export type RowFilterTransactionsTransactionIdParameter = string;
+export type RowFilterTransactionsWalletIdParameter = string;
+export type RowFilterTransactionsTransactionTypeIdParameter = string;
+export type RowFilterTransactionsAmountParameter = string;
+export type RowFilterTransactionsTransactionDateParameter = string;
+export type RowFilterTransactionsDescriptionParameter = string;
+export type RowFilterTransactionTypesTransactionTypeIdParameter = string;
+export type RowFilterTransactionTypesNameParameter = string;
+export type RowFilterProfilesPhotoUrlParameter = string;
+export type RowFilterProfilesUserIdParameter = string;
+export type RowFilterCurrenciesCurrencyIdParameter = string;
+export type RowFilterCurrenciesNameParameter = string;
+export type RowFilterWalletsWalletIdParameter = string;
+export type RowFilterWalletsBalanceParameter = string;
+export type RowFilterWalletsCreatedAtParameter = string;
+export type RowFilterWalletsUpdatedAtParameter = string;
+export type RowFilterWalletsCurrencyIdParameter = string;
+export type RowFilterWalletsUserIdParameter = string;
+export type GetTransactionsParams = {
+    transaction_id?: RowFilterTransactionsTransactionIdParameter;
+    wallet_id?: RowFilterTransactionsWalletIdParameter;
+    transaction_type_id?: RowFilterTransactionsTransactionTypeIdParameter;
+    amount?: RowFilterTransactionsAmountParameter;
+    transaction_date?: RowFilterTransactionsTransactionDateParameter;
+    description?: RowFilterTransactionsDescriptionParameter;
     /**
      * Filtering Columns
      */
@@ -167,69 +167,31 @@ export type GetWalletParams = {
      */
     limit?: LimitParameter;
 };
-export type PostWalletParams = {
+export type PostTransactionsParams = {
     /**
      * Filtering Columns
      */
     select?: SelectParameter;
 };
-export type DeleteWalletParams = {
-    wallet_id?: RowFilterWalletWalletIdParameter;
-    balance?: RowFilterWalletBalanceParameter;
-    created_at?: RowFilterWalletCreatedAtParameter;
-    updated_at?: RowFilterWalletUpdatedAtParameter;
-    currency_id?: RowFilterWalletCurrencyIdParameter;
-    user_id?: RowFilterWalletUserIdParameter;
+export type DeleteTransactionsParams = {
+    transaction_id?: RowFilterTransactionsTransactionIdParameter;
+    wallet_id?: RowFilterTransactionsWalletIdParameter;
+    transaction_type_id?: RowFilterTransactionsTransactionTypeIdParameter;
+    amount?: RowFilterTransactionsAmountParameter;
+    transaction_date?: RowFilterTransactionsTransactionDateParameter;
+    description?: RowFilterTransactionsDescriptionParameter;
 };
-export type PatchWalletParams = {
-    wallet_id?: RowFilterWalletWalletIdParameter;
-    balance?: RowFilterWalletBalanceParameter;
-    created_at?: RowFilterWalletCreatedAtParameter;
-    updated_at?: RowFilterWalletUpdatedAtParameter;
-    currency_id?: RowFilterWalletCurrencyIdParameter;
-    user_id?: RowFilterWalletUserIdParameter;
+export type PatchTransactionsParams = {
+    transaction_id?: RowFilterTransactionsTransactionIdParameter;
+    wallet_id?: RowFilterTransactionsWalletIdParameter;
+    transaction_type_id?: RowFilterTransactionsTransactionTypeIdParameter;
+    amount?: RowFilterTransactionsAmountParameter;
+    transaction_date?: RowFilterTransactionsTransactionDateParameter;
+    description?: RowFilterTransactionsDescriptionParameter;
 };
-export type GetUserParams = {
-    photo_url?: RowFilterUserPhotoUrlParameter;
-    user_id?: RowFilterUserUserIdParameter;
-    /**
-     * Filtering Columns
-     */
-    select?: SelectParameter;
-    /**
-     * Ordering
-     */
-    order?: OrderParameter;
-    /**
-     * Limiting and Pagination
-     */
-    offset?: OffsetParameter;
-    /**
-     * Limiting and Pagination
-     */
-    limit?: LimitParameter;
-};
-export type PostUserParams = {
-    /**
-     * Filtering Columns
-     */
-    select?: SelectParameter;
-};
-export type DeleteUserParams = {
-    photo_url?: RowFilterUserPhotoUrlParameter;
-    user_id?: RowFilterUserUserIdParameter;
-};
-export type PatchUserParams = {
-    photo_url?: RowFilterUserPhotoUrlParameter;
-    user_id?: RowFilterUserUserIdParameter;
-};
-export type GetTransactionParams = {
-    transaction_id?: RowFilterTransactionTransactionIdParameter;
-    wallet_id?: RowFilterTransactionWalletIdParameter;
-    transaction_type_id?: RowFilterTransactionTransactionTypeIdParameter;
-    amount?: RowFilterTransactionAmountParameter;
-    transaction_date?: RowFilterTransactionTransactionDateParameter;
-    description?: RowFilterTransactionDescriptionParameter;
+export type GetTransactionTypesParams = {
+    transaction_type_id?: RowFilterTransactionTypesTransactionTypeIdParameter;
+    name?: RowFilterTransactionTypesNameParameter;
     /**
      * Filtering Columns
      */
@@ -247,31 +209,23 @@ export type GetTransactionParams = {
      */
     limit?: LimitParameter;
 };
-export type PostTransactionParams = {
+export type PostTransactionTypesParams = {
     /**
      * Filtering Columns
      */
     select?: SelectParameter;
 };
-export type DeleteTransactionParams = {
-    transaction_id?: RowFilterTransactionTransactionIdParameter;
-    wallet_id?: RowFilterTransactionWalletIdParameter;
-    transaction_type_id?: RowFilterTransactionTransactionTypeIdParameter;
-    amount?: RowFilterTransactionAmountParameter;
-    transaction_date?: RowFilterTransactionTransactionDateParameter;
-    description?: RowFilterTransactionDescriptionParameter;
+export type DeleteTransactionTypesParams = {
+    transaction_type_id?: RowFilterTransactionTypesTransactionTypeIdParameter;
+    name?: RowFilterTransactionTypesNameParameter;
 };
-export type PatchTransactionParams = {
-    transaction_id?: RowFilterTransactionTransactionIdParameter;
-    wallet_id?: RowFilterTransactionWalletIdParameter;
-    transaction_type_id?: RowFilterTransactionTransactionTypeIdParameter;
-    amount?: RowFilterTransactionAmountParameter;
-    transaction_date?: RowFilterTransactionTransactionDateParameter;
-    description?: RowFilterTransactionDescriptionParameter;
+export type PatchTransactionTypesParams = {
+    transaction_type_id?: RowFilterTransactionTypesTransactionTypeIdParameter;
+    name?: RowFilterTransactionTypesNameParameter;
 };
-export type GetCurrencyParams = {
-    currency_id?: RowFilterCurrencyCurrencyIdParameter;
-    name?: RowFilterCurrencyNameParameter;
+export type GetProfilesParams = {
+    photo_url?: RowFilterProfilesPhotoUrlParameter;
+    user_id?: RowFilterProfilesUserIdParameter;
     /**
      * Filtering Columns
      */
@@ -289,23 +243,23 @@ export type GetCurrencyParams = {
      */
     limit?: LimitParameter;
 };
-export type PostCurrencyParams = {
+export type PostProfilesParams = {
     /**
      * Filtering Columns
      */
     select?: SelectParameter;
 };
-export type DeleteCurrencyParams = {
-    currency_id?: RowFilterCurrencyCurrencyIdParameter;
-    name?: RowFilterCurrencyNameParameter;
+export type DeleteProfilesParams = {
+    photo_url?: RowFilterProfilesPhotoUrlParameter;
+    user_id?: RowFilterProfilesUserIdParameter;
 };
-export type PatchCurrencyParams = {
-    currency_id?: RowFilterCurrencyCurrencyIdParameter;
-    name?: RowFilterCurrencyNameParameter;
+export type PatchProfilesParams = {
+    photo_url?: RowFilterProfilesPhotoUrlParameter;
+    user_id?: RowFilterProfilesUserIdParameter;
 };
-export type GetTransactionTypeParams = {
-    transaction_type_id?: RowFilterTransactionTypeTransactionTypeIdParameter;
-    name?: RowFilterTransactionTypeNameParameter;
+export type GetCurrenciesParams = {
+    currency_id?: RowFilterCurrenciesCurrencyIdParameter;
+    name?: RowFilterCurrenciesNameParameter;
     /**
      * Filtering Columns
      */
@@ -323,19 +277,65 @@ export type GetTransactionTypeParams = {
      */
     limit?: LimitParameter;
 };
-export type PostTransactionTypeParams = {
+export type PostCurrenciesParams = {
     /**
      * Filtering Columns
      */
     select?: SelectParameter;
 };
-export type DeleteTransactionTypeParams = {
-    transaction_type_id?: RowFilterTransactionTypeTransactionTypeIdParameter;
-    name?: RowFilterTransactionTypeNameParameter;
+export type DeleteCurrenciesParams = {
+    currency_id?: RowFilterCurrenciesCurrencyIdParameter;
+    name?: RowFilterCurrenciesNameParameter;
 };
-export type PatchTransactionTypeParams = {
-    transaction_type_id?: RowFilterTransactionTypeTransactionTypeIdParameter;
-    name?: RowFilterTransactionTypeNameParameter;
+export type PatchCurrenciesParams = {
+    currency_id?: RowFilterCurrenciesCurrencyIdParameter;
+    name?: RowFilterCurrenciesNameParameter;
+};
+export type GetWalletsParams = {
+    wallet_id?: RowFilterWalletsWalletIdParameter;
+    balance?: RowFilterWalletsBalanceParameter;
+    created_at?: RowFilterWalletsCreatedAtParameter;
+    updated_at?: RowFilterWalletsUpdatedAtParameter;
+    currency_id?: RowFilterWalletsCurrencyIdParameter;
+    user_id?: RowFilterWalletsUserIdParameter;
+    /**
+     * Filtering Columns
+     */
+    select?: SelectParameter;
+    /**
+     * Ordering
+     */
+    order?: OrderParameter;
+    /**
+     * Limiting and Pagination
+     */
+    offset?: OffsetParameter;
+    /**
+     * Limiting and Pagination
+     */
+    limit?: LimitParameter;
+};
+export type PostWalletsParams = {
+    /**
+     * Filtering Columns
+     */
+    select?: SelectParameter;
+};
+export type DeleteWalletsParams = {
+    wallet_id?: RowFilterWalletsWalletIdParameter;
+    balance?: RowFilterWalletsBalanceParameter;
+    created_at?: RowFilterWalletsCreatedAtParameter;
+    updated_at?: RowFilterWalletsUpdatedAtParameter;
+    currency_id?: RowFilterWalletsCurrencyIdParameter;
+    user_id?: RowFilterWalletsUserIdParameter;
+};
+export type PatchWalletsParams = {
+    wallet_id?: RowFilterWalletsWalletIdParameter;
+    balance?: RowFilterWalletsBalanceParameter;
+    created_at?: RowFilterWalletsCreatedAtParameter;
+    updated_at?: RowFilterWalletsUpdatedAtParameter;
+    currency_id?: RowFilterWalletsCurrencyIdParameter;
+    user_id?: RowFilterWalletsUserIdParameter;
 };
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 /**
@@ -395,943 +395,943 @@ export function useGet<TData = Awaited<ReturnType<typeof get>>, TError = unknown
     query.queryKey = queryOptions.queryKey;
     return query;
 }
-export const getWallet = (params?: GetWalletParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<Wallet[] | null>({ url: `/wallet`, method: 'GET',
+export const getTransactions = (params?: GetTransactionsParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<Transactions[] | null>({ url: `/transactions`, method: 'GET',
         params, signal
     }, options);
 };
-export const getGetWalletQueryKey = (params?: GetWalletParams) => {
-    return [`/wallet`, ...(params ? [params] : [])] as const;
+export const getGetTransactionsQueryKey = (params?: GetTransactionsParams) => {
+    return [`/transactions`, ...(params ? [params] : [])] as const;
 };
-export const getGetWalletQueryOptions = <TData = Awaited<ReturnType<typeof getWallet>>, TError = unknown>(params?: GetWalletParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallet>>, TError, TData>>;
+export const getGetTransactionsQueryOptions = <TData = Awaited<ReturnType<typeof getTransactions>>, TError = unknown>(params?: GetTransactionsParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactions>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }) => {
     const { query: queryOptions, request: requestOptions } = options ?? {};
-    const queryKey = queryOptions?.queryKey ?? getGetWalletQueryKey(params);
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getWallet>>> = ({ signal }) => getWallet(params, requestOptions, signal);
-    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getWallet>>, TError, TData> & {
+    const queryKey = queryOptions?.queryKey ?? getGetTransactionsQueryKey(params);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTransactions>>> = ({ signal }) => getTransactions(params, requestOptions, signal);
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getTransactions>>, TError, TData> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
 };
-export type GetWalletQueryResult = NonNullable<Awaited<ReturnType<typeof getWallet>>>;
-export type GetWalletQueryError = unknown;
-export function useGetWallet<TData = Awaited<ReturnType<typeof getWallet>>, TError = unknown>(params: undefined | GetWalletParams, options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallet>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getWallet>>, TError, Awaited<ReturnType<typeof getWallet>>>, 'initialData'>;
+export type GetTransactionsQueryResult = NonNullable<Awaited<ReturnType<typeof getTransactions>>>;
+export type GetTransactionsQueryError = unknown;
+export function useGetTransactions<TData = Awaited<ReturnType<typeof getTransactions>>, TError = unknown>(params: undefined | GetTransactionsParams, options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactions>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getTransactions>>, TError, Awaited<ReturnType<typeof getTransactions>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): DefinedUseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetWallet<TData = Awaited<ReturnType<typeof getWallet>>, TError = unknown>(params?: GetWalletParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallet>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getWallet>>, TError, Awaited<ReturnType<typeof getWallet>>>, 'initialData'>;
+export function useGetTransactions<TData = Awaited<ReturnType<typeof getTransactions>>, TError = unknown>(params?: GetTransactionsParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactions>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getTransactions>>, TError, Awaited<ReturnType<typeof getTransactions>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetWallet<TData = Awaited<ReturnType<typeof getWallet>>, TError = unknown>(params?: GetWalletParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallet>>, TError, TData>>;
+export function useGetTransactions<TData = Awaited<ReturnType<typeof getTransactions>>, TError = unknown>(params?: GetTransactionsParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactions>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetWallet<TData = Awaited<ReturnType<typeof getWallet>>, TError = unknown>(params?: GetWalletParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallet>>, TError, TData>>;
+export function useGetTransactions<TData = Awaited<ReturnType<typeof getTransactions>>, TError = unknown>(params?: GetTransactionsParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactions>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 } {
-    const queryOptions = getGetWalletQueryOptions(params, options);
+    const queryOptions = getGetTransactionsQueryOptions(params, options);
     const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
     query.queryKey = queryOptions.queryKey;
     return query;
 }
-export const postWallet = (walletBody: WalletBody, params?: PostWalletParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<null>({ url: `/wallet`, method: 'POST',
+export const postTransactions = (transactionsBody: TransactionsBody, params?: PostTransactionsParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<null>({ url: `/transactions`, method: 'POST',
         headers: { 'Content-Type': 'application/json', },
-        data: walletBody,
+        data: transactionsBody,
         params, signal
     }, options);
 };
-export const getPostWalletMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postWallet>>, TError, {
-        data: WalletBody;
-        params?: PostWalletParams;
+export const getPostTransactionsMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postTransactions>>, TError, {
+        data: TransactionsBody;
+        params?: PostTransactionsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof postWallet>>, TError, {
-    data: WalletBody;
-    params?: PostWalletParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof postTransactions>>, TError, {
+    data: TransactionsBody;
+    params?: PostTransactionsParams;
 }, TContext> => {
-    const mutationKey = ['postWallet'];
+    const mutationKey = ['postTransactions'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postWallet>>, {
-        data: WalletBody;
-        params?: PostWalletParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postTransactions>>, {
+        data: TransactionsBody;
+        params?: PostTransactionsParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return postWallet(data, params, requestOptions);
+        return postTransactions(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PostWalletMutationResult = NonNullable<Awaited<ReturnType<typeof postWallet>>>;
-export type PostWalletMutationBody = WalletBody;
-export type PostWalletMutationError = unknown;
-export const usePostWallet = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postWallet>>, TError, {
-        data: WalletBody;
-        params?: PostWalletParams;
+export type PostTransactionsMutationResult = NonNullable<Awaited<ReturnType<typeof postTransactions>>>;
+export type PostTransactionsMutationBody = TransactionsBody;
+export type PostTransactionsMutationError = unknown;
+export const usePostTransactions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postTransactions>>, TError, {
+        data: TransactionsBody;
+        params?: PostTransactionsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postWallet>>, TError, {
-    data: WalletBody;
-    params?: PostWalletParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postTransactions>>, TError, {
+    data: TransactionsBody;
+    params?: PostTransactionsParams;
 }, TContext> => {
-    const mutationOptions = getPostWalletMutationOptions(options);
+    const mutationOptions = getPostTransactionsMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const deleteWallet = (params?: DeleteWalletParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/wallet`, method: 'DELETE',
+export const deleteTransactions = (params?: DeleteTransactionsParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/transactions`, method: 'DELETE',
         params
     }, options);
 };
-export const getDeleteWalletMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteWallet>>, TError, {
-        params?: DeleteWalletParams;
+export const getDeleteTransactionsMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTransactions>>, TError, {
+        params?: DeleteTransactionsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof deleteWallet>>, TError, {
-    params?: DeleteWalletParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof deleteTransactions>>, TError, {
+    params?: DeleteTransactionsParams;
 }, TContext> => {
-    const mutationKey = ['deleteWallet'];
+    const mutationKey = ['deleteTransactions'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteWallet>>, {
-        params?: DeleteWalletParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteTransactions>>, {
+        params?: DeleteTransactionsParams;
     }> = (props) => {
         const { params } = props ?? {};
-        return deleteWallet(params, requestOptions);
+        return deleteTransactions(params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type DeleteWalletMutationResult = NonNullable<Awaited<ReturnType<typeof deleteWallet>>>;
-export type DeleteWalletMutationError = unknown;
-export const useDeleteWallet = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteWallet>>, TError, {
-        params?: DeleteWalletParams;
+export type DeleteTransactionsMutationResult = NonNullable<Awaited<ReturnType<typeof deleteTransactions>>>;
+export type DeleteTransactionsMutationError = unknown;
+export const useDeleteTransactions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTransactions>>, TError, {
+        params?: DeleteTransactionsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteWallet>>, TError, {
-    params?: DeleteWalletParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteTransactions>>, TError, {
+    params?: DeleteTransactionsParams;
 }, TContext> => {
-    const mutationOptions = getDeleteWalletMutationOptions(options);
+    const mutationOptions = getDeleteTransactionsMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const patchWallet = (walletBody: WalletBody, params?: PatchWalletParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/wallet`, method: 'PATCH',
+export const patchTransactions = (transactionsBody: TransactionsBody, params?: PatchTransactionsParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/transactions`, method: 'PATCH',
         headers: { 'Content-Type': 'application/json', },
-        data: walletBody,
+        data: transactionsBody,
         params
     }, options);
 };
-export const getPatchWalletMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchWallet>>, TError, {
-        data: WalletBody;
-        params?: PatchWalletParams;
+export const getPatchTransactionsMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchTransactions>>, TError, {
+        data: TransactionsBody;
+        params?: PatchTransactionsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof patchWallet>>, TError, {
-    data: WalletBody;
-    params?: PatchWalletParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof patchTransactions>>, TError, {
+    data: TransactionsBody;
+    params?: PatchTransactionsParams;
 }, TContext> => {
-    const mutationKey = ['patchWallet'];
+    const mutationKey = ['patchTransactions'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchWallet>>, {
-        data: WalletBody;
-        params?: PatchWalletParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchTransactions>>, {
+        data: TransactionsBody;
+        params?: PatchTransactionsParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return patchWallet(data, params, requestOptions);
+        return patchTransactions(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PatchWalletMutationResult = NonNullable<Awaited<ReturnType<typeof patchWallet>>>;
-export type PatchWalletMutationBody = WalletBody;
-export type PatchWalletMutationError = unknown;
-export const usePatchWallet = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchWallet>>, TError, {
-        data: WalletBody;
-        params?: PatchWalletParams;
+export type PatchTransactionsMutationResult = NonNullable<Awaited<ReturnType<typeof patchTransactions>>>;
+export type PatchTransactionsMutationBody = TransactionsBody;
+export type PatchTransactionsMutationError = unknown;
+export const usePatchTransactions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchTransactions>>, TError, {
+        data: TransactionsBody;
+        params?: PatchTransactionsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchWallet>>, TError, {
-    data: WalletBody;
-    params?: PatchWalletParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchTransactions>>, TError, {
+    data: TransactionsBody;
+    params?: PatchTransactionsParams;
 }, TContext> => {
-    const mutationOptions = getPatchWalletMutationOptions(options);
+    const mutationOptions = getPatchTransactionsMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const getUser = (params?: GetUserParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<User[] | null>({ url: `/user`, method: 'GET',
+export const getTransactionTypes = (params?: GetTransactionTypesParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<TransactionTypes[] | null>({ url: `/transaction_types`, method: 'GET',
         params, signal
     }, options);
 };
-export const getGetUserQueryKey = (params?: GetUserParams) => {
-    return [`/user`, ...(params ? [params] : [])] as const;
+export const getGetTransactionTypesQueryKey = (params?: GetTransactionTypesParams) => {
+    return [`/transaction_types`, ...(params ? [params] : [])] as const;
 };
-export const getGetUserQueryOptions = <TData = Awaited<ReturnType<typeof getUser>>, TError = unknown>(params?: GetUserParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUser>>, TError, TData>>;
+export const getGetTransactionTypesQueryOptions = <TData = Awaited<ReturnType<typeof getTransactionTypes>>, TError = unknown>(params?: GetTransactionTypesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionTypes>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }) => {
     const { query: queryOptions, request: requestOptions } = options ?? {};
-    const queryKey = queryOptions?.queryKey ?? getGetUserQueryKey(params);
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUser>>> = ({ signal }) => getUser(params, requestOptions, signal);
-    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getUser>>, TError, TData> & {
+    const queryKey = queryOptions?.queryKey ?? getGetTransactionTypesQueryKey(params);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTransactionTypes>>> = ({ signal }) => getTransactionTypes(params, requestOptions, signal);
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getTransactionTypes>>, TError, TData> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
 };
-export type GetUserQueryResult = NonNullable<Awaited<ReturnType<typeof getUser>>>;
-export type GetUserQueryError = unknown;
-export function useGetUser<TData = Awaited<ReturnType<typeof getUser>>, TError = unknown>(params: undefined | GetUserParams, options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUser>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getUser>>, TError, Awaited<ReturnType<typeof getUser>>>, 'initialData'>;
+export type GetTransactionTypesQueryResult = NonNullable<Awaited<ReturnType<typeof getTransactionTypes>>>;
+export type GetTransactionTypesQueryError = unknown;
+export function useGetTransactionTypes<TData = Awaited<ReturnType<typeof getTransactionTypes>>, TError = unknown>(params: undefined | GetTransactionTypesParams, options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionTypes>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getTransactionTypes>>, TError, Awaited<ReturnType<typeof getTransactionTypes>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): DefinedUseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetUser<TData = Awaited<ReturnType<typeof getUser>>, TError = unknown>(params?: GetUserParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUser>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getUser>>, TError, Awaited<ReturnType<typeof getUser>>>, 'initialData'>;
+export function useGetTransactionTypes<TData = Awaited<ReturnType<typeof getTransactionTypes>>, TError = unknown>(params?: GetTransactionTypesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionTypes>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getTransactionTypes>>, TError, Awaited<ReturnType<typeof getTransactionTypes>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetUser<TData = Awaited<ReturnType<typeof getUser>>, TError = unknown>(params?: GetUserParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUser>>, TError, TData>>;
+export function useGetTransactionTypes<TData = Awaited<ReturnType<typeof getTransactionTypes>>, TError = unknown>(params?: GetTransactionTypesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionTypes>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetUser<TData = Awaited<ReturnType<typeof getUser>>, TError = unknown>(params?: GetUserParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getUser>>, TError, TData>>;
+export function useGetTransactionTypes<TData = Awaited<ReturnType<typeof getTransactionTypes>>, TError = unknown>(params?: GetTransactionTypesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionTypes>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 } {
-    const queryOptions = getGetUserQueryOptions(params, options);
+    const queryOptions = getGetTransactionTypesQueryOptions(params, options);
     const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
     query.queryKey = queryOptions.queryKey;
     return query;
 }
-export const postUser = (userBody: UserBody, params?: PostUserParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<null>({ url: `/user`, method: 'POST',
+export const postTransactionTypes = (transactionTypesBody: TransactionTypesBody, params?: PostTransactionTypesParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<null>({ url: `/transaction_types`, method: 'POST',
         headers: { 'Content-Type': 'application/json', },
-        data: userBody,
+        data: transactionTypesBody,
         params, signal
     }, options);
 };
-export const getPostUserMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postUser>>, TError, {
-        data: UserBody;
-        params?: PostUserParams;
+export const getPostTransactionTypesMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postTransactionTypes>>, TError, {
+        data: TransactionTypesBody;
+        params?: PostTransactionTypesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof postUser>>, TError, {
-    data: UserBody;
-    params?: PostUserParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof postTransactionTypes>>, TError, {
+    data: TransactionTypesBody;
+    params?: PostTransactionTypesParams;
 }, TContext> => {
-    const mutationKey = ['postUser'];
+    const mutationKey = ['postTransactionTypes'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postUser>>, {
-        data: UserBody;
-        params?: PostUserParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postTransactionTypes>>, {
+        data: TransactionTypesBody;
+        params?: PostTransactionTypesParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return postUser(data, params, requestOptions);
+        return postTransactionTypes(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PostUserMutationResult = NonNullable<Awaited<ReturnType<typeof postUser>>>;
-export type PostUserMutationBody = UserBody;
-export type PostUserMutationError = unknown;
-export const usePostUser = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postUser>>, TError, {
-        data: UserBody;
-        params?: PostUserParams;
+export type PostTransactionTypesMutationResult = NonNullable<Awaited<ReturnType<typeof postTransactionTypes>>>;
+export type PostTransactionTypesMutationBody = TransactionTypesBody;
+export type PostTransactionTypesMutationError = unknown;
+export const usePostTransactionTypes = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postTransactionTypes>>, TError, {
+        data: TransactionTypesBody;
+        params?: PostTransactionTypesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postUser>>, TError, {
-    data: UserBody;
-    params?: PostUserParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postTransactionTypes>>, TError, {
+    data: TransactionTypesBody;
+    params?: PostTransactionTypesParams;
 }, TContext> => {
-    const mutationOptions = getPostUserMutationOptions(options);
+    const mutationOptions = getPostTransactionTypesMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const deleteUser = (params?: DeleteUserParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/user`, method: 'DELETE',
+export const deleteTransactionTypes = (params?: DeleteTransactionTypesParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/transaction_types`, method: 'DELETE',
         params
     }, options);
 };
-export const getDeleteUserMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteUser>>, TError, {
-        params?: DeleteUserParams;
+export const getDeleteTransactionTypesMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTransactionTypes>>, TError, {
+        params?: DeleteTransactionTypesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof deleteUser>>, TError, {
-    params?: DeleteUserParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof deleteTransactionTypes>>, TError, {
+    params?: DeleteTransactionTypesParams;
 }, TContext> => {
-    const mutationKey = ['deleteUser'];
+    const mutationKey = ['deleteTransactionTypes'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteUser>>, {
-        params?: DeleteUserParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteTransactionTypes>>, {
+        params?: DeleteTransactionTypesParams;
     }> = (props) => {
         const { params } = props ?? {};
-        return deleteUser(params, requestOptions);
+        return deleteTransactionTypes(params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type DeleteUserMutationResult = NonNullable<Awaited<ReturnType<typeof deleteUser>>>;
-export type DeleteUserMutationError = unknown;
-export const useDeleteUser = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteUser>>, TError, {
-        params?: DeleteUserParams;
+export type DeleteTransactionTypesMutationResult = NonNullable<Awaited<ReturnType<typeof deleteTransactionTypes>>>;
+export type DeleteTransactionTypesMutationError = unknown;
+export const useDeleteTransactionTypes = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTransactionTypes>>, TError, {
+        params?: DeleteTransactionTypesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteUser>>, TError, {
-    params?: DeleteUserParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteTransactionTypes>>, TError, {
+    params?: DeleteTransactionTypesParams;
 }, TContext> => {
-    const mutationOptions = getDeleteUserMutationOptions(options);
+    const mutationOptions = getDeleteTransactionTypesMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const patchUser = (userBody: UserBody, params?: PatchUserParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/user`, method: 'PATCH',
+export const patchTransactionTypes = (transactionTypesBody: TransactionTypesBody, params?: PatchTransactionTypesParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/transaction_types`, method: 'PATCH',
         headers: { 'Content-Type': 'application/json', },
-        data: userBody,
+        data: transactionTypesBody,
         params
     }, options);
 };
-export const getPatchUserMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchUser>>, TError, {
-        data: UserBody;
-        params?: PatchUserParams;
+export const getPatchTransactionTypesMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchTransactionTypes>>, TError, {
+        data: TransactionTypesBody;
+        params?: PatchTransactionTypesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof patchUser>>, TError, {
-    data: UserBody;
-    params?: PatchUserParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof patchTransactionTypes>>, TError, {
+    data: TransactionTypesBody;
+    params?: PatchTransactionTypesParams;
 }, TContext> => {
-    const mutationKey = ['patchUser'];
+    const mutationKey = ['patchTransactionTypes'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchUser>>, {
-        data: UserBody;
-        params?: PatchUserParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchTransactionTypes>>, {
+        data: TransactionTypesBody;
+        params?: PatchTransactionTypesParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return patchUser(data, params, requestOptions);
+        return patchTransactionTypes(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PatchUserMutationResult = NonNullable<Awaited<ReturnType<typeof patchUser>>>;
-export type PatchUserMutationBody = UserBody;
-export type PatchUserMutationError = unknown;
-export const usePatchUser = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchUser>>, TError, {
-        data: UserBody;
-        params?: PatchUserParams;
+export type PatchTransactionTypesMutationResult = NonNullable<Awaited<ReturnType<typeof patchTransactionTypes>>>;
+export type PatchTransactionTypesMutationBody = TransactionTypesBody;
+export type PatchTransactionTypesMutationError = unknown;
+export const usePatchTransactionTypes = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchTransactionTypes>>, TError, {
+        data: TransactionTypesBody;
+        params?: PatchTransactionTypesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchUser>>, TError, {
-    data: UserBody;
-    params?: PatchUserParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchTransactionTypes>>, TError, {
+    data: TransactionTypesBody;
+    params?: PatchTransactionTypesParams;
 }, TContext> => {
-    const mutationOptions = getPatchUserMutationOptions(options);
+    const mutationOptions = getPatchTransactionTypesMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const getTransaction = (params?: GetTransactionParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<Transaction[] | null>({ url: `/transaction`, method: 'GET',
+export const getProfiles = (params?: GetProfilesParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<Profiles[] | null>({ url: `/profiles`, method: 'GET',
         params, signal
     }, options);
 };
-export const getGetTransactionQueryKey = (params?: GetTransactionParams) => {
-    return [`/transaction`, ...(params ? [params] : [])] as const;
+export const getGetProfilesQueryKey = (params?: GetProfilesParams) => {
+    return [`/profiles`, ...(params ? [params] : [])] as const;
 };
-export const getGetTransactionQueryOptions = <TData = Awaited<ReturnType<typeof getTransaction>>, TError = unknown>(params?: GetTransactionParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransaction>>, TError, TData>>;
+export const getGetProfilesQueryOptions = <TData = Awaited<ReturnType<typeof getProfiles>>, TError = unknown>(params?: GetProfilesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfiles>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }) => {
     const { query: queryOptions, request: requestOptions } = options ?? {};
-    const queryKey = queryOptions?.queryKey ?? getGetTransactionQueryKey(params);
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTransaction>>> = ({ signal }) => getTransaction(params, requestOptions, signal);
-    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getTransaction>>, TError, TData> & {
+    const queryKey = queryOptions?.queryKey ?? getGetProfilesQueryKey(params);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProfiles>>> = ({ signal }) => getProfiles(params, requestOptions, signal);
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getProfiles>>, TError, TData> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
 };
-export type GetTransactionQueryResult = NonNullable<Awaited<ReturnType<typeof getTransaction>>>;
-export type GetTransactionQueryError = unknown;
-export function useGetTransaction<TData = Awaited<ReturnType<typeof getTransaction>>, TError = unknown>(params: undefined | GetTransactionParams, options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransaction>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getTransaction>>, TError, Awaited<ReturnType<typeof getTransaction>>>, 'initialData'>;
+export type GetProfilesQueryResult = NonNullable<Awaited<ReturnType<typeof getProfiles>>>;
+export type GetProfilesQueryError = unknown;
+export function useGetProfiles<TData = Awaited<ReturnType<typeof getProfiles>>, TError = unknown>(params: undefined | GetProfilesParams, options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfiles>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getProfiles>>, TError, Awaited<ReturnType<typeof getProfiles>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): DefinedUseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetTransaction<TData = Awaited<ReturnType<typeof getTransaction>>, TError = unknown>(params?: GetTransactionParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransaction>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getTransaction>>, TError, Awaited<ReturnType<typeof getTransaction>>>, 'initialData'>;
+export function useGetProfiles<TData = Awaited<ReturnType<typeof getProfiles>>, TError = unknown>(params?: GetProfilesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfiles>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getProfiles>>, TError, Awaited<ReturnType<typeof getProfiles>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetTransaction<TData = Awaited<ReturnType<typeof getTransaction>>, TError = unknown>(params?: GetTransactionParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransaction>>, TError, TData>>;
+export function useGetProfiles<TData = Awaited<ReturnType<typeof getProfiles>>, TError = unknown>(params?: GetProfilesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfiles>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetTransaction<TData = Awaited<ReturnType<typeof getTransaction>>, TError = unknown>(params?: GetTransactionParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransaction>>, TError, TData>>;
+export function useGetProfiles<TData = Awaited<ReturnType<typeof getProfiles>>, TError = unknown>(params?: GetProfilesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfiles>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 } {
-    const queryOptions = getGetTransactionQueryOptions(params, options);
+    const queryOptions = getGetProfilesQueryOptions(params, options);
     const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
     query.queryKey = queryOptions.queryKey;
     return query;
 }
-export const postTransaction = (transactionBody: TransactionBody, params?: PostTransactionParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<null>({ url: `/transaction`, method: 'POST',
+export const postProfiles = (profilesBody: ProfilesBody, params?: PostProfilesParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<null>({ url: `/profiles`, method: 'POST',
         headers: { 'Content-Type': 'application/json', },
-        data: transactionBody,
+        data: profilesBody,
         params, signal
     }, options);
 };
-export const getPostTransactionMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postTransaction>>, TError, {
-        data: TransactionBody;
-        params?: PostTransactionParams;
+export const getPostProfilesMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postProfiles>>, TError, {
+        data: ProfilesBody;
+        params?: PostProfilesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof postTransaction>>, TError, {
-    data: TransactionBody;
-    params?: PostTransactionParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof postProfiles>>, TError, {
+    data: ProfilesBody;
+    params?: PostProfilesParams;
 }, TContext> => {
-    const mutationKey = ['postTransaction'];
+    const mutationKey = ['postProfiles'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postTransaction>>, {
-        data: TransactionBody;
-        params?: PostTransactionParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postProfiles>>, {
+        data: ProfilesBody;
+        params?: PostProfilesParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return postTransaction(data, params, requestOptions);
+        return postProfiles(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PostTransactionMutationResult = NonNullable<Awaited<ReturnType<typeof postTransaction>>>;
-export type PostTransactionMutationBody = TransactionBody;
-export type PostTransactionMutationError = unknown;
-export const usePostTransaction = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postTransaction>>, TError, {
-        data: TransactionBody;
-        params?: PostTransactionParams;
+export type PostProfilesMutationResult = NonNullable<Awaited<ReturnType<typeof postProfiles>>>;
+export type PostProfilesMutationBody = ProfilesBody;
+export type PostProfilesMutationError = unknown;
+export const usePostProfiles = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postProfiles>>, TError, {
+        data: ProfilesBody;
+        params?: PostProfilesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postTransaction>>, TError, {
-    data: TransactionBody;
-    params?: PostTransactionParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postProfiles>>, TError, {
+    data: ProfilesBody;
+    params?: PostProfilesParams;
 }, TContext> => {
-    const mutationOptions = getPostTransactionMutationOptions(options);
+    const mutationOptions = getPostProfilesMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const deleteTransaction = (params?: DeleteTransactionParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/transaction`, method: 'DELETE',
+export const deleteProfiles = (params?: DeleteProfilesParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/profiles`, method: 'DELETE',
         params
     }, options);
 };
-export const getDeleteTransactionMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTransaction>>, TError, {
-        params?: DeleteTransactionParams;
+export const getDeleteProfilesMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteProfiles>>, TError, {
+        params?: DeleteProfilesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof deleteTransaction>>, TError, {
-    params?: DeleteTransactionParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof deleteProfiles>>, TError, {
+    params?: DeleteProfilesParams;
 }, TContext> => {
-    const mutationKey = ['deleteTransaction'];
+    const mutationKey = ['deleteProfiles'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteTransaction>>, {
-        params?: DeleteTransactionParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteProfiles>>, {
+        params?: DeleteProfilesParams;
     }> = (props) => {
         const { params } = props ?? {};
-        return deleteTransaction(params, requestOptions);
+        return deleteProfiles(params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type DeleteTransactionMutationResult = NonNullable<Awaited<ReturnType<typeof deleteTransaction>>>;
-export type DeleteTransactionMutationError = unknown;
-export const useDeleteTransaction = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTransaction>>, TError, {
-        params?: DeleteTransactionParams;
+export type DeleteProfilesMutationResult = NonNullable<Awaited<ReturnType<typeof deleteProfiles>>>;
+export type DeleteProfilesMutationError = unknown;
+export const useDeleteProfiles = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteProfiles>>, TError, {
+        params?: DeleteProfilesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteTransaction>>, TError, {
-    params?: DeleteTransactionParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteProfiles>>, TError, {
+    params?: DeleteProfilesParams;
 }, TContext> => {
-    const mutationOptions = getDeleteTransactionMutationOptions(options);
+    const mutationOptions = getDeleteProfilesMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const patchTransaction = (transactionBody: TransactionBody, params?: PatchTransactionParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/transaction`, method: 'PATCH',
+export const patchProfiles = (profilesBody: ProfilesBody, params?: PatchProfilesParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/profiles`, method: 'PATCH',
         headers: { 'Content-Type': 'application/json', },
-        data: transactionBody,
+        data: profilesBody,
         params
     }, options);
 };
-export const getPatchTransactionMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchTransaction>>, TError, {
-        data: TransactionBody;
-        params?: PatchTransactionParams;
+export const getPatchProfilesMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchProfiles>>, TError, {
+        data: ProfilesBody;
+        params?: PatchProfilesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof patchTransaction>>, TError, {
-    data: TransactionBody;
-    params?: PatchTransactionParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof patchProfiles>>, TError, {
+    data: ProfilesBody;
+    params?: PatchProfilesParams;
 }, TContext> => {
-    const mutationKey = ['patchTransaction'];
+    const mutationKey = ['patchProfiles'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchTransaction>>, {
-        data: TransactionBody;
-        params?: PatchTransactionParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchProfiles>>, {
+        data: ProfilesBody;
+        params?: PatchProfilesParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return patchTransaction(data, params, requestOptions);
+        return patchProfiles(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PatchTransactionMutationResult = NonNullable<Awaited<ReturnType<typeof patchTransaction>>>;
-export type PatchTransactionMutationBody = TransactionBody;
-export type PatchTransactionMutationError = unknown;
-export const usePatchTransaction = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchTransaction>>, TError, {
-        data: TransactionBody;
-        params?: PatchTransactionParams;
+export type PatchProfilesMutationResult = NonNullable<Awaited<ReturnType<typeof patchProfiles>>>;
+export type PatchProfilesMutationBody = ProfilesBody;
+export type PatchProfilesMutationError = unknown;
+export const usePatchProfiles = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchProfiles>>, TError, {
+        data: ProfilesBody;
+        params?: PatchProfilesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchTransaction>>, TError, {
-    data: TransactionBody;
-    params?: PatchTransactionParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchProfiles>>, TError, {
+    data: ProfilesBody;
+    params?: PatchProfilesParams;
 }, TContext> => {
-    const mutationOptions = getPatchTransactionMutationOptions(options);
+    const mutationOptions = getPatchProfilesMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const getCurrency = (params?: GetCurrencyParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<Currency[] | null>({ url: `/currency`, method: 'GET',
+export const getCurrencies = (params?: GetCurrenciesParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<Currencies[] | null>({ url: `/currencies`, method: 'GET',
         params, signal
     }, options);
 };
-export const getGetCurrencyQueryKey = (params?: GetCurrencyParams) => {
-    return [`/currency`, ...(params ? [params] : [])] as const;
+export const getGetCurrenciesQueryKey = (params?: GetCurrenciesParams) => {
+    return [`/currencies`, ...(params ? [params] : [])] as const;
 };
-export const getGetCurrencyQueryOptions = <TData = Awaited<ReturnType<typeof getCurrency>>, TError = unknown>(params?: GetCurrencyParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrency>>, TError, TData>>;
+export const getGetCurrenciesQueryOptions = <TData = Awaited<ReturnType<typeof getCurrencies>>, TError = unknown>(params?: GetCurrenciesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrencies>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }) => {
     const { query: queryOptions, request: requestOptions } = options ?? {};
-    const queryKey = queryOptions?.queryKey ?? getGetCurrencyQueryKey(params);
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrency>>> = ({ signal }) => getCurrency(params, requestOptions, signal);
-    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getCurrency>>, TError, TData> & {
+    const queryKey = queryOptions?.queryKey ?? getGetCurrenciesQueryKey(params);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrencies>>> = ({ signal }) => getCurrencies(params, requestOptions, signal);
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getCurrencies>>, TError, TData> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
 };
-export type GetCurrencyQueryResult = NonNullable<Awaited<ReturnType<typeof getCurrency>>>;
-export type GetCurrencyQueryError = unknown;
-export function useGetCurrency<TData = Awaited<ReturnType<typeof getCurrency>>, TError = unknown>(params: undefined | GetCurrencyParams, options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrency>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getCurrency>>, TError, Awaited<ReturnType<typeof getCurrency>>>, 'initialData'>;
+export type GetCurrenciesQueryResult = NonNullable<Awaited<ReturnType<typeof getCurrencies>>>;
+export type GetCurrenciesQueryError = unknown;
+export function useGetCurrencies<TData = Awaited<ReturnType<typeof getCurrencies>>, TError = unknown>(params: undefined | GetCurrenciesParams, options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrencies>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getCurrencies>>, TError, Awaited<ReturnType<typeof getCurrencies>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): DefinedUseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetCurrency<TData = Awaited<ReturnType<typeof getCurrency>>, TError = unknown>(params?: GetCurrencyParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrency>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getCurrency>>, TError, Awaited<ReturnType<typeof getCurrency>>>, 'initialData'>;
+export function useGetCurrencies<TData = Awaited<ReturnType<typeof getCurrencies>>, TError = unknown>(params?: GetCurrenciesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrencies>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getCurrencies>>, TError, Awaited<ReturnType<typeof getCurrencies>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetCurrency<TData = Awaited<ReturnType<typeof getCurrency>>, TError = unknown>(params?: GetCurrencyParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrency>>, TError, TData>>;
+export function useGetCurrencies<TData = Awaited<ReturnType<typeof getCurrencies>>, TError = unknown>(params?: GetCurrenciesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrencies>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetCurrency<TData = Awaited<ReturnType<typeof getCurrency>>, TError = unknown>(params?: GetCurrencyParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrency>>, TError, TData>>;
+export function useGetCurrencies<TData = Awaited<ReturnType<typeof getCurrencies>>, TError = unknown>(params?: GetCurrenciesParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrencies>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 } {
-    const queryOptions = getGetCurrencyQueryOptions(params, options);
+    const queryOptions = getGetCurrenciesQueryOptions(params, options);
     const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
     query.queryKey = queryOptions.queryKey;
     return query;
 }
-export const postCurrency = (currencyBody: CurrencyBody, params?: PostCurrencyParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<null>({ url: `/currency`, method: 'POST',
+export const postCurrencies = (currenciesBody: CurrenciesBody, params?: PostCurrenciesParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<null>({ url: `/currencies`, method: 'POST',
         headers: { 'Content-Type': 'application/json', },
-        data: currencyBody,
+        data: currenciesBody,
         params, signal
     }, options);
 };
-export const getPostCurrencyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postCurrency>>, TError, {
-        data: CurrencyBody;
-        params?: PostCurrencyParams;
+export const getPostCurrenciesMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postCurrencies>>, TError, {
+        data: CurrenciesBody;
+        params?: PostCurrenciesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof postCurrency>>, TError, {
-    data: CurrencyBody;
-    params?: PostCurrencyParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof postCurrencies>>, TError, {
+    data: CurrenciesBody;
+    params?: PostCurrenciesParams;
 }, TContext> => {
-    const mutationKey = ['postCurrency'];
+    const mutationKey = ['postCurrencies'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postCurrency>>, {
-        data: CurrencyBody;
-        params?: PostCurrencyParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postCurrencies>>, {
+        data: CurrenciesBody;
+        params?: PostCurrenciesParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return postCurrency(data, params, requestOptions);
+        return postCurrencies(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PostCurrencyMutationResult = NonNullable<Awaited<ReturnType<typeof postCurrency>>>;
-export type PostCurrencyMutationBody = CurrencyBody;
-export type PostCurrencyMutationError = unknown;
-export const usePostCurrency = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postCurrency>>, TError, {
-        data: CurrencyBody;
-        params?: PostCurrencyParams;
+export type PostCurrenciesMutationResult = NonNullable<Awaited<ReturnType<typeof postCurrencies>>>;
+export type PostCurrenciesMutationBody = CurrenciesBody;
+export type PostCurrenciesMutationError = unknown;
+export const usePostCurrencies = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postCurrencies>>, TError, {
+        data: CurrenciesBody;
+        params?: PostCurrenciesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postCurrency>>, TError, {
-    data: CurrencyBody;
-    params?: PostCurrencyParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postCurrencies>>, TError, {
+    data: CurrenciesBody;
+    params?: PostCurrenciesParams;
 }, TContext> => {
-    const mutationOptions = getPostCurrencyMutationOptions(options);
+    const mutationOptions = getPostCurrenciesMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const deleteCurrency = (params?: DeleteCurrencyParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/currency`, method: 'DELETE',
+export const deleteCurrencies = (params?: DeleteCurrenciesParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/currencies`, method: 'DELETE',
         params
     }, options);
 };
-export const getDeleteCurrencyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteCurrency>>, TError, {
-        params?: DeleteCurrencyParams;
+export const getDeleteCurrenciesMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteCurrencies>>, TError, {
+        params?: DeleteCurrenciesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof deleteCurrency>>, TError, {
-    params?: DeleteCurrencyParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof deleteCurrencies>>, TError, {
+    params?: DeleteCurrenciesParams;
 }, TContext> => {
-    const mutationKey = ['deleteCurrency'];
+    const mutationKey = ['deleteCurrencies'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCurrency>>, {
-        params?: DeleteCurrencyParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCurrencies>>, {
+        params?: DeleteCurrenciesParams;
     }> = (props) => {
         const { params } = props ?? {};
-        return deleteCurrency(params, requestOptions);
+        return deleteCurrencies(params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type DeleteCurrencyMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCurrency>>>;
-export type DeleteCurrencyMutationError = unknown;
-export const useDeleteCurrency = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteCurrency>>, TError, {
-        params?: DeleteCurrencyParams;
+export type DeleteCurrenciesMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCurrencies>>>;
+export type DeleteCurrenciesMutationError = unknown;
+export const useDeleteCurrencies = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteCurrencies>>, TError, {
+        params?: DeleteCurrenciesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteCurrency>>, TError, {
-    params?: DeleteCurrencyParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteCurrencies>>, TError, {
+    params?: DeleteCurrenciesParams;
 }, TContext> => {
-    const mutationOptions = getDeleteCurrencyMutationOptions(options);
+    const mutationOptions = getDeleteCurrenciesMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const patchCurrency = (currencyBody: CurrencyBody, params?: PatchCurrencyParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/currency`, method: 'PATCH',
+export const patchCurrencies = (currenciesBody: CurrenciesBody, params?: PatchCurrenciesParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/currencies`, method: 'PATCH',
         headers: { 'Content-Type': 'application/json', },
-        data: currencyBody,
+        data: currenciesBody,
         params
     }, options);
 };
-export const getPatchCurrencyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchCurrency>>, TError, {
-        data: CurrencyBody;
-        params?: PatchCurrencyParams;
+export const getPatchCurrenciesMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchCurrencies>>, TError, {
+        data: CurrenciesBody;
+        params?: PatchCurrenciesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof patchCurrency>>, TError, {
-    data: CurrencyBody;
-    params?: PatchCurrencyParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof patchCurrencies>>, TError, {
+    data: CurrenciesBody;
+    params?: PatchCurrenciesParams;
 }, TContext> => {
-    const mutationKey = ['patchCurrency'];
+    const mutationKey = ['patchCurrencies'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchCurrency>>, {
-        data: CurrencyBody;
-        params?: PatchCurrencyParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchCurrencies>>, {
+        data: CurrenciesBody;
+        params?: PatchCurrenciesParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return patchCurrency(data, params, requestOptions);
+        return patchCurrencies(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PatchCurrencyMutationResult = NonNullable<Awaited<ReturnType<typeof patchCurrency>>>;
-export type PatchCurrencyMutationBody = CurrencyBody;
-export type PatchCurrencyMutationError = unknown;
-export const usePatchCurrency = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchCurrency>>, TError, {
-        data: CurrencyBody;
-        params?: PatchCurrencyParams;
+export type PatchCurrenciesMutationResult = NonNullable<Awaited<ReturnType<typeof patchCurrencies>>>;
+export type PatchCurrenciesMutationBody = CurrenciesBody;
+export type PatchCurrenciesMutationError = unknown;
+export const usePatchCurrencies = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchCurrencies>>, TError, {
+        data: CurrenciesBody;
+        params?: PatchCurrenciesParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchCurrency>>, TError, {
-    data: CurrencyBody;
-    params?: PatchCurrencyParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchCurrencies>>, TError, {
+    data: CurrenciesBody;
+    params?: PatchCurrenciesParams;
 }, TContext> => {
-    const mutationOptions = getPatchCurrencyMutationOptions(options);
+    const mutationOptions = getPatchCurrenciesMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const getTransactionType = (params?: GetTransactionTypeParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<TransactionType[] | null>({ url: `/transactionType`, method: 'GET',
+export const getWallets = (params?: GetWalletsParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<Wallets[] | null>({ url: `/wallets`, method: 'GET',
         params, signal
     }, options);
 };
-export const getGetTransactionTypeQueryKey = (params?: GetTransactionTypeParams) => {
-    return [`/transactionType`, ...(params ? [params] : [])] as const;
+export const getGetWalletsQueryKey = (params?: GetWalletsParams) => {
+    return [`/wallets`, ...(params ? [params] : [])] as const;
 };
-export const getGetTransactionTypeQueryOptions = <TData = Awaited<ReturnType<typeof getTransactionType>>, TError = unknown>(params?: GetTransactionTypeParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionType>>, TError, TData>>;
+export const getGetWalletsQueryOptions = <TData = Awaited<ReturnType<typeof getWallets>>, TError = unknown>(params?: GetWalletsParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallets>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }) => {
     const { query: queryOptions, request: requestOptions } = options ?? {};
-    const queryKey = queryOptions?.queryKey ?? getGetTransactionTypeQueryKey(params);
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTransactionType>>> = ({ signal }) => getTransactionType(params, requestOptions, signal);
-    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getTransactionType>>, TError, TData> & {
+    const queryKey = queryOptions?.queryKey ?? getGetWalletsQueryKey(params);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getWallets>>> = ({ signal }) => getWallets(params, requestOptions, signal);
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getWallets>>, TError, TData> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
 };
-export type GetTransactionTypeQueryResult = NonNullable<Awaited<ReturnType<typeof getTransactionType>>>;
-export type GetTransactionTypeQueryError = unknown;
-export function useGetTransactionType<TData = Awaited<ReturnType<typeof getTransactionType>>, TError = unknown>(params: undefined | GetTransactionTypeParams, options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionType>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getTransactionType>>, TError, Awaited<ReturnType<typeof getTransactionType>>>, 'initialData'>;
+export type GetWalletsQueryResult = NonNullable<Awaited<ReturnType<typeof getWallets>>>;
+export type GetWalletsQueryError = unknown;
+export function useGetWallets<TData = Awaited<ReturnType<typeof getWallets>>, TError = unknown>(params: undefined | GetWalletsParams, options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallets>>, TError, TData>> & Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof getWallets>>, TError, Awaited<ReturnType<typeof getWallets>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): DefinedUseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetTransactionType<TData = Awaited<ReturnType<typeof getTransactionType>>, TError = unknown>(params?: GetTransactionTypeParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionType>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getTransactionType>>, TError, Awaited<ReturnType<typeof getTransactionType>>>, 'initialData'>;
+export function useGetWallets<TData = Awaited<ReturnType<typeof getWallets>>, TError = unknown>(params?: GetWalletsParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallets>>, TError, TData>> & Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof getWallets>>, TError, Awaited<ReturnType<typeof getWallets>>>, 'initialData'>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetTransactionType<TData = Awaited<ReturnType<typeof getTransactionType>>, TError = unknown>(params?: GetTransactionTypeParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionType>>, TError, TData>>;
+export function useGetWallets<TData = Awaited<ReturnType<typeof getWallets>>, TError = unknown>(params?: GetWalletsParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallets>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetTransactionType<TData = Awaited<ReturnType<typeof getTransactionType>>, TError = unknown>(params?: GetTransactionTypeParams, options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionType>>, TError, TData>>;
+export function useGetWallets<TData = Awaited<ReturnType<typeof getWallets>>, TError = unknown>(params?: GetWalletsParams, options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWallets>>, TError, TData>>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;
 } {
-    const queryOptions = getGetTransactionTypeQueryOptions(params, options);
+    const queryOptions = getGetWalletsQueryOptions(params, options);
     const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
         queryKey: DataTag<QueryKey, TData, TError>;
     };
     query.queryKey = queryOptions.queryKey;
     return query;
 }
-export const postTransactionType = (transactionTypeBody: TransactionTypeBody, params?: PostTransactionTypeParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
-    return customAxios<null>({ url: `/transactionType`, method: 'POST',
+export const postWallets = (walletsBody: WalletsBody, params?: PostWalletsParams, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<null>({ url: `/wallets`, method: 'POST',
         headers: { 'Content-Type': 'application/json', },
-        data: transactionTypeBody,
+        data: walletsBody,
         params, signal
     }, options);
 };
-export const getPostTransactionTypeMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postTransactionType>>, TError, {
-        data: TransactionTypeBody;
-        params?: PostTransactionTypeParams;
+export const getPostWalletsMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postWallets>>, TError, {
+        data: WalletsBody;
+        params?: PostWalletsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof postTransactionType>>, TError, {
-    data: TransactionTypeBody;
-    params?: PostTransactionTypeParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof postWallets>>, TError, {
+    data: WalletsBody;
+    params?: PostWalletsParams;
 }, TContext> => {
-    const mutationKey = ['postTransactionType'];
+    const mutationKey = ['postWallets'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postTransactionType>>, {
-        data: TransactionTypeBody;
-        params?: PostTransactionTypeParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof postWallets>>, {
+        data: WalletsBody;
+        params?: PostWalletsParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return postTransactionType(data, params, requestOptions);
+        return postWallets(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PostTransactionTypeMutationResult = NonNullable<Awaited<ReturnType<typeof postTransactionType>>>;
-export type PostTransactionTypeMutationBody = TransactionTypeBody;
-export type PostTransactionTypeMutationError = unknown;
-export const usePostTransactionType = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postTransactionType>>, TError, {
-        data: TransactionTypeBody;
-        params?: PostTransactionTypeParams;
+export type PostWalletsMutationResult = NonNullable<Awaited<ReturnType<typeof postWallets>>>;
+export type PostWalletsMutationBody = WalletsBody;
+export type PostWalletsMutationError = unknown;
+export const usePostWallets = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof postWallets>>, TError, {
+        data: WalletsBody;
+        params?: PostWalletsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postTransactionType>>, TError, {
-    data: TransactionTypeBody;
-    params?: PostTransactionTypeParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof postWallets>>, TError, {
+    data: WalletsBody;
+    params?: PostWalletsParams;
 }, TContext> => {
-    const mutationOptions = getPostTransactionTypeMutationOptions(options);
+    const mutationOptions = getPostWalletsMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const deleteTransactionType = (params?: DeleteTransactionTypeParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/transactionType`, method: 'DELETE',
+export const deleteWallets = (params?: DeleteWalletsParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/wallets`, method: 'DELETE',
         params
     }, options);
 };
-export const getDeleteTransactionTypeMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTransactionType>>, TError, {
-        params?: DeleteTransactionTypeParams;
+export const getDeleteWalletsMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteWallets>>, TError, {
+        params?: DeleteWalletsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof deleteTransactionType>>, TError, {
-    params?: DeleteTransactionTypeParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof deleteWallets>>, TError, {
+    params?: DeleteWalletsParams;
 }, TContext> => {
-    const mutationKey = ['deleteTransactionType'];
+    const mutationKey = ['deleteWallets'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteTransactionType>>, {
-        params?: DeleteTransactionTypeParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteWallets>>, {
+        params?: DeleteWalletsParams;
     }> = (props) => {
         const { params } = props ?? {};
-        return deleteTransactionType(params, requestOptions);
+        return deleteWallets(params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type DeleteTransactionTypeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteTransactionType>>>;
-export type DeleteTransactionTypeMutationError = unknown;
-export const useDeleteTransactionType = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteTransactionType>>, TError, {
-        params?: DeleteTransactionTypeParams;
+export type DeleteWalletsMutationResult = NonNullable<Awaited<ReturnType<typeof deleteWallets>>>;
+export type DeleteWalletsMutationError = unknown;
+export const useDeleteWallets = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof deleteWallets>>, TError, {
+        params?: DeleteWalletsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteTransactionType>>, TError, {
-    params?: DeleteTransactionTypeParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof deleteWallets>>, TError, {
+    params?: DeleteWalletsParams;
 }, TContext> => {
-    const mutationOptions = getDeleteTransactionTypeMutationOptions(options);
+    const mutationOptions = getDeleteWalletsMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
-export const patchTransactionType = (transactionTypeBody: TransactionTypeBody, params?: PatchTransactionTypeParams, options?: SecondParameter<typeof customAxios>) => {
-    return customAxios<null>({ url: `/transactionType`, method: 'PATCH',
+export const patchWallets = (walletsBody: WalletsBody, params?: PatchWalletsParams, options?: SecondParameter<typeof customAxios>) => {
+    return customAxios<null>({ url: `/wallets`, method: 'PATCH',
         headers: { 'Content-Type': 'application/json', },
-        data: transactionTypeBody,
+        data: walletsBody,
         params
     }, options);
 };
-export const getPatchTransactionTypeMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchTransactionType>>, TError, {
-        data: TransactionTypeBody;
-        params?: PatchTransactionTypeParams;
+export const getPatchWalletsMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchWallets>>, TError, {
+        data: WalletsBody;
+        params?: PatchWalletsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}): UseMutationOptions<Awaited<ReturnType<typeof patchTransactionType>>, TError, {
-    data: TransactionTypeBody;
-    params?: PatchTransactionTypeParams;
+}): UseMutationOptions<Awaited<ReturnType<typeof patchWallets>>, TError, {
+    data: WalletsBody;
+    params?: PatchWalletsParams;
 }, TContext> => {
-    const mutationKey = ['patchTransactionType'];
+    const mutationKey = ['patchWallets'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
         options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
             options
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchTransactionType>>, {
-        data: TransactionTypeBody;
-        params?: PatchTransactionTypeParams;
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchWallets>>, {
+        data: WalletsBody;
+        params?: PatchWalletsParams;
     }> = (props) => {
         const { data, params } = props ?? {};
-        return patchTransactionType(data, params, requestOptions);
+        return patchWallets(data, params, requestOptions);
     };
     return { mutationFn, ...mutationOptions };
 };
-export type PatchTransactionTypeMutationResult = NonNullable<Awaited<ReturnType<typeof patchTransactionType>>>;
-export type PatchTransactionTypeMutationBody = TransactionTypeBody;
-export type PatchTransactionTypeMutationError = unknown;
-export const usePatchTransactionType = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchTransactionType>>, TError, {
-        data: TransactionTypeBody;
-        params?: PatchTransactionTypeParams;
+export type PatchWalletsMutationResult = NonNullable<Awaited<ReturnType<typeof patchWallets>>>;
+export type PatchWalletsMutationBody = WalletsBody;
+export type PatchWalletsMutationError = unknown;
+export const usePatchWallets = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof patchWallets>>, TError, {
+        data: WalletsBody;
+        params?: PatchWalletsParams;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
-}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchTransactionType>>, TError, {
-    data: TransactionTypeBody;
-    params?: PatchTransactionTypeParams;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof patchWallets>>, TError, {
+    data: WalletsBody;
+    params?: PatchWalletsParams;
 }, TContext> => {
-    const mutationOptions = getPatchTransactionTypeMutationOptions(options);
+    const mutationOptions = getPatchWalletsMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };

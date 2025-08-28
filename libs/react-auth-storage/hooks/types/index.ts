@@ -1,11 +1,10 @@
 type AuthTokens = {
   accessToken: string;
-  refreshToken?: string;
-  idToken?: string;
 };
 
 type AuthFunctions = {
   setTokens: (tokens: AuthTokens) => void;
+  refreshSession: () => Promise<string | undefined>;
   handleLogout: () => void;
 };
 

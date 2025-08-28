@@ -1,4 +1,5 @@
 import { setupAxiosInterceptors } from "@react-auth-setup";
+import { useAuthStore } from "@react-auth-storage";
 import type { AxiosError, AxiosRequestConfig } from "axios";
 import axios from "axios";
 
@@ -12,6 +13,19 @@ const apiAxiosInstance = axios.create({
 
 setupAxiosInterceptors({
   axiosInstance: apiAxiosInstance,
+  customErrorMiddleware: async (error) => {
+    if (error?.response.status === 401) {
+      console.log("401 error - trying to refresh session", error);
+      const accessToken = await useAuthStore.getState().refreshSession();
+      if (accessToken) {
+        const originalRequest = error.config;
+        // update the token in the original request and retry
+        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+        return apiAxiosInstance(originalRequest);
+      }
+    }
+    throw error;
+  },
 });
 
 // add a second `options` argument here if you want to pass extra options to each generated query

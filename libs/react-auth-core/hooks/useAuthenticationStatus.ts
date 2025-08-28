@@ -5,14 +5,8 @@ import { useAuthStore } from "@react-auth-storage";
  */
 const useAuthenticationStatus = () => {
   const accessToken = useAuthStore((state) => state.accessToken);
-  const refreshToken = useAuthStore((state) => state.refreshToken);
 
-  // The User has submitted a phone number but still has not submitted a valid code to be logged in.
-  if (accessToken && !refreshToken) {
-    return "otp flow";
-  }
-
-  if (accessToken && refreshToken) {
+  if (accessToken) {
     return "logged in";
   }
 

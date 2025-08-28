@@ -26,10 +26,7 @@ const ResetPasswordScreen = ({
   const { url } = route.params ?? {};
   const navigation = useNavigation();
   useEffect(() => {
-    const setSupabaseSession = async (
-      accessToken: string,
-      refreshToken: string,
-    ) => {
+    const setSession = async (accessToken: string, refreshToken: string) => {
       const { error } = await supabase.auth.setSession({
         access_token: accessToken,
         refresh_token: refreshToken,
@@ -52,7 +49,7 @@ const ResetPasswordScreen = ({
           if (params.type !== "recovery") {
             throw new Error("Invalid link type");
           }
-          await setSupabaseSession(params.access_token, params.refresh_token);
+          await setSession(params.access_token, params.refresh_token);
         }
       } catch (error) {
         console.error("Error handling deep link:", error);

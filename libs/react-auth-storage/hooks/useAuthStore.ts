@@ -5,18 +5,12 @@ import { shallow } from "zustand/shallow";
 import { createWithEqualityFn } from "zustand/traditional";
 
 import { createZustandMmkvStorage } from "../utils/createZustandMmkvStorage";
-// @ts-ignore
-const IS_WEB = typeof sessionStorage !== "undefined";
+import { supabase } from "@react-auth-client";
 
 const SESSION_STORAGE_NAME = "auth-storage";
 
-const INITIAL_TOKENS_STATE: Pick<
-  AuthState,
-  "accessToken" | "refreshToken" | "idToken"
-> = {
+const INITIAL_TOKENS_STATE: Pick<AuthState, "accessToken"> = {
   accessToken: "",
-  refreshToken: "",
-  idToken: "",
 };
 
 const useAuthStore = createWithEqualityFn<AuthState>()(
@@ -39,15 +33,29 @@ const useAuthStore = createWithEqualityFn<AuthState>()(
 
         set(wipedState);
       },
+      refreshSession: async () => {
+        const {
+          data: {
+            session: { access_token: accessToken },
+          },
+          error: refreshSessionError,
+        } = await supabase.auth.refreshSession();
+        if (!refreshSessionError && accessToken) {
+          // update the token in the store
+          set({ accessToken: accessToken });
+          return accessToken;
+        } else {
+          if (refreshSessionError) {
+            throw refreshSessionError;
+          } else {
+            throw "No access_token returned when refreshing session";
+          }
+        }
+      },
     }),
     {
       name: SESSION_STORAGE_NAME,
       storage: createJSONStorage(() => {
-        if (IS_WEB) {
-          // @ts-ignore
-          return sessionStorage;
-        }
-
         return createZustandMmkvStorage({ id: SESSION_STORAGE_NAME });
       }),
     },

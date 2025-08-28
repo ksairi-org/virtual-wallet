@@ -1,21 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Containers } from "@ui-containers";
 import { Spacer } from "tamagui";
 import { BaseTextInput, SubmitButton } from "@molecules";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
-import { useUserStore } from "@stores";
 import { useAuthStore } from "@react-auth-storage";
 import { useBooleanState } from "@react-hooks";
-import { useGetUser } from "@react-query-sdk";
+import { patchProfiles, useGetCurrencies } from "@react-query-sdk";
 import { supabase } from "@react-auth-client";
+import { Avatar } from "@organisms";
+import { useGetLoggedUser } from "@hooks";
+import { showAlert } from "@utils";
+
+const profilePhotoFileName = "profile-photo";
 
 const AccountScreen = () => {
-  const { firstName, lastName, email } = useUserStore((state) => state);
+  const {
+    firstName,
+    lastName,
+    email,
+    id: userId,
+    profilePhotoUrl,
+  } = useGetLoggedUser() ?? {};
   const handleLogout = useAuthStore((state) => state.handleLogout);
   const { state: isLoading, toggleState: toggleIsLoading } =
     useBooleanState(false);
-  const { data, error } = useGetUser();
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  const { data, error } = useGetCurrencies();
+
   console.log("Currencies Hook data:", data, "Error:", error);
+
+  useEffect(() => {
+    setAvatarUrl(profilePhotoUrl);
+  }, [profilePhotoUrl]);
 
   const handleOnPressLogout = async () => {
     try {
@@ -29,37 +46,16 @@ const AccountScreen = () => {
     }
   };
 
-  useEffect(() => {
-    // const getProfile = async () => {
-    //   try {
-    //     setLoading(true);
-    //     if (!session?.user) throw new Error("No user on the session!");
-    //     const { data, error, status } = await supabase
-    //       .from("profiles")
-    //       .select(`username, website, avatar_url`)
-    //       .eq("id", session?.user.id)
-    //       .single();
-    //     if (error && status !== 406) {
-    //       throw error;
-    //     }
-    //     console.log("Profile data:", error);
-    //     if (data) {
-    //       setDisplayName(data.displayName);
-    //       setAvatarUrl(data.avatar_url);
-    //     }
-    //   } catch (error) {
-    //     if (error instanceof Error) {
-    //       showAlert({ preset: "error", title: error.message });
-    //     }
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-    // if (session) {
-    //   getProfile();
-    // }
-  }, []);
-
+  const updateProfile = async () => {
+    try {
+      await patchProfiles(
+        { photo_url: avatarUrl, user_id: userId },
+        { user_id: `eq.${userId}` },
+      );
+    } catch (e) {
+      showAlert(e.message);
+    }
+  };
   return (
     <Containers.Screen>
       <Containers.SubY>
@@ -75,15 +71,15 @@ const AccountScreen = () => {
 
         <Spacer size={"$button-md"} />
 
-        {/* <SubmitButton
-          onPress={() => updateProfile({ displayName, avatar_url: avatarUrl })}
-          loading={loading}
-          disabled={loading}
-        >
-          <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
-            {"Update"}
-          </LabelSemiboldLg>
-        </SubmitButton> */}
+        <Avatar
+          size={200}
+          url={avatarUrl}
+          destinationPath={`${userId}/${profilePhotoFileName}`}
+          onUpload={(url: string) => {
+            setAvatarUrl(url);
+            updateProfile();
+          }}
+        />
 
         <Spacer size={"$button-md"} />
 

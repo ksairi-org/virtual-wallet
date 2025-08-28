@@ -33,8 +33,6 @@ const useAppleLoginWithPersistence = () => {
         setKeyValue("firstName", firstName);
         setKeyValue("lastName", lastName);
       }
-      setKeyValue("id", userId);
-      setKeyValue("email", email);
 
       return { userId, firstName, lastName, email };
     },

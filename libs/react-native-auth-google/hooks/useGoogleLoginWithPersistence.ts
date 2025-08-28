@@ -23,10 +23,8 @@ const useGoogleLoginWithPersistence = () => {
         });
 
         const { user } = data;
-        setKeyValue("id", userId);
         setKeyValue("firstName", user.givenName);
         setKeyValue("lastName", user.familyName);
-        setKeyValue("email", user.email);
         return {
           userId,
           firstName: user.givenName,

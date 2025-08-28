@@ -7,7 +7,6 @@ import {
 import { useCallback, useState } from "react";
 
 import { useAuthStore } from "@react-auth-storage";
-import { useUserStore } from "@stores";
 import { supabase } from "@react-auth-client";
 
 type Status = "idle" | "loading" | "error" | "success";
@@ -17,19 +16,15 @@ type Status = "idle" | "loading" | "error" | "success";
  */
 const useLoginWithPersistence = () => {
   const setTokens = useAuthStore((state) => state.setTokens);
-  const setKeyValue = useUserStore((state) => state.setKeyValue);
   const [status, setStatus] = useState<Status>("idle");
 
   const setLoggedUserData = useCallback(
     (data: AuthTokenResponse["data"]) => {
       setTokens({
         accessToken: data.session.access_token,
-        refreshToken: data.session.refresh_token,
       });
-      setKeyValue("id", data.user.id);
-      setKeyValue("email", data.user.email);
     },
-    [setKeyValue, setTokens],
+    [setTokens],
   );
 
   const handleLogInSocialNetwork = useCallback(
