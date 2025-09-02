@@ -11,7 +11,8 @@ import { useUserStore } from "@stores";
  * `nonce` The nonce returned from Apple
  */
 const useAppleLoginWithPersistence = () => {
-  const { handleLogInSocialNetwork } = useLoginWithPersistence();
+  const { handleLogInSocialNetwork, loginWithSocialError } =
+    useLoginWithPersistence();
   const setKeyValue = useUserStore((state) => state.setKeyValue);
 
   const handleAppleLoginWithPersistence = useCallback(
@@ -39,7 +40,7 @@ const useAppleLoginWithPersistence = () => {
     [handleLogInSocialNetwork, setKeyValue],
   );
 
-  return { handleAppleLoginWithPersistence };
+  return { handleAppleLoginWithPersistence, error: loginWithSocialError };
 };
 
 export { useAppleLoginWithPersistence };

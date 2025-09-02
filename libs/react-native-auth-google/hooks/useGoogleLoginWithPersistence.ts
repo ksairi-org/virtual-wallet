@@ -11,7 +11,8 @@ import { SignInResponse } from "@react-native-google-signin/google-signin";
  * `nonce` The nonce returned from Google
  */
 const useGoogleLoginWithPersistence = () => {
-  const { handleLogInSocialNetwork } = useLoginWithPersistence();
+  const { handleLogInSocialNetwork, loginWithSocialError } =
+    useLoginWithPersistence();
   const setKeyValue = useUserStore((state) => state.setKeyValue);
 
   const handleGoogleLoginWithPersistence = useCallback(
@@ -36,7 +37,7 @@ const useGoogleLoginWithPersistence = () => {
     [handleLogInSocialNetwork, setKeyValue],
   );
 
-  return { handleGoogleLoginWithPersistence };
+  return { handleGoogleLoginWithPersistence, error: loginWithSocialError };
 };
 
 export { useGoogleLoginWithPersistence };

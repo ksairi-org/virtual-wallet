@@ -4,10 +4,12 @@ import {
   SignInWithPasswordCredentials,
 } from "@supabase/supabase-js";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useAuthStore } from "@react-auth-storage";
 import { supabase } from "@react-auth-client";
+import { useAddProfileIfNeeded } from "@react-auth-hooks";
+import { useUserStore } from "@stores";
 
 type Status = "idle" | "loading" | "error" | "success";
 
@@ -17,6 +19,15 @@ type Status = "idle" | "loading" | "error" | "success";
 const useLoginWithPersistence = () => {
   const setTokens = useAuthStore((state) => state.setTokens);
   const [status, setStatus] = useState<Status>("idle");
+  const [loginWithSocialError, setLoginWithSocialError] = useState<string>();
+  const { addProfileIfNeeded, error: addProfileError } =
+    useAddProfileIfNeeded();
+
+  const { hasSeenWelcomeScreen } = useUserStore((state) => state);
+
+  useEffect(() => {
+    setLoginWithSocialError(addProfileError);
+  }, [addProfileError]);
 
   const setLoggedUserData = useCallback(
     (data: AuthTokenResponse["data"]) => {
@@ -36,6 +47,10 @@ const useLoginWithPersistence = () => {
         if (error) {
           throw error;
         }
+        if (!hasSeenWelcomeScreen) {
+          await addProfileIfNeeded({ user_id: data.user.id });
+        }
+
         setLoggedUserData(data);
         setStatus("success");
 
@@ -43,10 +58,10 @@ const useLoginWithPersistence = () => {
       } catch (error) {
         console.error("Login failed with social", error);
         setStatus("error");
-        throw new Error(error);
+        setLoginWithSocialError(error);
       }
     },
-    [setLoggedUserData],
+    [addProfileIfNeeded, hasSeenWelcomeScreen, setLoggedUserData],
   );
 
   const handleLogInWithEmail = useCallback(
@@ -58,22 +73,26 @@ const useLoginWithPersistence = () => {
         if (error) {
           throw error;
         }
+        if (!hasSeenWelcomeScreen) {
+          await addProfileIfNeeded({ user_id: data.user.id });
+        }
         setLoggedUserData(data);
         setStatus("success");
         return data.user;
       } catch (error) {
         console.error("Login failed with email:", error);
         setStatus("error");
-        throw new Error(error);
+        setLoginWithSocialError(error);
       }
     },
-    [setLoggedUserData],
+    [addProfileIfNeeded, hasSeenWelcomeScreen, setLoggedUserData],
   );
 
   return {
     handleLogInWithEmail,
     handleLogInSocialNetwork,
     status,
+    loginWithSocialError,
   };
 };
 

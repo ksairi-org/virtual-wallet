@@ -10,7 +10,7 @@ const WelcomeScreen = ({
   const setKeyValue = useUserStore((state) => state.setKeyValue);
   const handleOnPress = () => {
     setKeyValue("hasSeenWelcomeScreen", true);
-    navigation.navigate("HomeStackNavigator", { screen: "AccountScreen" });
+    navigation.navigate("HomeStackNavigator", { screen: "ProfileScreen" });
   };
   return (
     <Containers.Screen backgroundColor={"$background-action"}>

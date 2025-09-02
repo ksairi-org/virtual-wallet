@@ -11,7 +11,7 @@ type LoggedUser = {
   profilePhotoUrl?: string;
 } | null;
 
-const useGetLoggedUser = () => {
+const useGetLoggedUserProfile = () => {
   const [user, setUser] = useState<LoggedUser>(null);
   const [userId, setUserId] = useState(null);
   const { data: userProfileData } = useGetProfiles(
@@ -42,4 +42,4 @@ const useGetLoggedUser = () => {
   return memoizedUser;
 };
 
-export { useGetLoggedUser };
+export { useGetLoggedUserProfile };

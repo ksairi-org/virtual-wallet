@@ -42,14 +42,13 @@ const AppleSignInButton = ({
   });
 
   const handleOnPress = useCallback(
-    (...params: Parameters<AppleButtonProps["onPress"]>) => {
+    async (...params: Parameters<AppleButtonProps["onPress"]>) => {
       onPress?.(...params);
 
-      handleSignInWithApple().then((response) => {
-        if (response) {
-          onSuccess?.(response);
-        }
-      });
+      const response = await handleSignInWithApple();
+      if (response) {
+        onSuccess?.(response);
+      }
     },
     [handleSignInWithApple, onPress, onSuccess],
   );

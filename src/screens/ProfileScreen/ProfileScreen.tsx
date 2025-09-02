@@ -8,19 +8,19 @@ import { useBooleanState } from "@react-hooks";
 import { patchProfiles, useGetCurrencies } from "@react-query-sdk";
 import { supabase } from "@react-auth-client";
 import { Avatar } from "@organisms";
-import { useGetLoggedUser } from "@hooks";
+import { useGetLoggedUserProfile } from "@hooks";
 import { showAlert } from "@utils";
 
 const profilePhotoFileName = "profile-photo";
 
-const AccountScreen = () => {
+const ProfileScreen = () => {
   const {
     firstName,
     lastName,
     email,
     id: userId,
     profilePhotoUrl,
-  } = useGetLoggedUser() ?? {};
+  } = useGetLoggedUserProfile() ?? {};
   const handleLogout = useAuthStore((state) => state.handleLogout);
   const { state: isLoading, toggleState: toggleIsLoading } =
     useBooleanState(false);
@@ -46,10 +46,10 @@ const AccountScreen = () => {
     }
   };
 
-  const updateProfile = async () => {
+  const updateProfile = (url: string) => {
     try {
-      await patchProfiles(
-        { photo_url: avatarUrl, user_id: userId },
+      patchProfiles(
+        { photo_url: url, user_id: userId },
         { user_id: `eq.${userId}` },
       );
     } catch (e) {
@@ -76,8 +76,10 @@ const AccountScreen = () => {
           url={avatarUrl}
           destinationPath={`${userId}/${profilePhotoFileName}`}
           onUpload={(url: string) => {
-            setAvatarUrl(url);
-            updateProfile();
+            setAvatarUrl(() => {
+              updateProfile(url);
+              return url;
+            });
           }}
         />
 
@@ -93,4 +95,4 @@ const AccountScreen = () => {
   );
 };
 
-export { AccountScreen };
+export { ProfileScreen };

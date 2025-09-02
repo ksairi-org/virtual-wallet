@@ -1,14 +1,14 @@
 import type { HomeStackNavigatorParamList } from "./types";
-import { AccountScreen, HomeScreen } from "@screens";
+import { ProfileScreen, HomeScreen } from "@screens";
 import { createStackNavigator } from "../createNavigator";
 
 const Stack = createStackNavigator<HomeStackNavigatorParamList>();
 
 const HomeStackNavigator = () => (
-  <Stack.Navigator initialRouteName={"AccountScreen"}>
+  <Stack.Navigator initialRouteName={"ProfileScreen"}>
     <Stack.Screen
-      name={"AccountScreen"}
-      component={AccountScreen}
+      name={"ProfileScreen"}
+      component={ProfileScreen}
       options={{ headerShown: false }}
     />
 

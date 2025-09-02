@@ -2,7 +2,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type HomeStackNavigatorParamList = {
   HomeScreen: undefined;
-  AccountScreen: undefined;
+  ProfileScreen: undefined;
 };
 
 type HomeStackNavigatorScreenProps<

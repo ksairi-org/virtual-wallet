@@ -32,14 +32,13 @@ const GoogleSigninButton = ({
     onGoogleSignInError: onError,
   });
 
-  const handleOnPress = useCallback(() => {
+  const handleOnPress = useCallback(async () => {
     onPress?.();
 
-    handleSignInWithGoogle().then((response) => {
-      if (response) {
-        onSuccess?.(response);
-      }
-    });
+    const response = await handleSignInWithGoogle();
+    if (response) {
+      onSuccess?.(response);
+    }
   }, [handleSignInWithGoogle, onPress, onSuccess]);
 
   return (

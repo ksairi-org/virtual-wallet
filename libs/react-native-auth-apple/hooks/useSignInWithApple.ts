@@ -1,6 +1,6 @@
 import type { AppleSignInErrorType, AppleSignInResponse } from "../types";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 
@@ -42,9 +42,68 @@ const isErrorOfCancelledByUser = (message: string) =>
 const useSignInWithApple = ({
   onAppleSignInError,
 }: UseSignInWithAppleOptions = {}) => {
-  const { handleAppleLoginWithPersistence } = useAppleLoginWithPersistence();
+  const { handleAppleLoginWithPersistence, error } =
+    useAppleLoginWithPersistence();
 
   const { handlerByPlatform } = useHandlerByPlatform();
+
+  const treatError = useCallback(
+    (error: unknown) => {
+      if (error instanceof AppleSignInError) {
+        if (!isErrorOfCancelledByUser(error.message)) {
+          console.error(ERROR_TITLE, error);
+        }
+
+        onAppleSignInError?.(error);
+      } else if (isErrorWithCode(error)) {
+        if (!isErrorOfCancelledByUser(error.message)) {
+          console.error(ERROR_TITLE, error);
+        }
+        let errorCode: AppleSignInErrorType = "UNKNOWN";
+        switch (error.code) {
+          case appleAuth.Error.CANCELED:
+            errorCode = "SIGN_IN_CANCELLED";
+
+            break;
+          case appleAuth.Error.UNKNOWN:
+            errorCode = "UNKNOWN";
+
+            break;
+          case appleAuth.Error.INVALID_RESPONSE:
+            errorCode = "INVALID_RESPONSE";
+
+            break;
+          case appleAuth.Error.NOT_HANDLED:
+            errorCode = "NOT_HANDLED";
+
+            break;
+          case appleAuth.Error.FAILED:
+            errorCode = "SIGN_IN_FAILED";
+
+            break;
+        }
+        if (!isErrorOfCancelledByUser(error.message)) {
+          onAppleSignInError?.(
+            new AppleSignInError(errorCode, error.message, error),
+          );
+        }
+      } else if (error instanceof Error) {
+        // an error that's not related to google sign in occurred
+        onAppleSignInError?.(
+          new AppleSignInError("UNKNOWN", error.message, error),
+        );
+      } else {
+        onAppleSignInError?.(new AppleSignInError("UNKNOWN", "Unknown error"));
+      }
+    },
+    [onAppleSignInError],
+  );
+
+  useEffect(() => {
+    if (error) {
+      treatError(error);
+    }
+  }, [error, treatError]);
 
   const handleSignInWithApple =
     useCallback(async (): Promise<AppleSignInResponse | void> => {
@@ -59,60 +118,9 @@ const useSignInWithApple = ({
         const loginResponse = await handleAppleLoginWithPersistence(response);
         return loginResponse;
       } catch (error) {
-        if (error instanceof AppleSignInError) {
-          if (!isErrorOfCancelledByUser(error.message)) {
-            console.error(ERROR_TITLE, error);
-          }
-
-          onAppleSignInError?.(error);
-        } else if (isErrorWithCode(error)) {
-          if (!isErrorOfCancelledByUser(error.message)) {
-            console.error(ERROR_TITLE, error);
-          }
-          let errorCode: AppleSignInErrorType = "UNKNOWN";
-          switch (error.code) {
-            case appleAuth.Error.CANCELED:
-              errorCode = "SIGN_IN_CANCELLED";
-
-              break;
-            case appleAuth.Error.UNKNOWN:
-              errorCode = "UNKNOWN";
-
-              break;
-            case appleAuth.Error.INVALID_RESPONSE:
-              errorCode = "INVALID_RESPONSE";
-
-              break;
-            case appleAuth.Error.NOT_HANDLED:
-              errorCode = "NOT_HANDLED";
-
-              break;
-            case appleAuth.Error.FAILED:
-              errorCode = "SIGN_IN_FAILED";
-
-              break;
-          }
-          if (!isErrorOfCancelledByUser(error.message)) {
-            onAppleSignInError?.(
-              new AppleSignInError(errorCode, error.message, error),
-            );
-          }
-        } else if (error instanceof Error) {
-          // an error that's not related to google sign in occurred
-          onAppleSignInError?.(
-            new AppleSignInError("UNKNOWN", error.message, error),
-          );
-        } else {
-          onAppleSignInError?.(
-            new AppleSignInError("UNKNOWN", "Unknown error"),
-          );
-        }
+        treatError(error);
       }
-    }, [
-      handleAppleLoginWithPersistence,
-      handlerByPlatform,
-      onAppleSignInError,
-    ]);
+    }, [handleAppleLoginWithPersistence, handlerByPlatform, treatError]);
 
   return { handleSignInWithApple };
 };

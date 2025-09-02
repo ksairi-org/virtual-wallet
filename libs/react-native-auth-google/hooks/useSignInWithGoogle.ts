@@ -1,6 +1,6 @@
 import type { GoogleSignInErrorType, GoogleSignInResponse } from "../types";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 import {
   GoogleSignin,
@@ -40,7 +40,9 @@ const isErrorOfCancelledByUser = (message: string) =>
 const useSignInWithGoogle = ({
   onGoogleSignInError,
 }: UseSignInWithGoogleOptions = {}) => {
-  const { handleGoogleLoginWithPersistence } = useGoogleLoginWithPersistence();
+  const { handleGoogleLoginWithPersistence, error } =
+    useGoogleLoginWithPersistence();
+
   const handleSignOutWithGoogle = useCallback(async () => {
     try {
       await GoogleSignin.signOut();
@@ -48,6 +50,69 @@ const useSignInWithGoogle = ({
       console.error("GOOGLE SIGN OUT ERROR--->", err);
     }
   }, []);
+
+  const treatError = useCallback(
+    async (error: unknown) => {
+      if (!isErrorOfCancelledByUser) {
+        console.error("GOOGLE SIGN IN ERROR--->", error);
+      }
+
+      await handleSignOutWithGoogle();
+      if (error instanceof GoogleSignInError) {
+        if (!isErrorOfCancelledByUser(error.message)) {
+          onGoogleSignInError?.(error);
+        }
+      } else if (isErrorWithCode(error)) {
+        let errorCode: GoogleSignInErrorType = "UNKNOWN";
+
+        switch (error.code) {
+          case statusCodes.IN_PROGRESS:
+            // operation (eg. sign in) already in progress
+            errorCode = "IN_PROGRESS";
+
+            break;
+          case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+            // Android only, play services not available or outdated
+            errorCode = "PLAY_SERVICES_NOT_AVAILABLE";
+
+            break;
+          case statusCodes.SIGN_IN_CANCELLED:
+            // user cancelled the login flow
+            errorCode = "SIGN_IN_CANCELLED";
+
+            break;
+          case statusCodes.SIGN_IN_REQUIRED:
+            // user needs to be signed in
+            errorCode = "SIGN_IN_REQUIRED";
+
+            break;
+          default:
+            break;
+        }
+        if (!isErrorOfCancelledByUser(error.message)) {
+          onGoogleSignInError?.(
+            new GoogleSignInError(errorCode, error.message, error),
+          );
+        }
+      } else if (error instanceof Error) {
+        // an error that's not related to google sign in occurred
+        onGoogleSignInError?.(
+          new GoogleSignInError("UNKNOWN", error.message, error),
+        );
+      } else {
+        onGoogleSignInError?.(
+          new GoogleSignInError("UNKNOWN", "Unknown error"),
+        );
+      }
+    },
+    [handleSignOutWithGoogle, onGoogleSignInError],
+  );
+
+  useEffect(() => {
+    if (error) {
+      treatError(error);
+    }
+  }, [error, treatError]);
 
   const handleSignInWithGoogle =
     useCallback(async (): Promise<GoogleSignInResponse | void> => {
@@ -72,63 +137,9 @@ const useSignInWithGoogle = ({
 
         return response;
       } catch (error) {
-        if (!isErrorOfCancelledByUser) {
-          console.error("GOOGLE SIGN IN ERROR--->", error);
-        }
-
-        await handleSignOutWithGoogle();
-        if (error instanceof GoogleSignInError) {
-          if (!isErrorOfCancelledByUser(error.message)) {
-            onGoogleSignInError?.(error);
-          }
-        } else if (isErrorWithCode(error)) {
-          let errorCode: GoogleSignInErrorType = "UNKNOWN";
-
-          switch (error.code) {
-            case statusCodes.IN_PROGRESS:
-              // operation (eg. sign in) already in progress
-              errorCode = "IN_PROGRESS";
-
-              break;
-            case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-              // Android only, play services not available or outdated
-              errorCode = "PLAY_SERVICES_NOT_AVAILABLE";
-
-              break;
-            case statusCodes.SIGN_IN_CANCELLED:
-              // user cancelled the login flow
-              errorCode = "SIGN_IN_CANCELLED";
-
-              break;
-            case statusCodes.SIGN_IN_REQUIRED:
-              // user needs to be signed in
-              errorCode = "SIGN_IN_REQUIRED";
-
-              break;
-            default:
-              break;
-          }
-          if (!isErrorOfCancelledByUser(error.message)) {
-            onGoogleSignInError?.(
-              new GoogleSignInError(errorCode, error.message, error),
-            );
-          }
-        } else if (error instanceof Error) {
-          // an error that's not related to google sign in occurred
-          onGoogleSignInError?.(
-            new GoogleSignInError("UNKNOWN", error.message, error),
-          );
-        } else {
-          onGoogleSignInError?.(
-            new GoogleSignInError("UNKNOWN", "Unknown error"),
-          );
-        }
+        treatError(error);
       }
-    }, [
-      handleGoogleLoginWithPersistence,
-      handleSignOutWithGoogle,
-      onGoogleSignInError,
-    ]);
+    }, [handleGoogleLoginWithPersistence, treatError]);
 
   return { handleSignInWithGoogle, handleSignOutWithGoogle };
 };
