@@ -21,7 +21,7 @@ const Avatar = ({
   size = 150,
   onUpload,
 }: AvatarProps) => {
-  const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [key, setKey] = useState(0); // to force re-rendering the Image component
   const avatarSize = { height: size, width: size };
@@ -41,7 +41,7 @@ const Avatar = ({
         fr.readAsDataURL(data);
         fr.onload = () => {
           setAvatarUrl(fr.result as string);
-          setUploading(false);
+          setLoading(false);
         };
       } catch (error) {
         if (error instanceof Error) {
@@ -57,8 +57,6 @@ const Avatar = ({
 
   const uploadAvatar = async () => {
     try {
-      setUploading(true);
-
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: "images", // Restrict to only images
         allowsMultipleSelection: false, // Can only select one image
@@ -66,7 +64,6 @@ const Avatar = ({
         quality: 1,
         exif: false, // We don't want nor need that data.
       });
-
       if (result.canceled || !result.assets || result.assets.length === 0) {
         return;
       }
@@ -75,6 +72,8 @@ const Avatar = ({
       if (!image.uri) {
         throw new Error("No image uri!");
       }
+
+      setLoading(true);
 
       const arraybuffer = await fetch(image.uri).then((res) =>
         res.arrayBuffer(),
@@ -101,6 +100,7 @@ const Avatar = ({
       } else {
         throw error;
       }
+      setLoading(false);
     }
   };
 
@@ -123,11 +123,7 @@ const Avatar = ({
         />
       )}
       <Containers.SubY>
-        <CtaButton
-          onPress={uploadAvatar}
-          disabled={uploading}
-          loading={uploading}
-        >
+        <CtaButton onPress={uploadAvatar} disabled={loading} loading={loading}>
           <BodyRegularMd>{"Upload"}</BodyRegularMd>
         </CtaButton>
       </Containers.SubY>

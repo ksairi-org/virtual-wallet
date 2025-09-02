@@ -21,6 +21,7 @@ setupAxiosInterceptors({
         const originalRequest = error.config;
         // update the token in the original request and retry
         originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+        console.log("Retrying");
         return apiAxiosInstance(originalRequest);
       }
     }

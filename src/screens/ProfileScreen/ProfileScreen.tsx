@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Containers } from "@ui-containers";
 import { Spacer } from "tamagui";
 import { BaseTextInput, SubmitButton } from "@molecules";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useAuthStore } from "@react-auth-storage";
 import { useBooleanState } from "@react-hooks";
-import { patchProfiles, useGetCurrencies } from "@react-query-sdk";
+import { patchProfiles } from "@react-query-sdk";
 import { supabase } from "@react-auth-client";
 import { Avatar } from "@organisms";
 import { useGetLoggedUserProfile } from "@hooks";
 import { showAlert } from "@utils";
+import { BUCKET_NAME } from "@constants";
 
 const profilePhotoFileName = "profile-photo";
 
@@ -25,10 +26,7 @@ const ProfileScreen = () => {
   const { state: isLoading, toggleState: toggleIsLoading } =
     useBooleanState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-
-  const { data, error } = useGetCurrencies();
-
-  console.log("Currencies Hook data:", data, "Error:", error);
+  const lastUploadedPhoto = useRef(profilePhotoUrl);
 
   useEffect(() => {
     setAvatarUrl(profilePhotoUrl);
@@ -46,12 +44,19 @@ const ProfileScreen = () => {
     }
   };
 
-  const updateProfile = (url: string) => {
+  const updateProfile = async (url: string) => {
     try {
-      patchProfiles(
+      await patchProfiles(
         { photo_url: url, user_id: userId },
         { user_id: `eq.${userId}` },
       );
+      if (lastUploadedPhoto.current && lastUploadedPhoto.current !== url) {
+        // extension changed
+        await supabase.storage
+          .from(BUCKET_NAME)
+          .remove([lastUploadedPhoto.current]);
+      }
+      lastUploadedPhoto.current = url;
     } catch (e) {
       showAlert(e.message);
     }
