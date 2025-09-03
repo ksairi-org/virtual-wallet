@@ -1,3 +1,4 @@
+import { useGetEntityById } from "@hooks";
 import {
   GetProfilesParams,
   Profiles,
@@ -21,8 +22,12 @@ const useAddProfileIfNeeded = () => {
     GetProfilesParams["user_id"] | undefined
   >();
 
-  const { refetch: fetchProfiles, error: getProfileError } = useGetProfiles(
-    { user_id: `eq.${userId}` },
+  const { refetch: fetchProfiles, error: getProfileError } = useGetEntityById<
+    Profiles[],
+    GetProfilesParams
+  >(
+    useGetProfiles,
+    { user_id: userId },
     {
       query: { enabled: false },
     },

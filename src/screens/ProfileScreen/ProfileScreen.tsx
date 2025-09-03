@@ -5,10 +5,15 @@ import { BaseTextInput, SubmitButton } from "@molecules";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useAuthStore } from "@react-auth-storage";
 import { useBooleanState } from "@react-hooks";
-import { patchProfiles } from "@react-query-sdk";
+import {
+  GetWalletsParams,
+  patchProfiles,
+  useGetWallets,
+  Wallets,
+} from "@react-query-sdk";
 import { supabase } from "@react-auth-client";
 import { Avatar } from "@organisms";
-import { useGetLoggedUserProfile } from "@hooks";
+import { useGetEntityById, useGetLoggedUserProfile } from "@hooks";
 import { showAlert } from "@utils";
 import { BUCKET_NAME } from "@constants";
 
@@ -27,6 +32,19 @@ const ProfileScreen = () => {
     useBooleanState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const lastUploadedPhoto = useRef(profilePhotoUrl);
+  const { data, error } = useGetEntityById<Wallets[], GetWalletsParams>(
+    useGetWallets,
+    {
+      user_id: userId,
+    },
+  );
+
+  // const { mutateAsync } = useUpdateEntityById(useUpdateEntityById, {
+  //   data: {}, // Provide the correct ProfilesBody structure here
+  //   params: { id: userId }, // Use the actual userId for filtering
+  // });
+
+  console.log("useGetEntityById(useGetWallets)", data, "Error:", error);
 
   useEffect(() => {
     setAvatarUrl(profilePhotoUrl);
