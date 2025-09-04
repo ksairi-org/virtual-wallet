@@ -36,6 +36,18 @@ const ProfileScreen = () => {
   console.log("useGetEntityById(useGetWallets)", data, "Error:", error);
 
   useEffect(() => {
+    const edgeFunc = async () => {
+      const { data, error } = await supabase.functions.invoke("hello-world", {
+        body: { name: "Mariano" },
+      });
+
+      console.log(data, error);
+    };
+
+    edgeFunc();
+  }, []);
+
+  useEffect(() => {
     setAvatarUrl(profilePhotoUrl);
   }, [profilePhotoUrl]);
 

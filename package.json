@@ -18,7 +18,9 @@
     "lint": "expo lint --fix",
     "check:tsc": "tsc --noEmit",
     "generate:spec": "node libs/react-query-sdk/download-spec.js",
-    "generate:hooks": "yarn generate:spec && yarn orval --config libs/react-query-sdk/orval.config.ts"
+    "generate:hooks": "yarn generate:spec && yarn orval --config libs/react-query-sdk/orval.config.ts",
+    "deploy-supabase-functions-stg": "yarn supabase functions deploy --project-ref oidpaoqsngnydihqkgok",
+    "deploy-supabase-functions-prod": "yarn supabase functions deploy --project-ref icftqbzrrsqwzsuqgmxd"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -96,7 +98,7 @@
     "orval": "^7.11.2",
     "prettier": "^3.6.2",
     "react-native-svg-transformer": "^1.5.1",
-    "supabase": "2.34.3",
+    "supabase": "2.39.2",
     "typescript": "~5.8.3"
   },
   "packageManager": "yarn@4.9.2",

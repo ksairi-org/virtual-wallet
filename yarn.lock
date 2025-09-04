@@ -16907,9 +16907,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supabase@npm:2.34.3":
-  version: 2.34.3
-  resolution: "supabase@npm:2.34.3"
+"supabase@npm:2.39.2":
+  version: 2.39.2
+  resolution: "supabase@npm:2.39.2"
   dependencies:
     bin-links: "npm:^5.0.0"
     https-proxy-agent: "npm:^7.0.2"
@@ -16917,7 +16917,7 @@ __metadata:
     tar: "npm:7.4.3"
   bin:
     supabase: bin/supabase
-  checksum: 10c0/434830df0c53dcf08907c3b1653a2d4f72b2cbdb8db5252a261473cc3100023093f0a77471066666a8929250eeccb6b743e4641f00ccc0966f8d5a02485a1e67
+  checksum: 10c0/d64cb5be6f6706c9ff62c9141964e8c7185321131c1f76f449574e1da293bfd48782f25e82cd9987c2d1bef698ca4daad6b5b25229bca0742883b3e567f99c1e
   languageName: node
   linkType: hard
 
@@ -17984,7 +17984,7 @@ __metadata:
     react-native-svg-transformer: "npm:^1.5.1"
     react-native-url-polyfill: "npm:^2.0.0"
     rive-react-native: "npm:9.3.4"
-    supabase: "npm:2.34.3"
+    supabase: "npm:2.39.2"
     tamagui: "npm:1.132.15"
     typescript: "npm:~5.8.3"
     zustand: "npm:^5.0.6"
