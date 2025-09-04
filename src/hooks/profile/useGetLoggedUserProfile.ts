@@ -1,7 +1,7 @@
-import { useGetEntityById } from "@hooks";
 import { supabase } from "@react-auth-client";
-import { GetProfilesParams, Profiles, useGetProfiles } from "@react-query-sdk";
+import { useGetProfiles } from "@react-query-sdk";
 import { useUserStore } from "@stores";
+import { getQueryFilters } from "@utils";
 import { useEffect, useMemo, useState } from "react";
 
 type LoggedUser = {
@@ -15,14 +15,10 @@ type LoggedUser = {
 const useGetLoggedUserProfile = () => {
   const [user, setUser] = useState<LoggedUser>(null);
   const [userId, setUserId] = useState(null);
-  const { data: userProfileData } = useGetEntityById<
-    Profiles[],
-    GetProfilesParams
-  >(
-    useGetProfiles,
-    {
+  const { data: userProfileData } = useGetProfiles(
+    getQueryFilters({
       user_id: userId,
-    },
+    }),
     { query: { enabled: !!userId } },
   );
   const { firstName: firstNameStore, lastName: lastNameStore } = useUserStore(

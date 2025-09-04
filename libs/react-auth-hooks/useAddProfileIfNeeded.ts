@@ -1,10 +1,10 @@
-import { useGetEntityById } from "@hooks";
 import {
   GetProfilesParams,
   Profiles,
   useGetProfiles,
   usePostProfiles,
 } from "@react-query-sdk";
+import { getQueryFilters } from "@utils";
 import { useCallback, useState } from "react";
 
 const getErrorMessage = (error: unknown) => {
@@ -22,12 +22,8 @@ const useAddProfileIfNeeded = () => {
     GetProfilesParams["user_id"] | undefined
   >();
 
-  const { refetch: fetchProfiles, error: getProfileError } = useGetEntityById<
-    Profiles[],
-    GetProfilesParams
-  >(
-    useGetProfiles,
-    { user_id: userId },
+  const { refetch: fetchProfiles, error: getProfileError } = useGetProfiles(
+    getQueryFilters({ user_id: userId }),
     {
       query: { enabled: false },
     },

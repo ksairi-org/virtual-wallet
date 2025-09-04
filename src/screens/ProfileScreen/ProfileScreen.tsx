@@ -5,16 +5,11 @@ import { BaseTextInput, SubmitButton } from "@molecules";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useAuthStore } from "@react-auth-storage";
 import { useBooleanState } from "@react-hooks";
-import {
-  GetWalletsParams,
-  patchProfiles,
-  useGetWallets,
-  Wallets,
-} from "@react-query-sdk";
+import { patchProfiles, useGetWallets } from "@react-query-sdk";
 import { supabase } from "@react-auth-client";
 import { Avatar } from "@organisms";
-import { useGetEntityById, useGetLoggedUserProfile } from "@hooks";
-import { showAlert } from "@utils";
+import { useGetLoggedUserProfile } from "@hooks";
+import { getQueryFilters, showAlert } from "@utils";
 import { BUCKET_NAME } from "@constants";
 
 const profilePhotoFileName = "profile-photo";
@@ -32,17 +27,11 @@ const ProfileScreen = () => {
     useBooleanState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const lastUploadedPhoto = useRef(profilePhotoUrl);
-  const { data, error } = useGetEntityById<Wallets[], GetWalletsParams>(
-    useGetWallets,
-    {
+  const { data, error } = useGetWallets(
+    getQueryFilters({
       user_id: userId,
-    },
+    }),
   );
-
-  // const { mutateAsync } = useUpdateEntityById(useUpdateEntityById, {
-  //   data: {}, // Provide the correct ProfilesBody structure here
-  //   params: { id: userId }, // Use the actual userId for filtering
-  // });
 
   console.log("useGetEntityById(useGetWallets)", data, "Error:", error);
 
@@ -66,7 +55,7 @@ const ProfileScreen = () => {
     try {
       await patchProfiles(
         { photo_url: url, user_id: userId },
-        { user_id: `eq.${userId}` },
+        getQueryFilters({ user_id: userId }),
       );
       if (lastUploadedPhoto.current && lastUploadedPhoto.current !== url) {
         // extension changed

@@ -7,6 +7,7 @@ import { CtaButton } from "@molecules";
 import { BodyRegularMd } from "@fonts";
 import { showAlert } from "@utils";
 import { BUCKET_NAME } from "@constants";
+import { ActivityIndicator } from "react-native";
 
 type AvatarProps = {
   size: number;
@@ -114,13 +115,12 @@ const Avatar = ({
         />
       ) : (
         <Containers.SubY
-          backgroundColor={"$background-body"}
-          borderWidth={"$button-sm"}
-          borderStyle={"solid"}
-          borderColor={"$background-secondary"}
-          borderRadius={"$2xl"}
-          overflow="hidden"
-        />
+          style={avatarSize}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <ActivityIndicator size={"small"} />
+        </Containers.SubY>
       )}
       <Containers.SubY>
         <CtaButton onPress={uploadAvatar} disabled={loading} loading={loading}>

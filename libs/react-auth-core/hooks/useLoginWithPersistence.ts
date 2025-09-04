@@ -82,7 +82,7 @@ const useLoginWithPersistence = () => {
       } catch (error) {
         console.error("Login failed with email:", error);
         setStatus("error");
-        setLoginWithSocialError(error);
+        throw error;
       }
     },
     [addProfileIfNeeded, hasSeenWelcomeScreen, setLoggedUserData],
