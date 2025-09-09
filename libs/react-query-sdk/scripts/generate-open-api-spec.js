@@ -3,7 +3,6 @@ const axios = require("axios");
 const {
   functionsUrlSuffix,
   specsFolder,
-  dbOpenApiSpecFileName,
   openApiSpecFileName,
   functionsOpenApiSpecFileName,
 } = require("../constants.js");
@@ -43,17 +42,7 @@ const generateOpenApiSpec = async () => {
       throw new Error("Invalid OpenAPI specification received");
     }
 
-    const dbOpenApiSpecPath = path.join(
-      parentDirname,
-      specsFolder,
-      dbOpenApiSpecFileName,
-    );
-
-    fs.writeFileSync(dbOpenApiSpecPath, JSON.stringify(response.data, null, 2));
-
-    const dbOpenApiSpec = JSON.parse(
-      fs.readFileSync(dbOpenApiSpecPath, "utf8"),
-    );
+    const dbOpenApiSpec = JSON.parse(JSON.stringify(response.data, null, 2));
 
     generateFunctionsOpenApiSpec();
 
