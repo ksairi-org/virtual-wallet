@@ -5,7 +5,11 @@ import { BaseTextInput, SubmitButton } from "@molecules";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useAuthStore } from "@react-auth-storage";
 import { useBooleanState } from "@react-hooks";
-import { patchProfiles, useGetWallets } from "@react-query-sdk";
+import {
+  patchProfiles,
+  useGetWallets,
+  useInvokeHelloWorld,
+} from "@react-query-sdk";
 import { supabase } from "@react-auth-client";
 import { Avatar } from "@organisms";
 import { useGetLoggedUserProfile } from "@hooks";
@@ -33,19 +37,18 @@ const ProfileScreen = () => {
     }),
   );
 
-  console.log("useGetEntityById(useGetWallets)", data, "Error:", error);
+  const { mutateAsync } = useInvokeHelloWorld();
+
+  console.log("useGetWallets", data, "Error:", error);
 
   useEffect(() => {
     const edgeFunc = async () => {
-      const { data, error } = await supabase.functions.invoke("hello-world", {
-        body: { name: "Mariano" },
-      });
-
-      console.log(data, error);
+      const response = await mutateAsync({ data: { name: "Mariano@@YYYYY" } });
+      console.log("response", response);
     };
 
     edgeFunc();
-  }, []);
+  }, [mutateAsync]);
 
   useEffect(() => {
     setAvatarUrl(profilePhotoUrl);

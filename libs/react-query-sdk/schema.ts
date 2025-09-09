@@ -337,6 +337,12 @@ export type PatchWalletsParams = {
     currency_id?: RowFilterWalletsCurrencyIdParameter;
     user_id?: RowFilterWalletsUserIdParameter;
 };
+export type InvokeHelloWorldBody = {
+    name: string;
+};
+export type InvokeHelloWorld200 = {
+    message?: string;
+};
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 /**
  * @summary OpenAPI description (this document)
@@ -1333,5 +1339,53 @@ export const usePatchWallets = <TError = unknown, TContext = unknown>(options?: 
     params?: PatchWalletsParams;
 }, TContext> => {
     const mutationOptions = getPatchWalletsMutationOptions(options);
+    return useMutation(mutationOptions, queryClient);
+};
+/**
+ * @summary Invoke hello-world function
+ */
+export const invokeHelloWorld = (invokeHelloWorldBody: InvokeHelloWorldBody, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<InvokeHelloWorld200>({ url: `/functions/v1/hello-world`, method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        data: invokeHelloWorldBody, signal
+    }, options);
+};
+export const getInvokeHelloWorldMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
+        data: InvokeHelloWorldBody;
+    }, TContext>;
+    request?: SecondParameter<typeof customAxios>;
+}): UseMutationOptions<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
+    data: InvokeHelloWorldBody;
+}, TContext> => {
+    const mutationKey = ['invokeHelloWorld'];
+    const { mutation: mutationOptions, request: requestOptions } = options ?
+        options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+            options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey, }, request: undefined };
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof invokeHelloWorld>>, {
+        data: InvokeHelloWorldBody;
+    }> = (props) => {
+        const { data } = props ?? {};
+        return invokeHelloWorld(data, requestOptions);
+    };
+    return { mutationFn, ...mutationOptions };
+};
+export type InvokeHelloWorldMutationResult = NonNullable<Awaited<ReturnType<typeof invokeHelloWorld>>>;
+export type InvokeHelloWorldMutationBody = InvokeHelloWorldBody;
+export type InvokeHelloWorldMutationError = unknown;
+/**
+* @summary Invoke hello-world function
+*/
+export const useInvokeHelloWorld = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
+        data: InvokeHelloWorldBody;
+    }, TContext>;
+    request?: SecondParameter<typeof customAxios>;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
+    data: InvokeHelloWorldBody;
+}, TContext> => {
+    const mutationOptions = getInvokeHelloWorldMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };

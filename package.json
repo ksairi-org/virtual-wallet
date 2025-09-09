@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "yarn generate:hooks && yarn expo start",
+    "start": "yarn generate:open-api-hooks && yarn expo start",
     "config-envs": "doppler run -p mobile -c $0 -- doppler secrets substitute env.template.yaml --output .env",
     "dev-client-ios": "yarn config-envs $0 && dotenv -e .env -- eas build --platform ios --profile dev-client-ios --local",
     "dev-client-android": "yarn config-envs $0 && dotenv -e .env -- eas build --platform android --profile dev-client-android --local",
@@ -17,8 +17,8 @@
     "postinstall": "husky",
     "lint": "expo lint --fix",
     "check:tsc": "tsc --noEmit",
-    "generate:spec": "node libs/react-query-sdk/download-spec.js",
-    "generate:hooks": "yarn generate:spec && yarn orval --config libs/react-query-sdk/orval.config.ts",
+    "generate:open-api-spec": "node libs/react-query-sdk/scripts/generate-open-api-spec.js",
+    "generate:open-api-hooks": "yarn generate:open-api-spec && yarn orval --config libs/react-query-sdk/orval.config.ts",
     "deploy-supabase-functions-stg": "yarn supabase functions deploy --project-ref oidpaoqsngnydihqkgok",
     "deploy-supabase-functions-prod": "yarn supabase functions deploy --project-ref icftqbzrrsqwzsuqgmxd"
   },

@@ -1,4 +1,5 @@
 import { defineConfig } from "orval";
+import { scriptsFolder } from "./constants";
 
 const infiniteQueryOperationNames: string[] = []; // input function names that need to support infinite querying
 
@@ -19,13 +20,56 @@ const operationOverrides = infiniteQueryOperationNames.reduce(
 if (typeof process.env.EXPO_PUBLIC_SERVER_URL !== "string") {
   throw new Error("EXPO_PUBLIC_SERVER_URL is not defined in the process");
 }
+// export default defineConfig({
+//   "react-sdk": {
+//     input: "./supabase-spec.json",
+//     hooks: {
+//       afterAllFilesWrite: [
+//         `node ${__dirname}/adjust-responses.js`,
+//         `node ${__dirname}/adjust-errors.js`,
+//       ],
+//     },
+//     output: {
+//       target: "./schema.ts",
+//       client: "react-query",
+//       override: {
+//         mutator: {
+//           path: "./custom-axios.ts",
+//           name: "customAxiosRestApi",
+//         },
+//         operations: operationOverrides,
+//       },
+//     },
+//   },
+//   "functions-sdk": {
+//     input: "./functions-spec.json",
+//     hooks: {
+//       afterAllFilesWrite: [
+//         `node ${__dirname}/adjust-responses.js`,
+//         `node ${__dirname}/adjust-errors.js`,
+//       ],
+//     },
+//     output: {
+//       target: "./edge-functions-schema.ts",
+//       client: "react-query",
+//       override: {
+//         mutator: {
+//           path: "./custom-axios.ts",
+//           name: "customAxiosEdgeFunctions",
+//         },
+//       },
+//     },
+//   },
+// });
+
 export default defineConfig({
   "react-sdk": {
-    input: "./supabase-spec.json",
+    input: "./specs/open-api-spec.json",
     hooks: {
       afterAllFilesWrite: [
-        `node ${__dirname}/adjust-responses.js`,
-        `node ${__dirname}/adjust-errors.js`,
+        `node ${__dirname}/${scriptsFolder}/clean-directory.js`,
+        `node ${__dirname}/${scriptsFolder}/adjust-responses.js`,
+        `node ${__dirname}/${scriptsFolder}/adjust-errors.js`,
       ],
     },
     output: {

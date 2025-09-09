@@ -2,10 +2,10 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { tsquery } from "@phenomnomnominal/tsquery";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import path, { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(dirname(__filename));
 
 const schemaFilePath = resolve(__dirname, "schema.ts");
 const contents = readFileSync(schemaFilePath, "utf-8");

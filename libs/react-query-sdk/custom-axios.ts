@@ -2,47 +2,66 @@ import { setupAxiosInterceptors } from "@react-auth-setup";
 import { useAuthStore } from "@react-auth-storage";
 import type { AxiosError, AxiosRequestConfig } from "axios";
 import axios from "axios";
+import { functionsUrlSuffix } from "./constants";
 
 const apiAxiosInstance = axios.create({
   paramsSerializer: { indexes: null },
-  baseURL: process.env.EXPO_PUBLIC_SERVER_URL + "/rest/v1/",
+  baseURL: process.env.EXPO_PUBLIC_OPEN_API_SERVER_URL,
   headers: {
     apikey: process.env.EXPO_PUBLIC_SUPABASE_API_KEY,
   },
 });
 
-setupAxiosInterceptors({
-  axiosInstance: apiAxiosInstance,
-  customErrorMiddleware: async (error) => {
-    if (error?.response.status === 401) {
-      console.log("401 error - trying to refresh session", error);
-      const accessToken = await useAuthStore.getState().refreshSession();
-      if (accessToken) {
-        const originalRequest = error.config;
-        // update the token in the original request and retry
-        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-        console.log("Retrying");
-        return apiAxiosInstance(originalRequest);
-      }
-    }
-    throw error;
+const functionsAxiosInstance = axios.create({
+  paramsSerializer: { indexes: null },
+  baseURL: process.env.EXPO_PUBLIC_SERVER_URL,
+  headers: {
+    apikey: process.env.EXPO_PUBLIC_SUPABASE_API_KEY,
   },
 });
 
-// add a second `options` argument here if you want to pass extra options to each generated query
-const customAxios = <T>(
+// Setup interceptors for both instances
+const setupInterceptors = (instance: typeof apiAxiosInstance) => {
+  setupAxiosInterceptors({
+    axiosInstance: instance,
+    customErrorMiddleware: async (error) => {
+      if (error?.response.status === 401) {
+        console.log("401 error - trying to refresh session", error);
+        const accessToken = await useAuthStore.getState().refreshSession();
+        if (accessToken) {
+          const originalRequest = error.config;
+          // update the token in the original request and retry
+          originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+          console.log("Retrying");
+          return instance(originalRequest);
+        }
+      }
+      throw error;
+    },
+  });
+};
+
+setupInterceptors(apiAxiosInstance);
+setupInterceptors(functionsAxiosInstance);
+
+const customAxios = async <T>(
   config: AxiosRequestConfig,
   options?: AxiosRequestConfig,
-): Promise<T> =>
-  apiAxiosInstance
-    .request({
+): Promise<T> => {
+  // Determine which instance to use based on URL path
+  const isAFunction = config.url?.startsWith(functionsUrlSuffix);
+
+  const instance = isAFunction ? functionsAxiosInstance : apiAxiosInstance;
+  try {
+    const { data } = await instance.request({
       ...config,
       ...options,
-    })
-    .then(({ data }) => data)
-    .catch((e) => {
-      throw e;
     });
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
 
 type ErrorType<Error> = AxiosError<Error>;
 

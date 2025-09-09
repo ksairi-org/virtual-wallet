@@ -4,10 +4,10 @@ import { fileURLToPath } from "url";
 import { tsquery } from "@phenomnomnominal/tsquery";
 import { isPropertySignature, isTypeReferenceNode } from "typescript";
 import { constantify } from "inflected";
-import { dirname } from "path";
+import path, { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(dirname(__filename));
 
 const schemaFilePath = resolve(__dirname, "schema.ts");
 const errorFilePath = resolve(__dirname, "errors.ts");
