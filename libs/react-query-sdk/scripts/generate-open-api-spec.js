@@ -9,31 +9,35 @@ const {
 } = require("../constants.js");
 const path = require("path");
 
-const { generateFunctionsSpec } = require("./generate-functions-spec.js");
+const {
+  generateFunctionsOpenApiSpec,
+} = require("./generate-functions-open-api-spec.js");
 
 const parentDirname = path.dirname(__dirname);
 
 const generateOpenApiSpec = async () => {
-  const openApiUrl = process.env.EXPO_PUBLIC_OPEN_API_SERVER_URL;
   const apiKey = process.env.EXPO_PUBLIC_SUPABASE_API_KEY;
 
-  if (!process.env.EXPO_PUBLIC_SERVER_URL || !apiKey) {
+  if (!process.env.EXPO_PUBLIC_OPEN_API_SERVER_URL || !apiKey) {
     console.error(
-      "❌ Missing required environment variables: process.env.EXPO_PUBLIC_SERVER_URL and EXPO_PUBLIC_SUPABASE_API_KEY",
+      "❌ Missing required environment variables: process.env.EXPO_PUBLIC_OPEN_API_SERVER_URL and EXPO_PUBLIC_SUPABASE_API_KEY",
     );
     process.exit(1);
   }
 
   try {
-    console.log("🔄 Downloading Supabase OpenAPI spec...");
+    console.log("🔄 Downloading OpenAPI spec...");
 
-    const response = await axios.get(openApiUrl, {
-      headers: {
-        apikey: apiKey,
-        Accept: "application/json",
+    const response = await axios.get(
+      process.env.EXPO_PUBLIC_OPEN_API_SERVER_URL,
+      {
+        headers: {
+          apikey: apiKey,
+          Accept: "application/json",
+        },
+        timeout: 30000,
       },
-      timeout: 30000,
-    });
+    );
     // Ensure the response is valid JSON
     if (typeof response !== "object" || response?.status !== 200) {
       throw new Error("Invalid OpenAPI specification received");
@@ -51,7 +55,7 @@ const generateOpenApiSpec = async () => {
       fs.readFileSync(dbOpenApiSpecPath, "utf8"),
     );
 
-    generateFunctionsSpec();
+    generateFunctionsOpenApiSpec();
 
     const functionsOpenApiSpec = JSON.parse(
       fs.readFileSync(
@@ -87,7 +91,7 @@ const generateOpenApiSpec = async () => {
     );
     fs.writeFileSync(openApiSpecPath, JSON.stringify(combinedSpec, null, 2));
 
-    console.log("✅ Supabase OpenAPI spec downloaded successfully");
+    console.log("✅ OpenAPI spec downloaded successfully");
     console.log(`📁 Saved to: ${openApiSpecPath}`);
   } catch (error) {
     console.error(error);

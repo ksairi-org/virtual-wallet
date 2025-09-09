@@ -8,7 +8,7 @@ const {
 const parentDirname = path.dirname(__dirname);
 
 /**
- * Generate OpenAPI spec from Edge Functions directory
+ * Generate OpenAPI spec from Functions directory
  * Scans supabase/functions directory for function definitions
  */
 const parseFunctions = () => {
@@ -24,14 +24,14 @@ const parseFunctions = () => {
   const baseSpec = {
     openapi: "3.0.0",
     info: {
-      title: "Supabase Edge Functions API",
+      title: "Functions API",
       version: "1.0.0",
-      description: "Auto-generated Edge Functions API specification",
+      description: "Auto-generated Functions API specification",
     },
     servers: [
       {
         url: "/",
-        description: "Edge Functions endpoint",
+        description: "Functions endpoint",
       },
     ],
     paths: {},
@@ -284,24 +284,23 @@ const createEmptySpec = () => {
   return {
     openapi: "3.0.0",
     info: {
-      title: "Supabase Edge Functions API",
+      title: "Functions API",
       version: "1.0.0",
-      description: "Edge Functions API specification",
+      description: "Functions API specification",
     },
     servers: [
       {
         url: "/",
-        description: "Edge Functions endpoint",
+        description: "Functions endpoint",
       },
     ],
     paths: {},
   };
 };
 
-// Main execution
-const generateFunctionsSpec = () => {
+const generateFunctionsOpenApiSpec = () => {
   try {
-    console.log("Generating Edge Functions OpenAPI spec...");
+    console.log("Generating Functions OpenAPI spec...");
     const spec = parseFunctions();
 
     // Write to file
@@ -323,4 +322,4 @@ const generateFunctionsSpec = () => {
   }
 };
 
-module.exports = { generateFunctionsSpec };
+module.exports = { generateFunctionsOpenApiSpec };
