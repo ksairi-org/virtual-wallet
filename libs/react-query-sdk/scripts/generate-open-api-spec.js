@@ -1,13 +1,17 @@
 const fs = require("fs");
 const axios = require("axios");
-const { functionsUrlSuffix, specsFolder } = require("../constants.js");
+const {
+  functionsUrlSuffix,
+  specsFolder,
+  dbOpenApiSpecFileName,
+  openApiSpecFileName,
+  functionsOpenApiSpecFileName,
+} = require("../constants.js");
 const path = require("path");
 
-const parentDirname = path.dirname(__dirname);
+const { generateFunctionsSpec } = require("./generate-functions-spec.js");
 
-const dbOpenApiSpecFileName = "./db-open-api-spec.json";
-const functionsOpenApiSpecFileName = "./functions-spec.json";
-const openApiSpecFileName = "./open-api-spec.json";
+const parentDirname = path.dirname(__dirname);
 
 const generateOpenApiSpec = async () => {
   const openApiUrl = process.env.EXPO_PUBLIC_OPEN_API_SERVER_URL;
@@ -46,6 +50,8 @@ const generateOpenApiSpec = async () => {
     const dbOpenApiSpec = JSON.parse(
       fs.readFileSync(dbOpenApiSpecPath, "utf8"),
     );
+
+    generateFunctionsSpec();
 
     const functionsOpenApiSpec = JSON.parse(
       fs.readFileSync(

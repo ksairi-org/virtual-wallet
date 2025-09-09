@@ -338,10 +338,13 @@ export type PatchWalletsParams = {
     user_id?: RowFilterWalletsUserIdParameter;
 };
 export type InvokeHelloWorldBody = {
-    name: string;
+    [key: string]: unknown;
 };
 export type InvokeHelloWorld200 = {
-    message?: string;
+    [key: string]: unknown;
+};
+export type InvokeHelloWorld400 = {
+    error?: string;
 };
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 /**
@@ -1350,7 +1353,7 @@ export const invokeHelloWorld = (invokeHelloWorldBody: InvokeHelloWorldBody, opt
         data: invokeHelloWorldBody, signal
     }, options);
 };
-export const getInvokeHelloWorldMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+export const getInvokeHelloWorldMutationOptions = <TError = InvokeHelloWorld400, TContext = unknown>(options?: {
     mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
         data: InvokeHelloWorldBody;
     }, TContext>;
@@ -1374,11 +1377,11 @@ export const getInvokeHelloWorldMutationOptions = <TError = unknown, TContext = 
 };
 export type InvokeHelloWorldMutationResult = NonNullable<Awaited<ReturnType<typeof invokeHelloWorld>>>;
 export type InvokeHelloWorldMutationBody = InvokeHelloWorldBody;
-export type InvokeHelloWorldMutationError = unknown;
+export type InvokeHelloWorldMutationError = InvokeHelloWorld400;
 /**
 * @summary Invoke hello-world function
 */
-export const useInvokeHelloWorld = <TError = unknown, TContext = unknown>(options?: {
+export const useInvokeHelloWorld = <TError = InvokeHelloWorld400, TContext = unknown>(options?: {
     mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
         data: InvokeHelloWorldBody;
     }, TContext>;
