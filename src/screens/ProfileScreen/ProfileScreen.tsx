@@ -8,6 +8,7 @@ import { useBooleanState } from "@react-hooks";
 import {
   patchProfiles,
   useGetWallets,
+  useInvokeByeWorld,
   useInvokeHelloWorld,
 } from "@react-query-sdk";
 import { supabase } from "@react-auth-client";
@@ -15,6 +16,7 @@ import { Avatar } from "@organisms";
 import { useGetLoggedUserProfile } from "@hooks";
 import { getQueryFilters, showAlert } from "@utils";
 import { BUCKET_NAME } from "@constants";
+import { ActivityIndicator } from "react-native";
 
 const profilePhotoFileName = "profile-photo";
 
@@ -37,18 +39,28 @@ const ProfileScreen = () => {
     }),
   );
 
-  const { mutateAsync } = useInvokeHelloWorld();
+  const { mutateAsync, isPending: isPendingHello } = useInvokeHelloWorld();
+  const { mutateAsync: byeWorld, isPending: isPendingBye } =
+    useInvokeByeWorld();
 
   console.log("useGetWallets", data, "Error:", error);
+  console.log("isPendingHello", isPendingHello);
+  console.log("isPendingBye", isPendingBye);
 
   useEffect(() => {
-    const edgeFunc = async () => {
+    const helloFunc = async () => {
       const response = await mutateAsync({ data: { name: "Mariano@@YYYYY" } });
       console.log("response", response);
     };
 
-    edgeFunc();
-  }, [mutateAsync]);
+    const byeFunc = async () => {
+      const response = await byeWorld({ data: { name: "Mariano" } });
+      console.log("response", response);
+    };
+
+    helloFunc();
+    byeFunc();
+  }, [mutateAsync, byeWorld]);
 
   useEffect(() => {
     setAvatarUrl(profilePhotoUrl);
@@ -83,7 +95,7 @@ const ProfileScreen = () => {
       showAlert(e.message);
     }
   };
-  return (
+  return !isPendingHello && !isPendingBye ? (
     <Containers.Screen>
       <Containers.SubY>
         <BodyRegularSm>{"Email"}</BodyRegularSm>
@@ -119,6 +131,8 @@ const ProfileScreen = () => {
         </SubmitButton>
       </Containers.SubY>
     </Containers.Screen>
+  ) : (
+    <ActivityIndicator size={"small"} />
   );
 };
 

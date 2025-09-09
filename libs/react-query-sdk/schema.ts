@@ -73,6 +73,9 @@ export type CurrenciesBody = Currencies;
  * wallets
  */
 export type WalletsBody = Wallets;
+export type InvokeByeWorldBody = {
+    [key: string]: unknown;
+};
 export type PreferParamsParameter = typeof PreferParamsParameter[keyof typeof PreferParamsParameter];
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PreferParamsParameter = {} as const;
@@ -337,8 +340,11 @@ export type PatchWalletsParams = {
     currency_id?: RowFilterWalletsCurrencyIdParameter;
     user_id?: RowFilterWalletsUserIdParameter;
 };
-export type InvokeHelloWorldBody = {
+export type InvokeByeWorld200 = {
     [key: string]: unknown;
+};
+export type InvokeByeWorld400 = {
+    error?: string;
 };
 export type InvokeHelloWorld200 = {
     [key: string]: unknown;
@@ -1345,21 +1351,69 @@ export const usePatchWallets = <TError = unknown, TContext = unknown>(options?: 
     return useMutation(mutationOptions, queryClient);
 };
 /**
+ * @summary Invoke bye-world function
+ */
+export const invokeByeWorld = (invokeByeWorldBody: InvokeByeWorldBody, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<InvokeByeWorld200>({ url: `/functions/v1/bye-world`, method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        data: invokeByeWorldBody, signal
+    }, options);
+};
+export const getInvokeByeWorldMutationOptions = <TError = InvokeByeWorld400, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeByeWorld>>, TError, {
+        data: InvokeByeWorldBody;
+    }, TContext>;
+    request?: SecondParameter<typeof customAxios>;
+}): UseMutationOptions<Awaited<ReturnType<typeof invokeByeWorld>>, TError, {
+    data: InvokeByeWorldBody;
+}, TContext> => {
+    const mutationKey = ['invokeByeWorld'];
+    const { mutation: mutationOptions, request: requestOptions } = options ?
+        options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+            options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey, }, request: undefined };
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof invokeByeWorld>>, {
+        data: InvokeByeWorldBody;
+    }> = (props) => {
+        const { data } = props ?? {};
+        return invokeByeWorld(data, requestOptions);
+    };
+    return { mutationFn, ...mutationOptions };
+};
+export type InvokeByeWorldMutationResult = NonNullable<Awaited<ReturnType<typeof invokeByeWorld>>>;
+export type InvokeByeWorldMutationBody = InvokeByeWorldBody;
+export type InvokeByeWorldMutationError = InvokeByeWorld400;
+/**
+* @summary Invoke bye-world function
+*/
+export const useInvokeByeWorld = <TError = InvokeByeWorld400, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeByeWorld>>, TError, {
+        data: InvokeByeWorldBody;
+    }, TContext>;
+    request?: SecondParameter<typeof customAxios>;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof invokeByeWorld>>, TError, {
+    data: InvokeByeWorldBody;
+}, TContext> => {
+    const mutationOptions = getInvokeByeWorldMutationOptions(options);
+    return useMutation(mutationOptions, queryClient);
+};
+/**
  * @summary Invoke hello-world function
  */
-export const invokeHelloWorld = (invokeHelloWorldBody: InvokeHelloWorldBody, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+export const invokeHelloWorld = (invokeByeWorldBody: InvokeByeWorldBody, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
     return customAxios<InvokeHelloWorld200>({ url: `/functions/v1/hello-world`, method: 'POST',
         headers: { 'Content-Type': 'application/json', },
-        data: invokeHelloWorldBody, signal
+        data: invokeByeWorldBody, signal
     }, options);
 };
 export const getInvokeHelloWorldMutationOptions = <TError = InvokeHelloWorld400, TContext = unknown>(options?: {
     mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
-        data: InvokeHelloWorldBody;
+        data: InvokeByeWorldBody;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
 }): UseMutationOptions<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
-    data: InvokeHelloWorldBody;
+    data: InvokeByeWorldBody;
 }, TContext> => {
     const mutationKey = ['invokeHelloWorld'];
     const { mutation: mutationOptions, request: requestOptions } = options ?
@@ -1368,7 +1422,7 @@ export const getInvokeHelloWorldMutationOptions = <TError = InvokeHelloWorld400,
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey, }, request: undefined };
     const mutationFn: MutationFunction<Awaited<ReturnType<typeof invokeHelloWorld>>, {
-        data: InvokeHelloWorldBody;
+        data: InvokeByeWorldBody;
     }> = (props) => {
         const { data } = props ?? {};
         return invokeHelloWorld(data, requestOptions);
@@ -1376,18 +1430,18 @@ export const getInvokeHelloWorldMutationOptions = <TError = InvokeHelloWorld400,
     return { mutationFn, ...mutationOptions };
 };
 export type InvokeHelloWorldMutationResult = NonNullable<Awaited<ReturnType<typeof invokeHelloWorld>>>;
-export type InvokeHelloWorldMutationBody = InvokeHelloWorldBody;
+export type InvokeHelloWorldMutationBody = InvokeByeWorldBody;
 export type InvokeHelloWorldMutationError = InvokeHelloWorld400;
 /**
 * @summary Invoke hello-world function
 */
 export const useInvokeHelloWorld = <TError = InvokeHelloWorld400, TContext = unknown>(options?: {
     mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
-        data: InvokeHelloWorldBody;
+        data: InvokeByeWorldBody;
     }, TContext>;
     request?: SecondParameter<typeof customAxios>;
 }, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof invokeHelloWorld>>, TError, {
-    data: InvokeHelloWorldBody;
+    data: InvokeByeWorldBody;
 }, TContext> => {
     const mutationOptions = getInvokeHelloWorldMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
