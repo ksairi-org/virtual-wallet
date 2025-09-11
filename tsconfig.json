@@ -40,7 +40,8 @@
       "@images": ["src/components/atoms/images"],
       "@stores": ["src/stores/index.ts"],
       "@constants": ["src/constants"],
-      "@hooks": ["src/hooks"]
+      "@hooks": ["src/hooks"],
+      "@i18n": ["src/i18n"]
     }
   }
 }

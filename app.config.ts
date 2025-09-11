@@ -7,7 +7,6 @@ import type { ConfigContext, ExpoConfig } from "expo/config";
  * @param params.config Expo config
  * @returns Expo config mode
  */
-// eslint-disable-next-line import/no-default-export
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: process.env.DISPLAY_NAME,
@@ -113,6 +112,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     "expo-secure-store",
+    "expo-localization",
   ],
   extra: {
     eas: {

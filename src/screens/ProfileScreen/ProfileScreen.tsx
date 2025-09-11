@@ -17,6 +17,7 @@ import { useGetLoggedUserProfile } from "@hooks";
 import { getQueryFilters, showAlert } from "@utils";
 import { BUCKET_NAME } from "@constants";
 import { ActivityIndicator } from "react-native";
+import { Trans } from "@lingui/react/macro";
 
 const profilePhotoFileName = "profile-photo";
 
@@ -104,7 +105,9 @@ const ProfileScreen = () => {
 
         <Spacer size={"$button-md"} />
 
-        <BodyRegularSm>{"Fullname"}</BodyRegularSm>
+        <BodyRegularSm>
+          <Trans>{"Full name"}</Trans>
+        </BodyRegularSm>
         <Spacer size={"$md"} />
         <BaseTextInput value={firstName + " " + lastName} />
 
@@ -126,7 +129,7 @@ const ProfileScreen = () => {
 
         <SubmitButton onPress={handleOnPressLogout} loading={isLoading}>
           <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
-            {"Sign Out"}
+            <Trans>{"Sign Out"}</Trans>
           </LabelSemiboldLg>
         </SubmitButton>
       </Containers.SubY>

@@ -13,6 +13,7 @@ import { SplashView } from "@react-native-splash-view";
 import { useCustomFonts } from "./hooks";
 import { themes } from "@theme";
 import { useDetectDeepLinkingWithHash } from "@hooks";
+import { LinguiClientProvider } from "@i18n";
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const splash = require("../../assets/splash.riv");
@@ -50,31 +51,33 @@ export default function App() {
   const { handleNavigationReady } = useDetectDeepLinkingWithHash(navigationRef);
 
   return (
-    <>
-      {!isAppReady ? null : (
-        <QueryClientProvider client={queryClient}>
-          <GestureHandlerRootView style={styles.gestureHandler}>
-            <TamaguiProvider
-              config={tamaguiConfig}
-              defaultTheme={isOSThemeDark ? "dark" : "light"}
-            >
-              <NavigationContainer
-                ref={navigationRef}
-                onReady={handleNavigationReady}
+    <LinguiClientProvider>
+      <>
+        {!isAppReady ? null : (
+          <QueryClientProvider client={queryClient}>
+            <GestureHandlerRootView style={styles.gestureHandler}>
+              <TamaguiProvider
+                config={tamaguiConfig}
+                defaultTheme={isOSThemeDark ? "dark" : "light"}
               >
-                <StatusBar barStyle={"default"} />
-                <RootStackNavigator />
-              </NavigationContainer>
-            </TamaguiProvider>
-          </GestureHandlerRootView>
-        </QueryClientProvider>
-      )}
-      <SplashView
-        style={getSplashViewStyle(isOSThemeDark)}
-        source={splash}
-        fadeOutDuration={SPLASH_FADE_OUT_DURATION_MS}
-        fadeOutDelay={2000}
-      />
-    </>
+                <NavigationContainer
+                  ref={navigationRef}
+                  onReady={handleNavigationReady}
+                >
+                  <StatusBar barStyle={"default"} />
+                  <RootStackNavigator />
+                </NavigationContainer>
+              </TamaguiProvider>
+            </GestureHandlerRootView>
+          </QueryClientProvider>
+        )}
+        <SplashView
+          style={getSplashViewStyle(isOSThemeDark)}
+          source={splash}
+          fadeOutDuration={SPLASH_FADE_OUT_DURATION_MS}
+          fadeOutDelay={2000}
+        />
+      </>
+    </LinguiClientProvider>
   );
 }

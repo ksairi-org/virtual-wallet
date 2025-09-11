@@ -8,6 +8,7 @@ import { BodyRegularMd } from "@fonts";
 import { showAlert } from "@utils";
 import { BUCKET_NAME } from "@constants";
 import { ActivityIndicator } from "react-native";
+import { Trans } from "@lingui/react/macro";
 
 type AvatarProps = {
   size: number;
@@ -124,7 +125,9 @@ const Avatar = ({
       )}
       <Containers.SubY>
         <CtaButton onPress={uploadAvatar} disabled={loading} loading={loading}>
-          <BodyRegularMd>{"Upload"}</BodyRegularMd>
+          <BodyRegularMd>
+            <Trans>{"Upload"}</Trans>
+          </BodyRegularMd>
         </CtaButton>
       </Containers.SubY>
     </Containers.SubY>

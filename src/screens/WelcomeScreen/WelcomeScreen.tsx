@@ -3,6 +3,7 @@ import { LabelSemiboldLg } from "@fonts";
 import { Containers } from "@ui-containers";
 import { CtaButton } from "@molecules";
 import { RootStackNavigatorScreenProps } from "@navigation/types";
+import { Trans } from "@lingui/react/macro";
 
 const WelcomeScreen = ({
   navigation,
@@ -18,7 +19,9 @@ const WelcomeScreen = ({
         <LabelSemiboldLg color={"$text-body"}>
           {"WelcomeScreen"}
         </LabelSemiboldLg>
-        <CtaButton onPress={handleOnPress}>{"Continue to App"}</CtaButton>
+        <CtaButton onPress={handleOnPress}>
+          <Trans>{"Continue to App"}</Trans>
+        </CtaButton>
       </Containers.SubY>
     </Containers.Screen>
   );
