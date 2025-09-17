@@ -87,7 +87,7 @@ const AnimatedSplashImage = ({
  * @returns {React.ReactElement} The component with Rive animation.
  */
 
-const getRiveSource = (source: any): RiveSourceResult => {
+const getRiveSource = (source: unknown): RiveSourceResult => {
   const { uri } = Image.resolveAssetSource(source);
   // 1. Remote file (http/https) → url
   if (/^https?:\/\//.test(uri)) {

@@ -9740,27 +9740,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-cli@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "dotenv-cli@npm:9.0.0"
-  dependencies:
-    cross-spawn: "npm:^7.0.6"
-    dotenv: "npm:^17.1.0"
-    dotenv-expand: "npm:^10.0.0"
-    minimist: "npm:^1.2.6"
-  bin:
-    dotenv: cli.js
-  checksum: 10c0/6a77003f8cc63410098a0d9cf8dff10f97653fc077a07a5aa85a24e08f75f4b5c31d79734fecfca1d61959a206077717c0c895147d5b017e0b72f4410991a2f3
-  languageName: node
-  linkType: hard
-
-"dotenv-expand@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "dotenv-expand@npm:10.0.0"
-  checksum: 10c0/298f5018e29cfdcb0b5f463ba8e8627749103fbcf6cf81c561119115754ed582deee37b49dfc7253028aaba875ab7aea5fa90e5dac88e511d009ab0e6677924e
-  languageName: node
-  linkType: hard
-
 "dotenv-expand@npm:~11.0.6":
   version: 11.0.7
   resolution: "dotenv-expand@npm:11.0.7"
@@ -9781,13 +9760,6 @@ __metadata:
   version: 16.6.1
   resolution: "dotenv@npm:16.6.1"
   checksum: 10c0/15ce56608326ea0d1d9414a5c8ee6dcf0fffc79d2c16422b4ac2268e7e2d76ff5a572d37ffe747c377de12005f14b3cc22361e79fc7f1061cce81f77d2c973dc
-  languageName: node
-  linkType: hard
-
-"dotenv@npm:^17.1.0":
-  version: 17.2.0
-  resolution: "dotenv@npm:17.2.0"
-  checksum: 10c0/d4cb5c2a09c288c921ef47a78f51c765a763266e23e84465cde6a87b28b9f7fc5a9d1fe349ed3c880b4c7297f82dd736dba5b08fe95ce53833ce4a7258d0fc43
   languageName: node
   linkType: hard
 
@@ -18487,7 +18459,6 @@ __metadata:
     babel-preset-expo: "npm:~13.0.0"
     burnt: "npm:^0.13.0"
     date-fns: "npm:^4.1.0"
-    dotenv-cli: "npm:^9.0.0"
     eas-cli: "npm:16.17.0"
     eslint: "npm:^9.0.0"
     eslint-config-expo: "npm:~9.2.0"
