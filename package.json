@@ -4,7 +4,7 @@
   "main": "index.ts",
   "scripts": {
     "pre-start": "doppler run -p mobile -c $0 --command \"doppler secrets substitute env.template.yaml --output .env && $1\"",
-    "start": "yarn i18n-compile && yarn pre-start $0 \"yarn generate:open-api-hooks && yarn expo start\"",
+    "start": "yarn i18n-compile && yarn pre-start ${0:-stg} \"yarn generate:open-api-hooks && yarn expo start\"",
     "pre-build": "yarn i18n-compile && yarn build $0 \"$1\"",
     "build": "doppler run -p mobile -c $0 --command \"doppler secrets substitute env.template.yaml --output .env && yarn generate:open-api-hooks && $1\"",
     "dev-client-ios": "yarn pre-build $0 \"eas build --platform ios --profile dev-client-ios --local\"",
