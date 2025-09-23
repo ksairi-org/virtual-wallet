@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "yarn i18n-compile && yarn generate:open-api-hooks && yarn expo start",
-    "build": "doppler run -p mobile -c $0 --command \"doppler secrets substitute env.template.yaml --output .env && $1\"",
-    "pre-build": "yarn i18n-compile && yarn generate:open-api-hooks && yarn build $0 \"$1\"",
+    "pre-start": "doppler run -p mobile -c $0 --command \"doppler secrets substitute env.template.yaml --output .env && $1\"",
+    "start": "yarn i18n-compile && yarn pre-start $0 \"yarn generate:open-api-hooks && yarn expo start\"",
+    "pre-build": "yarn i18n-compile && yarn build $0 \"$1\"",
+    "build": "doppler run -p mobile -c $0 --command \"doppler secrets substitute env.template.yaml --output .env && yarn generate:open-api-hooks && $1\"",
     "dev-client-ios": "yarn pre-build $0 \"eas build --platform ios --profile dev-client-ios --local\"",
     "dev-client-android": "yarn pre-build $0 \"eas build --platform android --profile dev-client-android --local\"",
     "dev-client-ios-device": "yarn pre-build $0 \"eas build --platform ios --profile dev-client-ios-real-device --local\"",
