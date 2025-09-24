@@ -13,14 +13,17 @@ const WelcomeScreen = ({
     setKeyValue("hasSeenWelcomeScreen", true);
     navigation.navigate("HomeStackNavigator", { screen: "ProfileScreen" });
   };
+
   return (
-    <Containers.Screen backgroundColor={"$background-action"}>
+    <Containers.Screen backgroundColor={"$background-body"}>
       <Containers.SubY flex={1} alignItems="center" justifyContent="center">
         <LabelSemiboldLg color={"$text-body"}>
           {"WelcomeScreen"}
         </LabelSemiboldLg>
         <CtaButton onPress={handleOnPress}>
-          <Trans>{"Continue to App"}</Trans>
+          <LabelSemiboldLg color={"$text-success"}>
+            <Trans>{"Continue to App"}</Trans>
+          </LabelSemiboldLg>
         </CtaButton>
       </Containers.SubY>
     </Containers.Screen>

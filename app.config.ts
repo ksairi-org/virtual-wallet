@@ -22,7 +22,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     backgroundColor: "#dce9ed",
   },
   ios: {
-    bundleIdentifier: process.env.EXPO_PUBLIC_APP_IDENTIFIER,
+    bundleIdentifier: process.env.APP_IDENTIFIER,
     googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICES_INFOPLIST_PATH,
     infoPlist: {
       UIBackgroundModes: ["fetch", "remote-notification"],
@@ -49,7 +49,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#000000",
     },
-    package: process.env.EXPO_PUBLIC_APP_IDENTIFIER,
+    package: process.env.APP_IDENTIFIER,
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON_PATH,
     permissions: ["android.permission.POST_NOTIFICATIONS"],
   },

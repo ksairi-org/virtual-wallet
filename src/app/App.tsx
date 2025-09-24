@@ -49,7 +49,6 @@ export default function App() {
     useRef<NavigationContainerRef<ReactNavigation.RootParamList>>(null);
 
   const { handleNavigationReady } = useDetectDeepLinkingWithHash(navigationRef);
-
   return (
     <LinguiClientProvider>
       <>

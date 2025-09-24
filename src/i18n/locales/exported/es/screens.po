@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: ../../screens/WelcomeScreen/WelcomeScreen.tsx:23
+#: ../../screens/WelcomeScreen/WelcomeScreen.tsx:25
 msgid "Continue to App"
 msgstr "Continuar a la App"
 

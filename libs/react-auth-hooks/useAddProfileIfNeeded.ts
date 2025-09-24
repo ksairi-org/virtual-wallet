@@ -1,9 +1,10 @@
 import {
-  GetProfilesParams,
+  getGetProfilesQueryKey,
+  getProfiles,
   Profiles,
-  useGetProfiles,
   usePostProfiles,
 } from "@react-query-sdk";
+import { useQueryClient } from "@tanstack/react-query";
 import { getQueryFilters } from "@utils";
 import { useCallback, useState } from "react";
 
@@ -18,33 +19,32 @@ const getErrorMessage = (error: unknown) => {
 };
 
 const useAddProfileIfNeeded = () => {
-  const [userId, setUserId] = useState<
-    GetProfilesParams["user_id"] | undefined
-  >();
-
-  const { refetch: fetchProfiles, error: getProfileError } = useGetProfiles(
-    getQueryFilters({ user_id: userId }),
-    {
-      query: { enabled: false },
-    },
-  );
+  const queryClient = useQueryClient();
+  const [queryError, setQueryError] = useState();
 
   const { mutateAsync: addProfile, error: addProfileError } = usePostProfiles();
 
   const addProfileIfNeeded = useCallback(
     async (params: Profiles) => {
-      setUserId(params.user_id);
-      const { data: userProfileData } = await fetchProfiles();
-      if (!userProfileData?.length) {
-        await addProfile({ data: params });
+      try {
+        const userProfileData = await queryClient.fetchQuery({
+          queryKey: getGetProfilesQueryKey(),
+          queryFn: () =>
+            getProfiles(getQueryFilters({ user_id: params.user_id })),
+        });
+        if (!userProfileData?.length) {
+          await addProfile({ data: params });
+        }
+      } catch (error) {
+        setQueryError(error);
       }
     },
-    [addProfile, fetchProfiles],
+    [addProfile, queryClient],
   );
 
   return {
     addProfileIfNeeded,
-    error: getErrorMessage(getProfileError || addProfileError),
+    error: getErrorMessage(queryError || addProfileError),
   };
 };
 

@@ -20,6 +20,7 @@ const LinguiClientProvider = ({ children }: LinguiClientProviderProps) => {
     if (Platform.OS === "ios") {
       Settings.set({ AppleLanguages: newLocale });
     }
+    console.log(newLocale);
     setI18nLocale(newLocale);
   }, []);
 

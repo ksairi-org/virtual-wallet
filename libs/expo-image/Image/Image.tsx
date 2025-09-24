@@ -15,6 +15,7 @@ import { styled } from "tamagui";
 import { Error } from "../Error";
 import { getImageDimensions } from "@react-native-functions";
 import { useFontScale } from "@react-native-hooks";
+import DEFAULT_NO_IMAGE from "../files/example.jpg";
 
 const StyledExpoImage = styled(UnstyledExpoImage, {});
 
@@ -24,6 +25,7 @@ type ImageProps = Omit<StyledImageProps, "width" | "height"> &
   Omit<ExpoImageProps, "transition"> & {
     ref?: React.Ref<ComponentRef<typeof StyledExpoImage>>;
   };
+
 const Image = ({
   ErrorComponent,
   errorImageSource,
@@ -81,6 +83,25 @@ const Image = ({
         ErrorComponent={ErrorComponent}
         {...imageProps}
         source={errorImageSource}
+        width={maybeScaledWidth}
+        height={maybeScaledHeight}
+      />
+    );
+  }
+
+  if (
+    typeof imageProps.source === "object" &&
+    imageProps.source !== null &&
+    "uri" in imageProps.source &&
+    !imageProps.source.uri
+  ) {
+    return (
+      <StyledExpoImage
+        ref={ref}
+        {...imageProps}
+        source={DEFAULT_NO_IMAGE}
+        onLoad={onLoad}
+        onError={onError}
         width={maybeScaledWidth}
         height={maybeScaledHeight}
       />

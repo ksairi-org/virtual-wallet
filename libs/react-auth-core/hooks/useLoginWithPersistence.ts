@@ -9,7 +9,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuthStore } from "@react-auth-storage";
 import { supabase } from "@react-auth-client";
 import { useAddProfileIfNeeded } from "@react-auth-hooks";
-import { useUserStore } from "@stores";
 
 type Status = "idle" | "loading" | "error" | "success";
 
@@ -22,8 +21,6 @@ const useLoginWithPersistence = () => {
   const [loginWithSocialError, setLoginWithSocialError] = useState<string>();
   const { addProfileIfNeeded, error: addProfileError } =
     useAddProfileIfNeeded();
-
-  const { hasSeenWelcomeScreen } = useUserStore((state) => state);
 
   useEffect(() => {
     setLoginWithSocialError(addProfileError);
@@ -47,13 +44,9 @@ const useLoginWithPersistence = () => {
         if (error) {
           throw error;
         }
-        if (!hasSeenWelcomeScreen) {
-          await addProfileIfNeeded({ user_id: data.user.id });
-        }
-
         setLoggedUserData(data);
+        await addProfileIfNeeded({ user_id: data.user.id });
         setStatus("success");
-
         return data.user;
       } catch (error) {
         console.error("Login failed with social", error);
@@ -61,7 +54,7 @@ const useLoginWithPersistence = () => {
         setLoginWithSocialError(error);
       }
     },
-    [addProfileIfNeeded, hasSeenWelcomeScreen, setLoggedUserData],
+    [addProfileIfNeeded, setLoggedUserData],
   );
 
   const handleLogInWithEmail = useCallback(
@@ -73,10 +66,8 @@ const useLoginWithPersistence = () => {
         if (error) {
           throw error;
         }
-        if (!hasSeenWelcomeScreen) {
-          await addProfileIfNeeded({ user_id: data.user.id });
-        }
         setLoggedUserData(data);
+        await addProfileIfNeeded({ user_id: data.user.id });
         setStatus("success");
         return data.user;
       } catch (error) {
@@ -85,7 +76,7 @@ const useLoginWithPersistence = () => {
         throw error;
       }
     },
-    [addProfileIfNeeded, hasSeenWelcomeScreen, setLoggedUserData],
+    [addProfileIfNeeded, setLoggedUserData],
   );
 
   return {

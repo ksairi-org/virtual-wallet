@@ -13,6 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: ../../components/organisms/Avatar/Avatar.tsx:129
+#: ../../components/organisms/Avatar/Avatar.tsx:115
 msgid "Upload"
 msgstr "Subir"

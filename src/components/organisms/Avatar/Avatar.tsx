@@ -7,7 +7,6 @@ import { CtaButton } from "@molecules";
 import { BodyRegularMd } from "@fonts";
 import { showAlert } from "@utils";
 import { BUCKET_NAME } from "@constants";
-import { ActivityIndicator } from "react-native";
 import { Trans } from "@lingui/react/macro";
 
 type AvatarProps = {
@@ -102,27 +101,14 @@ const Avatar = ({
       } else {
         throw error;
       }
+    } finally {
       setLoading(false);
     }
   };
 
   return (
     <Containers.SubY>
-      {avatarUrl ? (
-        <Image
-          source={{ uri: avatarUrl }}
-          style={avatarSize}
-          objectFit="cover"
-        />
-      ) : (
-        <Containers.SubY
-          style={avatarSize}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <ActivityIndicator size={"small"} />
-        </Containers.SubY>
-      )}
+      <Image source={{ uri: avatarUrl }} style={avatarSize} objectFit="cover" />
       <Containers.SubY>
         <CtaButton onPress={uploadAvatar} disabled={loading} loading={loading}>
           <BodyRegularMd>
