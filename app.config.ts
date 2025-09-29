@@ -68,9 +68,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         ios: {
           useFrameworks: "static",
+          forceStaticLinking: ["RNFBApp", "RNFBAnalytics", "RNFBMessaging"],
         },
         android: {
-          enableProguardInReleaseBuilds: true,
+          enableMinifyInReleaseBuilds: true,
           enableShrinkResourcesInReleaseBuilds: true,
           extraProguardRules: `
             -keep class com.stripe.android.** { *; }

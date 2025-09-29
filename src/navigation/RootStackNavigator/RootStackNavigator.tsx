@@ -1,5 +1,4 @@
-import { SafeAreaView } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { RootStackNavigatorParamList } from "./types";
 import { HomeStackNavigator } from "../HomeStackNavigator";
 import {

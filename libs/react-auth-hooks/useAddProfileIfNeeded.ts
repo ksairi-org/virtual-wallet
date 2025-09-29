@@ -32,7 +32,7 @@ const useAddProfileIfNeeded = () => {
           queryFn: () =>
             getProfiles(getQueryFilters({ user_id: params.user_id })),
         });
-        if (!userProfileData?.length) {
+        if (Array.isArray(userProfileData) && !userProfileData?.length) {
           await addProfile({ data: params });
         }
       } catch (error) {

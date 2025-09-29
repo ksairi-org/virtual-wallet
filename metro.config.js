@@ -1,7 +1,6 @@
 const { getDefaultConfig } = require("expo/metro-config");
 const { withSentryConfig } = require("@sentry/react-native/metro");
 const { mergeConfig } = require("metro-config");
-const exclusionList = require("metro-config/src/defaults/exclusionList");
 
 const defaultConfig = getDefaultConfig(__dirname);
 
@@ -17,8 +16,6 @@ const customConfig = {
   resolver: {
     assetExts: [...assetExts.filter((ext) => ext !== "svg"), "riv"],
     sourceExts: [...sourceExts, "svg"],
-    blockList: exclusionList([/^(?!.*node_modules).*\/dist\/.*/]),
-    unstable_enableSymlinks: true,
     unstable_enablePackageExports: true,
     resolverMainFields: ["sbmodern", "react-native", "browser", "main"],
   },
