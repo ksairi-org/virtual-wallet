@@ -5,6 +5,9 @@
 
 const themes = {
   light: {
+    color: "rgba(0,0,0,1)", // Default text color
+    backgroundHover: "rgba(237,240,242,1)", // Default hover background
+    borderColorHover: "rgba(157,167,178,1)", // Default hover border
     "splash-background2": "rgba(215,221,211,1)",
     "splash-background": "#767ff5",
     "background-page": "rgba(255,255,255,1)",
@@ -55,6 +58,9 @@ const themes = {
     "button-background-inactive-brand": "rgba(68,78,89,1)",
   },
   dark: {
+    color: "rgba(255,255,255,1)", // Default text color
+    backgroundHover: "rgba(23,30,38,1)", // Default hover background
+    borderColorHover: "rgba(68,78,89,1)", // Default hover border
     "splash-background2": "rgba(215,221,211,1)",
     "splash-background": "#767ff5",
     "background-page": "rgba(0,0,0,1)",
