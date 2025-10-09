@@ -12,12 +12,13 @@ import {
   useInvokeHelloWorld,
 } from "@react-query-sdk";
 import { supabase } from "@react-auth-client";
-import { Avatar } from "@organisms";
+import { Avatar, VisionCamera } from "@organisms";
 import { useGetLoggedUserProfile } from "@hooks";
 import { getQueryFilters, showAlert } from "@utils";
 import { BUCKET_NAME } from "@constants";
 import { ActivityIndicator } from "react-native";
 import { Trans } from "@lingui/react/macro";
+import { PhotoFile } from "react-native-vision-camera";
 
 const profilePhotoFileName = "profile-photo";
 
@@ -33,6 +34,7 @@ const ProfileScreen = () => {
   const { state: isLoading, toggleState: toggleIsLoading } =
     useBooleanState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [showCamera, setShowCamera] = useState(false);
   const lastUploadedPhoto = useRef(profilePhotoUrl);
   const { data, error } = useGetWallets(
     getQueryFilters({
@@ -67,6 +69,12 @@ const ProfileScreen = () => {
     setAvatarUrl(profilePhotoUrl);
   }, [profilePhotoUrl]);
 
+  const handleTakePhoto = async (photo: PhotoFile) => {
+    console.log(photo);
+    // The photo has been taken, now you can upload it to Supabase Storage
+    setShowCamera(false);
+  };
+
   const handleOnPressLogout = async () => {
     try {
       toggleIsLoading();
@@ -96,15 +104,22 @@ const ProfileScreen = () => {
       showAlert(e.message);
     }
   };
+  if (showCamera) {
+    return (
+      <VisionCamera
+        onTakePhoto={handleTakePhoto}
+        onClose={() => setShowCamera(false)}
+      />
+    );
+  }
   return !isPendingHello && !isPendingBye ? (
-    <Containers.Screen>
-      <Containers.SubY>
+    <Containers.ScreenGlass>
+      <Containers.SubGlassY>
         <BodyRegularSm>{"Email"}</BodyRegularSm>
         <Spacer size={"$md"} />
         <BaseTextInput value={email} disabled />
 
         <Spacer size={"$button-md"} />
-
         <BodyRegularSm>
           <Trans>{"Full name"}</Trans>
         </BodyRegularSm>
@@ -127,13 +142,26 @@ const ProfileScreen = () => {
 
         <Spacer size={"$button-md"} />
 
+        <SubmitButton
+          onPress={() => {
+            setShowCamera(true);
+          }}
+          loading={isLoading}
+        >
+          <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
+            <Trans>{"Take Photo"}</Trans>
+          </LabelSemiboldLg>
+        </SubmitButton>
+
+        <Spacer size={"$button-md"} />
+
         <SubmitButton onPress={handleOnPressLogout} loading={isLoading}>
           <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
             <Trans>{"Sign Out"}</Trans>
           </LabelSemiboldLg>
         </SubmitButton>
-      </Containers.SubY>
-    </Containers.Screen>
+      </Containers.SubGlassY>
+    </Containers.ScreenGlass>
   ) : (
     <ActivityIndicator size={"small"} />
   );

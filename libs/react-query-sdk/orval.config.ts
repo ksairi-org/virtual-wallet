@@ -26,8 +26,8 @@ export default defineConfig({
     input: "./specs/open-api-spec.json",
     hooks: {
       afterAllFilesWrite: [
-        `node ${__dirname}/${scriptsFolder}/adjust-responses.js`,
-        `node ${__dirname}/${scriptsFolder}/adjust-errors.js`,
+        `node ${__dirname}/${scriptsFolder}/adjust-responses.mjs`,
+        `node ${__dirname}/${scriptsFolder}/adjust-errors.mjs`,
       ],
     },
     output: {

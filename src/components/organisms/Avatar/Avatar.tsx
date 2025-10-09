@@ -111,7 +111,7 @@ const Avatar = ({
       <Image source={{ uri: avatarUrl }} style={avatarSize} objectFit="cover" />
       <Containers.SubY>
         <CtaButton onPress={uploadAvatar} disabled={loading} loading={loading}>
-          <BodyRegularMd>
+          <BodyRegularMd color={"$text-brand"}>
             <Trans>{"Upload"}</Trans>
           </BodyRegularMd>
         </CtaButton>

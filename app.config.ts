@@ -113,6 +113,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     "expo-secure-store",
     "expo-localization",
+    [
+      "react-native-vision-camera",
+      {
+        cameraPermissionText:
+          "We needs access to your camera to take a profile picture",
+      },
+    ],
   ],
   extra: {
     eas: {
