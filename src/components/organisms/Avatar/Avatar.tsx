@@ -15,6 +15,7 @@ type AvatarProps = {
   destinationPath: string;
   onUpload: (filePath: string) => void;
   onError?: (message: string) => void;
+  customKey: number;
 };
 
 const Avatar = ({
@@ -23,44 +24,33 @@ const Avatar = ({
   size = 150,
   onUpload,
   onError,
+  customKey,
 }: AvatarProps) => {
   const [loading, setLoading] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [key, setKey] = useState(0); // to force re-rendering the Image component
+  const [publicUrl, setPublicUrl] = useState<string | null>(null);
   const avatarSize = { height: size, width: size };
 
   useEffect(() => {
-    const downloadImage = async (path: string) => {
-      console.log(path);
+    const getImagePublicUrl = async (path: string) => {
       try {
-        const { data, error } = await supabase.storage
+        const { data } = await supabase.storage
           .from(BUCKET_NAME)
-          .download(path + "?" + key);
-
-        if (error) {
-          throw error;
-        }
-
-        const fr = new FileReader();
-        fr.readAsDataURL(data);
-        fr.onload = () => {
-          setAvatarUrl(fr.result as string);
-          setLoading(false);
-        };
+          .createSignedUrl(url, 60 * 60);
+        setPublicUrl(data.signedUrl);
       } catch (error) {
         if (error instanceof Error) {
           console.log("Error downloading image: ", error.message);
         }
       }
     };
-
     if (url) {
-      downloadImage(url);
+      getImagePublicUrl(url);
     }
-  }, [key, url]);
+  }, [customKey, url]);
 
   const uploadAvatar = async () => {
     try {
+      setLoading(true);
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: "images", // Restrict to only images
         allowsMultipleSelection: false, // Can only select one image
@@ -77,8 +67,6 @@ const Avatar = ({
         throw new Error("No image uri!");
       }
 
-      setLoading(true);
-
       const arraybuffer = await fetch(image.uri).then((res) =>
         res.arrayBuffer(),
       );
@@ -88,7 +76,6 @@ const Avatar = ({
         image.mimeType ?? "image/jpeg",
         destinationPath,
       );
-      setKey((prevKey) => prevKey + 1); // Force re-render the Image component
       onUpload(data.path);
     } catch (error) {
       if (error instanceof Error) {
@@ -103,7 +90,7 @@ const Avatar = ({
 
   return (
     <Containers.SubY>
-      <Image source={{ uri: avatarUrl }} style={avatarSize} objectFit="cover" />
+      <Image source={publicUrl} style={avatarSize} objectFit="cover" />
       <Containers.SubY>
         <CtaButton onPress={uploadAvatar} disabled={loading} loading={loading}>
           <BodyRegularMd color={"$text-brand"}>

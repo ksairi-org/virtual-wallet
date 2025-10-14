@@ -17,14 +17,14 @@ msgstr ""
 msgid "Continue to App"
 msgstr "Continue to App"
 
-#: ../../screens/ProfileScreen/ProfileScreen.tsx:144
+#: ../../screens/ProfileScreen/ProfileScreen.tsx:148
 msgid "Full name"
 msgstr ""
 
-#: ../../screens/ProfileScreen/ProfileScreen.tsx:173
+#: ../../screens/ProfileScreen/ProfileScreen.tsx:193
 msgid "Sign Out"
 msgstr "Sign Out"
 
-#: ../../screens/ProfileScreen/ProfileScreen.tsx:167
+#: ../../screens/ProfileScreen/ProfileScreen.tsx:180
 msgid "Take Photo"
 msgstr ""

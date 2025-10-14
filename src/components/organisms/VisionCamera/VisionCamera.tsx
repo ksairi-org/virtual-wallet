@@ -7,6 +7,7 @@ import { LabelSemiboldLg } from "@fonts";
 import { Trans } from "@lingui/react/macro";
 import { SubmitButton } from "@molecules";
 import { Spacer } from "tamagui";
+import { LinearGradient } from "@tamagui/linear-gradient";
 
 type VisionCameraProps = {
   onTakePhoto?: (photo: PhotoFile) => void;
@@ -24,18 +25,12 @@ const VisionCamera = ({ onTakePhoto, onClose }: VisionCameraProps) => {
   const appState = useRef(AppState.currentState);
 
   const checkPermission = useCallback(async () => {
-    if ((await Camera.getCameraPermissionStatus()) === "denied") {
-      const permission = await Camera.requestCameraPermission();
-      if (permission === "authorized") {
-        setHasPermission(true);
-        return;
-      }
+    const permission = await Camera.requestCameraPermission();
+    if (permission === "denied") {
       Linking.openSettings();
-      setHasPermission(false);
       return;
-    } else {
-      setHasPermission(true);
     }
+    setHasPermission(true);
   }, []);
 
   useEffect(() => {
@@ -61,8 +56,12 @@ const VisionCamera = ({ onTakePhoto, onClose }: VisionCameraProps) => {
   }, [checkPermission]);
 
   const handleTakePhoto = async () => {
-    const photo = await camera.current?.takePhoto();
-    onTakePhoto(photo);
+    try {
+      const photo = await camera.current?.takePhoto();
+      onTakePhoto(photo);
+    } catch (e) {
+      console.error("Error taking photo:", e);
+    }
   };
 
   if (!hasPermission) {
@@ -70,7 +69,10 @@ const VisionCamera = ({ onTakePhoto, onClose }: VisionCameraProps) => {
   }
 
   return (
-    <>
+    <LinearGradient
+      colors={["$background-body", "$background-brand"]}
+      style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }}
+    >
       {Device.isDevice ? (
         <Camera
           ref={camera}
@@ -95,7 +97,7 @@ const VisionCamera = ({ onTakePhoto, onClose }: VisionCameraProps) => {
           <Trans>{"Close"}</Trans>
         </LabelSemiboldLg>
       </SubmitButton>
-    </>
+    </LinearGradient>
   );
 };
 

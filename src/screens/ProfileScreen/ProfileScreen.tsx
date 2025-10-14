@@ -20,6 +20,7 @@ import { ActivityIndicator } from "react-native";
 import { Trans } from "@lingui/react/macro";
 import { PhotoFile } from "react-native-vision-camera";
 import { ImageBackground } from "expo-image";
+import * as FileSystem from "expo-file-system";
 
 const StyledImageBackground = styled(ImageBackground, {
   style: {
@@ -43,7 +44,8 @@ const ProfileScreen = () => {
     useBooleanState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [showCamera, setShowCamera] = useState(false);
-  const lastUploadedPhoto = useRef(profilePhotoUrl);
+  const [key, setKey] = useState(0); // to force re-rendering the Image component
+  const lastUploadedPhoto = useRef(null);
   const { data, error } = useGetWallets(
     getQueryFilters({
       user_id: userId,
@@ -59,6 +61,10 @@ const ProfileScreen = () => {
   console.log("isPendingBye", isPendingBye);
 
   const destinationPath = `${userId}/${profilePhotoFileName}`;
+
+  useEffect(() => {
+    lastUploadedPhoto.current = profilePhotoUrl;
+  }, [profilePhotoUrl]);
 
   useEffect(() => {
     const helloFunc = async () => {
@@ -81,7 +87,7 @@ const ProfileScreen = () => {
 
   const handleTakePhoto = async (photo: PhotoFile) => {
     try {
-      const photoData = await fetch(photo.path);
+      const photoData = new FileSystem.File("file:///" + photo.path);
       const data = await uploadImage(
         photo.path,
         await photoData.arrayBuffer(),
@@ -90,6 +96,7 @@ const ProfileScreen = () => {
       );
       await updateProfile(data.path);
     } catch (e) {
+      console.error("Error uploading photo:", e);
       showAlert({ title: e.message, preset: "error" });
     }
     setShowCamera(false);
@@ -120,18 +127,12 @@ const ProfileScreen = () => {
           .remove([lastUploadedPhoto.current]);
       }
       lastUploadedPhoto.current = url;
+      setKey((prev) => prev + 1);
     } catch (e) {
       showAlert(e.message);
     }
   };
-  if (showCamera) {
-    return (
-      <VisionCamera
-        onTakePhoto={handleTakePhoto}
-        onClose={() => setShowCamera(false)}
-      />
-    );
-  }
+
   return !isPendingHello && !isPendingBye ? (
     <Containers.Screen>
       <StyledImageBackground
@@ -152,6 +153,7 @@ const ProfileScreen = () => {
         <Spacer size={"$button-md"} />
 
         <Avatar
+          customKey={key}
           size={200}
           url={avatarUrl}
           destinationPath={destinationPath}
@@ -192,6 +194,12 @@ const ProfileScreen = () => {
           </LabelSemiboldLg>
         </SubmitButton>
       </StyledImageBackground>
+      {showCamera ? (
+        <VisionCamera
+          onTakePhoto={handleTakePhoto}
+          onClose={() => setShowCamera(false)}
+        />
+      ) : null}
     </Containers.Screen>
   ) : (
     <ActivityIndicator size={"small"} />

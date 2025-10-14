@@ -13,6 +13,14 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: ../../components/organisms/Avatar/Avatar.tsx:115
+#: ../../components/organisms/VisionCamera/VisionCamera.tsx:97
+msgid "Close"
+msgstr ""
+
+#: ../../components/organisms/VisionCamera/VisionCamera.tsx:89
+msgid "Take Photo"
+msgstr ""
+
+#: ../../components/organisms/Avatar/Avatar.tsx:99
 msgid "Upload"
 msgstr "Subir"
