@@ -1,5 +1,7 @@
 import { GlassView, type GlassViewProps } from "expo-glass-effect";
-import { styled } from "tamagui";
+import { styled, YStackProps } from "tamagui";
+
+type ScreenYGlassSubContainerProps = GlassViewProps & YStackProps;
 
 const StyledGlassView = styled(GlassView);
 
@@ -9,7 +11,10 @@ const StyledGlassView = styled(GlassView);
  * @param props.children content to show within the container
  * @returns JSX container containing its children
  */
-const ScreenYGlassSubContainer = ({ children, ...props }: GlassViewProps) => (
+const ScreenYGlassSubContainer = ({
+  children,
+  ...props
+}: ScreenYGlassSubContainerProps) => (
   <StyledGlassView {...props} flexDirection="column">
     {children}
   </StyledGlassView>

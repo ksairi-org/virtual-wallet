@@ -39,8 +39,9 @@ export class MockedCamera extends React.PureComponent {
   }
 
   async takePhoto() {
-    const writePath = `${RNFS.DocumentDirectoryPath}/simulated_camera_photo.png`;
-    const imageDataBase64 = "some_large_base_64_encoded_simulated_camera_photo";
+    const writePath = `${RNFS.DocumentDirectoryPath}/simulated_camera_photo.jpg`;
+    const imageDataBase64 =
+      "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
     await writeFile(writePath, imageDataBase64, "base64");
     return { path: writePath };
   }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Containers } from "@ui-containers";
-import { Spacer } from "tamagui";
+import { Spacer, styled } from "tamagui";
 import { BaseTextInput, SubmitButton } from "@molecules";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useAuthStore } from "@react-auth-storage";
@@ -14,11 +14,19 @@ import {
 import { supabase } from "@react-auth-client";
 import { Avatar, VisionCamera } from "@organisms";
 import { useGetLoggedUserProfile } from "@hooks";
-import { getQueryFilters, showAlert } from "@utils";
+import { getQueryFilters, showAlert, uploadImage } from "@utils";
 import { BUCKET_NAME } from "@constants";
 import { ActivityIndicator } from "react-native";
 import { Trans } from "@lingui/react/macro";
 import { PhotoFile } from "react-native-vision-camera";
+import { ImageBackground } from "expo-image";
+
+const StyledImageBackground = styled(ImageBackground, {
+  style: {
+    width: "100%",
+    height: "100%",
+  },
+});
 
 const profilePhotoFileName = "profile-photo";
 
@@ -50,6 +58,8 @@ const ProfileScreen = () => {
   console.log("isPendingHello", isPendingHello);
   console.log("isPendingBye", isPendingBye);
 
+  const destinationPath = `${userId}/${profilePhotoFileName}`;
+
   useEffect(() => {
     const helloFunc = async () => {
       const response = await mutateAsync({ data: { name: "Mariano@@YYYYY" } });
@@ -70,8 +80,18 @@ const ProfileScreen = () => {
   }, [profilePhotoUrl]);
 
   const handleTakePhoto = async (photo: PhotoFile) => {
-    console.log(photo);
-    // The photo has been taken, now you can upload it to Supabase Storage
+    try {
+      const photoData = await fetch(photo.path);
+      const data = await uploadImage(
+        photo.path,
+        await photoData.arrayBuffer(),
+        "image/jpeg",
+        destinationPath,
+      );
+      await updateProfile(data.path);
+    } catch (e) {
+      showAlert({ title: e.message, preset: "error" });
+    }
     setShowCamera(false);
   };
 
@@ -113,12 +133,15 @@ const ProfileScreen = () => {
     );
   }
   return !isPendingHello && !isPendingBye ? (
-    <Containers.ScreenGlass>
-      <Containers.SubGlassY>
+    <Containers.Screen>
+      <StyledImageBackground
+        source={{
+          uri: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=400&h=600&fit=crop",
+        }}
+      >
         <BodyRegularSm>{"Email"}</BodyRegularSm>
         <Spacer size={"$md"} />
         <BaseTextInput value={email} disabled />
-
         <Spacer size={"$button-md"} />
         <BodyRegularSm>
           <Trans>{"Full name"}</Trans>
@@ -131,12 +154,15 @@ const ProfileScreen = () => {
         <Avatar
           size={200}
           url={avatarUrl}
-          destinationPath={`${userId}/${profilePhotoFileName}`}
+          destinationPath={destinationPath}
           onUpload={(url: string) => {
             setAvatarUrl(() => {
               updateProfile(url);
               return url;
             });
+          }}
+          onError={(message) => {
+            showAlert({ title: message, preset: "error" });
           }}
         />
 
@@ -152,16 +178,21 @@ const ProfileScreen = () => {
             <Trans>{"Take Photo"}</Trans>
           </LabelSemiboldLg>
         </SubmitButton>
-
-        <Spacer size={"$button-md"} />
+        <Containers.SubGlassY
+          style={{ width: "100%" }}
+          isInteractive
+          height={50}
+        >
+          <Spacer size={"$button-md"} />
+        </Containers.SubGlassY>
 
         <SubmitButton onPress={handleOnPressLogout} loading={isLoading}>
           <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
             <Trans>{"Sign Out"}</Trans>
           </LabelSemiboldLg>
         </SubmitButton>
-      </Containers.SubGlassY>
-    </Containers.ScreenGlass>
+      </StyledImageBackground>
+    </Containers.Screen>
   ) : (
     <ActivityIndicator size={"small"} />
   );

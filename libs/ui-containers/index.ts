@@ -1,11 +1,15 @@
 import { Screen } from "./screen-container";
 import { SubX, SubY } from "./screen-sub-containers";
-import { ScreenGlass } from "./screen-glass-container";
+import {
+  ScreenYGlassContainer,
+  ScreenXGlassContainer,
+} from "./screen-glass-container";
 import { SubGlassX, SubGlassY } from "./screen-sub-glass-containers";
 
 const Containers = {
   Screen,
-  ScreenGlass,
+  ScreenXGlassContainer,
+  ScreenYGlassContainer,
   SubX,
   SubY,
   SubGlassX,

@@ -6,7 +6,7 @@ import { useWindowDimensions } from "react-native";
 import { ScrollView, styled, YStackProps } from "tamagui";
 import { GlassContainer, GlassContainerProps } from "expo-glass-effect";
 
-type ScreenGlassContainerProps = Pick<
+type ScreenXGlassContainerProps = Pick<
   YStackProps,
   "children" | "backgroundColor"
 > & {
@@ -68,8 +68,8 @@ const validateGlassViewChildren = (children: React.ReactNode) => {
   });
 };
 
-const VerticalGlassContainer = (props: VerticalGlassContainerProps) => (
-  <StyledGlassContainer flexDirection="column" {...props}>
+const HorizontalGlassContainer = (props: VerticalGlassContainerProps) => (
+  <StyledGlassContainer flexDirection="row" {...props}>
     {props.children}
   </StyledGlassContainer>
 );
@@ -82,12 +82,12 @@ const VerticalGlassContainer = (props: VerticalGlassContainerProps) => (
  * @param props.shouldAutoResize should the container auto resize if the height of the children is larger than the screen height
  * @returns JSX container containing its children
  */
-const ScreenGlassContainer = ({
+const ScreenXGlassContainer = ({
   children,
   shouldAutoResize = true,
   backgroundColor,
   ...props
-}: ScreenGlassContainerProps) => {
+}: ScreenXGlassContainerProps) => {
   const [contentHeight, setContentHeight] = useState<null | number>(null);
   const screenHeight = useWindowDimensions().height;
 
@@ -101,47 +101,49 @@ const ScreenGlassContainer = ({
 
   if (!shouldAutoResize) {
     return (
-      <VerticalGlassContainer
+      <HorizontalGlassContainer
         backgroundColor={backgroundColor}
         flexGrow={1}
         {...props}
       >
         {children}
-      </VerticalGlassContainer>
+      </HorizontalGlassContainer>
     );
   }
 
   if (contentHeight === null) {
     return (
-      <VerticalGlassContainer
+      <HorizontalGlassContainer
         backgroundColor={backgroundColor}
         onLayout={handleLayout}
         {...props}
       >
         {children}
-      </VerticalGlassContainer>
+      </HorizontalGlassContainer>
     );
   }
 
   if (contentHeight > screenHeight) {
     return (
-      <ScrollView backgroundColor={backgroundColor} flexGrow={1}>
-        <VerticalGlassContainer {...props}>{children}</VerticalGlassContainer>
+      <ScrollView backgroundColor={backgroundColor} flexGrow={1} horizontal>
+        <HorizontalGlassContainer {...props}>
+          {children}
+        </HorizontalGlassContainer>
       </ScrollView>
     );
   }
 
   return (
-    <VerticalGlassContainer
+    <HorizontalGlassContainer
       backgroundColor={backgroundColor}
       flexGrow={1}
       {...props}
     >
       {children}
-    </VerticalGlassContainer>
+    </HorizontalGlassContainer>
   );
 };
 
-export { ScreenGlassContainer };
+export { ScreenXGlassContainer };
 
-export type { ScreenGlassContainerProps };
+export type { ScreenXGlassContainerProps };

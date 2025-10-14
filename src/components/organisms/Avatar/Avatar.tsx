@@ -5,7 +5,7 @@ import { Containers } from "@ui-containers";
 import { Image } from "@expo-image";
 import { CtaButton } from "@molecules";
 import { BodyRegularMd } from "@fonts";
-import { showAlert } from "@utils";
+import { uploadImage } from "@utils";
 import { BUCKET_NAME } from "@constants";
 import { Trans } from "@lingui/react/macro";
 
@@ -14,6 +14,7 @@ type AvatarProps = {
   url: string | null;
   destinationPath: string;
   onUpload: (filePath: string) => void;
+  onError?: (message: string) => void;
 };
 
 const Avatar = ({
@@ -21,6 +22,7 @@ const Avatar = ({
   destinationPath,
   size = 150,
   onUpload,
+  onError,
 }: AvatarProps) => {
   const [loading, setLoading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -29,6 +31,7 @@ const Avatar = ({
 
   useEffect(() => {
     const downloadImage = async (path: string) => {
+      console.log(path);
       try {
         const { data, error } = await supabase.storage
           .from(BUCKET_NAME)
@@ -79,27 +82,19 @@ const Avatar = ({
       const arraybuffer = await fetch(image.uri).then((res) =>
         res.arrayBuffer(),
       );
-
-      const fileExt = image.uri?.split(".").pop()?.toLowerCase() ?? "jpeg";
-      const path = `${destinationPath}.${fileExt}`;
-      const { data, error: uploadError } = await supabase.storage
-        .from(BUCKET_NAME)
-        .upload(path, arraybuffer, {
-          contentType: image.mimeType ?? "image/jpeg",
-          upsert: true, // be able to overwrite the image
-        });
-
-      if (uploadError) {
-        console.error("Error uploading image: ", uploadError);
-        throw uploadError;
-      }
+      const data = await uploadImage(
+        image.uri,
+        arraybuffer,
+        image.mimeType ?? "image/jpeg",
+        destinationPath,
+      );
       setKey((prevKey) => prevKey + 1); // Force re-render the Image component
       onUpload(data.path);
     } catch (error) {
       if (error instanceof Error) {
-        showAlert({ title: error.message, preset: "error" });
+        onError(error.message);
       } else {
-        throw error;
+        onError(error?.message ?? "Unknown error");
       }
     } finally {
       setLoading(false);

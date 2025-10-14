@@ -1,2 +1,3 @@
-export { ScreenGlassContainer as ScreenGlass } from "./ScreenGlassContainer";
-export type { ScreenGlassContainerProps } from "./ScreenGlassContainer";
+export { ScreenYGlassContainer } from "./ScreenYGlassContainer";
+export { ScreenXGlassContainer } from "./ScreenXGlassContainer";
+export type { YGlassContainerProps } from "./ScreenYGlassContainer";
