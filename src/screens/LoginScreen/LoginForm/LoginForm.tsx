@@ -13,7 +13,7 @@ import { useLoginWithPersistence } from "@react-auth-core";
 import { createHandledFormElement, Form } from "@react-form";
 import { RootStackNavigation } from "@navigation/types";
 import { BaseTouchable } from "@ui-touchables";
-import { BaseTextInput, SubmitButton } from "@molecules";
+import { BaseTextInput, CTAButton } from "@molecules";
 import { loginSchema } from "@constants";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useGetFormMethods } from "@hooks";
@@ -114,7 +114,7 @@ const LoginForm = () => {
         </BodyRegularSm>
       </BaseTouchable>
       <Spacer size={"$3xl"} />
-      <SubmitButton
+      <CTAButton
         onPress={methods.handleSubmit(handleSubmit)}
         disabled={!isValid}
         loading={status === "loading"}
@@ -122,7 +122,7 @@ const LoginForm = () => {
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
           {"Login"}
         </LabelSemiboldLg>
-      </SubmitButton>
+      </CTAButton>
     </>
   );
 };

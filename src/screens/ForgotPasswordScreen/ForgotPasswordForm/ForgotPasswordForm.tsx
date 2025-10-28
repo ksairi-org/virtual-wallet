@@ -10,7 +10,7 @@ import { Spacer } from "tamagui";
 import { createHandledFormElement, Form } from "@react-form";
 import { useBooleanState } from "@react-hooks";
 import { BaseTouchable } from "@ui-touchables";
-import { BaseTextInput, SubmitButton } from "@molecules";
+import { BaseTextInput, CTAButton } from "@molecules";
 import { LabelSemiboldLg } from "@fonts";
 import { RESET_PASSWORD_URL, forgotPasswordSchema } from "@constants";
 import { useGetFormMethods } from "@hooks";
@@ -83,7 +83,7 @@ const ForgotPasswordForm = () => {
       </Form>
       <Spacer size={"$3xl"} />
 
-      <SubmitButton
+      <CTAButton
         onPress={methods.handleSubmit(handleSubmit)}
         width={"$full"}
         disabled={!isValid}
@@ -92,7 +92,7 @@ const ForgotPasswordForm = () => {
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
           {"Submit"}
         </LabelSemiboldLg>
-      </SubmitButton>
+      </CTAButton>
       <Spacer height={"$md"} />
       <BaseTouchable onPress={() => navigation.navigate("LoginScreen")}>
         <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>

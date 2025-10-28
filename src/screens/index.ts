@@ -4,3 +4,4 @@ export * from "./SignUpScreen";
 export * from "./WelcomeScreen";
 export * from "./ResetPasswordScreen";
 export * from "./ProfileScreen";
+export * from "./AIScreen";

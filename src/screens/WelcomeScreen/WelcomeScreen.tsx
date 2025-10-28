@@ -1,7 +1,7 @@
 import { useUserStore } from "@stores";
 import { LabelSemiboldLg } from "@fonts";
 import { Containers } from "@ui-containers";
-import { CtaButton } from "@molecules";
+import { CTAButton } from "@molecules";
 import { RootStackNavigatorScreenProps } from "@navigation/types";
 import { Trans } from "@lingui/react/macro";
 
@@ -20,11 +20,11 @@ const WelcomeScreen = ({
         <LabelSemiboldLg color={"$text-body"}>
           {"WelcomeScreen"}
         </LabelSemiboldLg>
-        <CtaButton onPress={handleOnPress}>
+        <CTAButton onPress={handleOnPress}>
           <LabelSemiboldLg color={"$text-success"}>
             <Trans>{"Continue to App"}</Trans>
           </LabelSemiboldLg>
-        </CtaButton>
+        </CTAButton>
       </Containers.SubY>
     </Containers.Screen>
   );

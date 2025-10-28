@@ -5,9 +5,17 @@
 
 const themes = {
   light: {
+    "surface-app": "rgba(255,255,255,1)",
+    "surface-primary": "rgba(252,250,248,1)",
+    "surface-secondary": "rgba(247,242,236,1)",
+    "surface-tertiary": "rgba(237,231,225,1)",
+    "surface-invert": "rgba(9,13,18,1)",
     color: "rgba(0,0,0,1)", // Default text color
     backgroundHover: "rgba(237,240,242,1)", // Default hover background
     borderColorHover: "rgba(157,167,178,1)", // Default hover border
+    borderColor: "rgba(157,167,178,1)", // Default border
+    background: "rgba(157,167,178,1)", // Default background
+    borderColorFocus: "rgba(157,167,178,1)", // Default borderColorFocus
     "splash-background2": "rgba(215,221,211,1)",
     "splash-background": "#767ff5",
     "background-page": "rgba(255,255,255,1)",
@@ -56,11 +64,49 @@ const themes = {
     "button-background-inactive-basic": "rgba(211,220,229,1)",
     "button-background-inactive-cta": "rgba(211,220,229,1)",
     "button-background-inactive-brand": "rgba(68,78,89,1)",
+    "surface-skill": "rgba(6,174,155,1)",
+    "text-skill text": "rgba(13,98,91,1)",
+    "surface-application": "rgba(0,111,201,1)",
+    "text-application text": "rgba(2,87,162,1)",
+    "surface-traits": "rgba(253,245,57,1)",
+    "text-traits text": "rgba(117,112,2,1)",
+    "surface-technical": "rgba(150,144,233,1)",
+    "text-technical text": "rgba(82,62,149,1)",
+    "surface-people": "rgba(127,194,33,1)",
+    "text-people text": "rgba(61,93,23,1)",
+    "surface-organisation": "rgba(246,133,31,1)",
+    "text-organisation text": "rgba(152,62,20,1)",
+    "surface-safety": "rgba(255,209,13,1)",
+    "text-safety text": "rgba(137,77,10,1)",
+    "surface-overlay-ios": "rgba(255,255,255,0.8)",
+    "surface-overlay-android": "rgba(255,255,255,0.95)",
+    "surface-success": "rgba(6,174,114,1)",
+    "surface-warning": "rgba(255,209,13,1)",
+    "surface-danger": "rgba(207,71,88,1)",
+    "surface-system": "rgba(12,140,233,1)",
+    "text-primary": "rgba(9,13,18,1)",
+    "text-secondary": "rgba(21,24,28,1)",
+    "text-tertiary": "rgba(91,88,83,1)",
+    "text-inverted": "rgba(255,255,255,1)",
+    "border-default": "rgba(237,231,225,1)",
+    "border-active": "rgba(13,98,91,1)",
+    "border-inverted": "rgba(9,13,18,1)",
+    "icon-primary": "rgba(17,19,21,1)",
+    "icon-secondary": "rgba(91,88,83,1)",
+    "icon-inverted": "rgba(255,255,255,1)",
   },
   dark: {
+    "surface-app": "rgba(9,13,18,1)",
+    "surface-primary": "rgba(17,19,21,1)",
+    "surface-secondary": "rgba(21,24,28,1)",
+    "surface-tertiary": "rgba(47,51,55,1)",
+    "surface-invert": "rgba(255,255,255,1)",
     color: "rgba(255,255,255,1)", // Default text color
     backgroundHover: "rgba(23,30,38,1)", // Default hover background
     borderColorHover: "rgba(68,78,89,1)", // Default hover border
+    borderColor: "rgba(157,167,178,1)", // Default border
+    background: "rgba(157,167,178,1)", // Default background
+    borderColorFocus: "rgba(157,167,178,1)", // Default borderColorFocus
     "splash-background2": "rgba(215,221,211,1)",
     "splash-background": "#767ff5",
     "background-page": "rgba(0,0,0,1)",
@@ -109,6 +155,36 @@ const themes = {
     "button-background-inactive-basic": "rgba(44,54,64,1)",
     "button-background-inactive-cta": "rgba(44,54,64,1)",
     "button-background-inactive-brand": "rgba(157,167,178,1)",
+    "surface-skill": "rgba(6,174,155,1)",
+    "text-skill text": "rgba(6,174,155,1)",
+    "surface-application": "rgba(0,111,201,1)",
+    "text-application text": "rgba(0,111,201,1)",
+    "surface-traits": "rgba(253,245,57,1)",
+    "text-traits text": "rgba(219,211,38,1)",
+    "surface-technical": "rgba(150,144,233,1)",
+    "text-technical text": "rgba(150,144,233,1)",
+    "surface-people": "rgba(127,194,33,1)",
+    "text-people text": "rgba(127,194,33,1)",
+    "surface-organisation": "rgba(246,133,31,1)",
+    "text-organisation text": "rgba(246,133,31,1)",
+    "surface-safety": "rgba(255,209,13,1)",
+    "text-safety text": "rgba(236,179,0,1)",
+    "surface-overlay-ios": "rgba(9,13,18,0.8)",
+    "surface-overlay-android": "rgba(9,13,18,0.95)",
+    "surface-success": "rgba(6,174,114,1)",
+    "surface-warning": "rgba(255,209,13,1)",
+    "surface-danger": "rgba(207,71,88,1)",
+    "surface-system": "rgba(12,140,233,1)",
+    "text-primary": "rgba(255,255,255,1)",
+    "text-secondary": "rgba(237,231,225,1)",
+    "text-tertiary": "rgba(216,210,202,1)",
+    "text-inverted": "rgba(9,13,18,1)",
+    "border-default": "rgba(47,51,55,1)",
+    "border-active": "rgba(11,193,169,1)",
+    "border-inverted": "rgba(255,255,255,1)",
+    "icon-primary": "rgba(255,255,255,1)",
+    "icon-secondary": "rgba(216,210,202,1)",
+    "icon-inverted": "rgba(17,19,21,1)",
   },
 };
 

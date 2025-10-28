@@ -8,7 +8,7 @@ import { GenericButton } from "../GenericButton";
 const pressedBackgroundColor: ColorTokens = "$button-background-active-cta";
 const inactiveBackgroundColor: ColorTokens = "$button-background-inactive-cta";
 
-type CtaButtonProps = Omit<
+type CTAButtonProps = Omit<
   GenericButtonProps,
   "backgroundColor" | "pressStyle" | "color"
 > & { loading?: boolean };
@@ -22,12 +22,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const CtaButton = ({
+const CTAButton = ({
   children,
   disabled,
   loading,
+  width,
+  borderRadius,
+  padding,
   ...props
-}: CtaButtonProps) => (
+}: CTAButtonProps) => (
   <GenericButton
     {...props}
     disabled={disabled}
@@ -36,10 +39,13 @@ const CtaButton = ({
     }
     pressStyle={disabled ? styles.inactivePress : styles.activePress}
     color={disabled ? "$text-inactive" : "$text-action"}
+    width={width || "$full"}
+    borderRadius={borderRadius || "$radius.xl"}
+    padding={padding || "$md"}
   >
     {loading ? <ActivityIndicator size={"small"} /> : children}
   </GenericButton>
 );
 
-export { CtaButton };
-export type { CtaButtonProps };
+export { CTAButton };
+export type { CTAButtonProps };

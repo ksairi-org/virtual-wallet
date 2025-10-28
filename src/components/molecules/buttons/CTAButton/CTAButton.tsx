@@ -8,7 +8,7 @@ import { GenericButton } from "../GenericButton";
 const pressedBackgroundColor: ColorTokens = "$button-background-active-cta";
 const inactiveBackgroundColor: ColorTokens = "$button-background-inactive-cta";
 
-type SubmitButtonProps = Omit<
+type CTAButtonProps = Omit<
   GenericButtonProps,
   "backgroundColor" | "pressStyle" | "color"
 > & { loading?: boolean };
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SubmitButton = ({
+const CTAButton = ({
   children,
   disabled,
   loading,
@@ -30,7 +30,7 @@ const SubmitButton = ({
   borderRadius,
   padding,
   ...props
-}: SubmitButtonProps) => (
+}: CTAButtonProps) => (
   <GenericButton
     {...props}
     disabled={disabled}
@@ -47,5 +47,5 @@ const SubmitButton = ({
   </GenericButton>
 );
 
-export { SubmitButton };
-export type { SubmitButtonProps };
+export { CTAButton };
+export type { CTAButtonProps };

@@ -9,7 +9,7 @@ import { Spacer } from "tamagui";
 import { createHandledFormElement, Form } from "@react-form";
 import { useBooleanState } from "@react-hooks";
 import { BaseTouchable } from "@ui-touchables";
-import { BaseTextInput, SubmitButton } from "@molecules";
+import { BaseTextInput, CTAButton } from "@molecules";
 import { LabelSemiboldLg } from "@fonts";
 import { resetPasswordSchema } from "@constants";
 import { useGetFormMethods } from "@hooks";
@@ -113,7 +113,7 @@ const ResetPasswordForm = () => {
       </Form>
 
       <Spacer size={"$3xl"} />
-      <SubmitButton
+      <CTAButton
         onPress={methods.handleSubmit(handleSubmit)}
         disabled={!isValid}
         loading={isLoading}
@@ -121,7 +121,7 @@ const ResetPasswordForm = () => {
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
           {"Submit"}
         </LabelSemiboldLg>
-      </SubmitButton>
+      </CTAButton>
       <Spacer height={"$md"} />
       <BaseTouchable onPress={() => navigation.navigate("LoginScreen")}>
         <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>

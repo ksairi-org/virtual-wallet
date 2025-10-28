@@ -16,6 +16,7 @@
       "@theme": ["src/theme/index.ts"],
       "@sentry": ["src/services/sentry/index.ts"],
       "@firebase-messaging": ["src/services/firebase-messaging/index.ts"],
+      "@ai": ["src/services/ai/index.ts"],
       "@react-native-hooks": ["libs/react-native-hooks"],
       "@react-hooks": ["libs/react-hooks"],
       "@react-native-functions": ["libs/react-native-functions"],

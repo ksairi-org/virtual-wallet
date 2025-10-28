@@ -3,6 +3,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 type HomeStackNavigatorParamList = {
   HomeScreen: undefined;
   ProfileScreen: undefined;
+  AIScreen: undefined;
 };
 
 type HomeStackNavigatorScreenProps<

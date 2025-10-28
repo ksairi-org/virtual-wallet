@@ -1,1 +1,1 @@
-/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages=JSON.parse("{\"0W0FHK\":[\"Nombre Completo\"],\"4/iEoT\":[\"Continuar a la App\"],\"ONWvwQ\":[\"Subir\"],\"bHYIks\":[\"Salir\"],\"tn75hC\":[\"Take Photo\"],\"yz7wBu\":[\"Close\"]}")as Messages;
+/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages=JSON.parse("{\"0W0FHK\":[\"Nombre Completo\"],\"4/iEoT\":[\"Continuar a la App\"],\"ONWvwQ\":[\"Subir\"],\"bHYIks\":[\"Salir\"],\"jsQZMk\":[\"AI\"],\"tn75hC\":[\"Take Photo\"],\"yz7wBu\":[\"Close\"]}")as Messages;

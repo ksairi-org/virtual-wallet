@@ -28469,6 +28469,9 @@
         "color": "rgba(0,0,0,1)",
         "backgroundHover": "rgba(237,240,242,1)",
         "borderColorHover": "rgba(157,167,178,1)",
+        "borderColor": "rgba(157,167,178,1)",
+        "background": "rgba(157,167,178,1)",
+        "borderColorFocus": "rgba(157,167,178,1)",
         "splash-background2": "rgba(215,221,211,1)",
         "splash-background": "#767ff5",
         "background-page": "rgba(255,255,255,1)",
@@ -28523,6 +28526,9 @@
         "color": "rgba(0,0,0,1)",
         "backgroundHover": "rgba(237,240,242,1)",
         "borderColorHover": "rgba(157,167,178,1)",
+        "borderColor": "rgba(157,167,178,1)",
+        "background": "rgba(157,167,178,1)",
+        "borderColorFocus": "rgba(157,167,178,1)",
         "splash-background2": "rgba(215,221,211,1)",
         "splash-background": "#767ff5",
         "background-page": "rgba(255,255,255,1)",
@@ -28594,6 +28600,27 @@
           "isVar": true,
           "key": "$borderColorHover",
           "name": "c-borderColorHover",
+          "val": "rgba(157,167,178,1)",
+          "variable": ""
+        },
+        "borderColor": {
+          "isVar": true,
+          "key": "$borderColor",
+          "name": "c-borderColor",
+          "val": "rgba(157,167,178,1)",
+          "variable": ""
+        },
+        "background": {
+          "isVar": true,
+          "key": "$background",
+          "name": "c-background",
+          "val": "rgba(157,167,178,1)",
+          "variable": ""
+        },
+        "borderColorFocus": {
+          "isVar": true,
+          "key": "$borderColorFocus",
+          "name": "c-borderColorFocus",
           "val": "rgba(157,167,178,1)",
           "variable": ""
         },
@@ -29469,6 +29496,27 @@
         "isVar": true,
         "key": "$borderColorHover",
         "name": "c-borderColorHover",
+        "val": "rgba(157,167,178,1)",
+        "variable": ""
+      },
+      "$color.borderColor": {
+        "isVar": true,
+        "key": "$borderColor",
+        "name": "c-borderColor",
+        "val": "rgba(157,167,178,1)",
+        "variable": ""
+      },
+      "$color.background": {
+        "isVar": true,
+        "key": "$background",
+        "name": "c-background",
+        "val": "rgba(157,167,178,1)",
+        "variable": ""
+      },
+      "$color.borderColorFocus": {
+        "isVar": true,
+        "key": "$borderColorFocus",
+        "name": "c-borderColorFocus",
         "val": "rgba(157,167,178,1)",
         "variable": ""
       },

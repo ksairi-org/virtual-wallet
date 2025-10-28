@@ -21,6 +21,6 @@ msgstr ""
 msgid "Take Photo"
 msgstr ""
 
-#: ../../components/organisms/Avatar/Avatar.tsx:99
+#: ../../components/organisms/Avatar/Avatar.tsx:97
 msgid "Upload"
 msgstr "Upload"

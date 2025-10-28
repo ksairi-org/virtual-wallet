@@ -1,32 +1,30 @@
 import { useState, useEffect } from "react";
-import * as ImagePicker from "expo-image-picker";
 import { supabase } from "@react-auth-client";
-import { Containers } from "@ui-containers";
-import { Image } from "@expo-image";
-import { CtaButton } from "@molecules";
-import { BodyRegularMd } from "@fonts";
-import { uploadImage } from "@utils";
 import { BUCKET_NAME } from "@constants";
-import { Trans } from "@lingui/react/macro";
+import { BaseIcon } from "@icons";
+import { Image } from "@expo-image";
+import { Spacer, XStack, YStack } from "tamagui";
+import { BaseTouchable } from "@ui-touchables";
+import { ActivityIndicator } from "react-native";
 
 type AvatarProps = {
   size: number;
   url: string | null;
-  destinationPath: string;
-  onUpload: (filePath: string) => void;
-  onError?: (message: string) => void;
   customKey: number;
+  onPressOpenCamera?: () => void;
+  onPressShowGallery?: () => void;
+  isUpLoading?: boolean;
 };
 
 const Avatar = ({
   url,
-  destinationPath,
   size = 150,
-  onUpload,
-  onError,
   customKey,
+  onPressShowGallery,
+  onPressOpenCamera,
+  isUpLoading,
 }: AvatarProps) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [publicUrl, setPublicUrl] = useState<string | null>(null);
   const avatarSize = { height: size, width: size };
 
@@ -48,57 +46,51 @@ const Avatar = ({
     }
   }, [customKey, url]);
 
-  const uploadAvatar = async () => {
-    try {
-      setLoading(true);
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: "images", // Restrict to only images
-        allowsMultipleSelection: false, // Can only select one image
-        allowsEditing: true, // Allows the user to crop / rotate their photo before uploading it
-        quality: 1,
-        exif: false, // We don't want nor need that data.
-      });
-      if (result.canceled || !result.assets || result.assets.length === 0) {
-        return;
-      }
-
-      const image = result.assets[0];
-      if (!image.uri) {
-        throw new Error("No image uri!");
-      }
-
-      const arraybuffer = await fetch(image.uri).then((res) =>
-        res.arrayBuffer(),
-      );
-      const data = await uploadImage(
-        image.uri,
-        arraybuffer,
-        image.mimeType ?? "image/jpeg",
-        destinationPath,
-      );
-      onUpload(data.path);
-    } catch (error) {
-      if (error instanceof Error) {
-        onError(error.message);
-      } else {
-        onError(error?.message ?? "Unknown error");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <Containers.SubY>
-      <Image source={publicUrl} style={avatarSize} objectFit="cover" />
-      <Containers.SubY>
-        <CtaButton onPress={uploadAvatar} disabled={loading} loading={loading}>
-          <BodyRegularMd color={"$text-brand"}>
-            <Trans>{"Upload"}</Trans>
-          </BodyRegularMd>
-        </CtaButton>
-      </Containers.SubY>
-    </Containers.SubY>
+    <XStack>
+      <Image
+        source={publicUrl}
+        style={avatarSize}
+        onLoad={() => {
+          setLoading(false);
+        }}
+      />
+      {loading ? <ActivityIndicator size={"small"} /> : null}
+      {loading ? null : (
+        <>
+          <Spacer size={"$sm"} />
+          <YStack height={avatarSize.height} justifyContent="center">
+            {onPressShowGallery ? (
+              <>
+                <BaseTouchable
+                  onPress={onPressShowGallery}
+                  disabled={isUpLoading}
+                >
+                  <BaseIcon
+                    width={20}
+                    height={20}
+                    iconName={"iconUpload"}
+                    color={"$icon-primary"}
+                  />
+                </BaseTouchable>
+
+                <Spacer size={"$sm"} />
+              </>
+            ) : null}
+            {onPressOpenCamera ? (
+              <BaseTouchable onPress={onPressOpenCamera} disabled={isUpLoading}>
+                <BaseIcon
+                  width={20}
+                  height={20}
+                  iconName={"iconCircleGraph"}
+                  color={"$icon-primary"}
+                />
+              </BaseTouchable>
+            ) : null}
+          </YStack>
+        </>
+      )}
+    </XStack>
   );
 };
 

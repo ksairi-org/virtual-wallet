@@ -13585,6 +13585,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"openai@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "openai@npm:6.3.0"
+  peerDependencies:
+    ws: ^8.18.0
+    zod: ^3.25 || ^4.0
+  peerDependenciesMeta:
+    ws:
+      optional: true
+    zod:
+      optional: true
+  bin:
+    openai: bin/cli
+  checksum: 10c0/192304069a75b9b0d71ee6e1b719544ec31f6f64cd750e1837cff9cc00187c023c80dd2c6d3049627b3b74721dd0a463a8fed230443003e4ab72c705c0d540dc
+  languageName: node
+  linkType: hard
+
 "openapi3-ts@npm:4.5.0":
   version: 4.5.0
   resolution: "openapi3-ts@npm:4.5.0"
@@ -16700,6 +16717,7 @@ __metadata:
     expo-status-bar: "npm:~3.0.8"
     husky: "npm:^9.1.7"
     inflected: "npm:^2.1.0"
+    openai: "npm:^6.3.0"
     orval: "npm:^7.11.2"
     prettier: "npm:^3.6.2"
     react: "npm:19.1.0"

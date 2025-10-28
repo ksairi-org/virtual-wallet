@@ -5,7 +5,7 @@ import { AppState, Linking, StyleSheet } from "react-native";
 import { PhotoFile, Camera as RealCamera } from "react-native-vision-camera";
 import { LabelSemiboldLg } from "@fonts";
 import { Trans } from "@lingui/react/macro";
-import { SubmitButton } from "@molecules";
+import { CTAButton } from "@molecules";
 import { Spacer } from "tamagui";
 import { LinearGradient } from "@tamagui/linear-gradient";
 
@@ -71,7 +71,11 @@ const VisionCamera = ({ onTakePhoto, onClose }: VisionCameraProps) => {
   return (
     <LinearGradient
       colors={["$background-body", "$background-brand"]}
-      style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }}
+      position="absolute"
+      top={0}
+      bottom={0}
+      left={0}
+      right={0}
     >
       {Device.isDevice ? (
         <Camera
@@ -84,19 +88,19 @@ const VisionCamera = ({ onTakePhoto, onClose }: VisionCameraProps) => {
       ) : (
         <MockedCamera ref={camera} />
       )}
-      <SubmitButton onPress={handleTakePhoto}>
+      <CTAButton onPress={handleTakePhoto}>
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
           <Trans>{"Take Photo"}</Trans>
         </LabelSemiboldLg>
-      </SubmitButton>
+      </CTAButton>
 
       <Spacer size={"$md"} />
 
-      <SubmitButton onPress={() => onClose?.()}>
+      <CTAButton onPress={() => onClose?.()}>
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
           <Trans>{"Close"}</Trans>
         </LabelSemiboldLg>
-      </SubmitButton>
+      </CTAButton>
     </LinearGradient>
   );
 };
