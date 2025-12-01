@@ -10,12 +10,11 @@ import { useCustomFonts } from "@hooks";
 import { LinguiClientProvider } from "@i18n";
 import * as Sentry from "@sentry/react-native";
 import { setupSentry } from "@sentry";
+import splash from "../../assets/splash.riv";
 
 const shouldEnableSentry = !__DEV__;
 
 setupSentry(shouldEnableSentry);
-
-const splash = require("../../assets/splash.riv");
 
 const SPLASH_FADE_OUT_DURATION_MS = 1000;
 
