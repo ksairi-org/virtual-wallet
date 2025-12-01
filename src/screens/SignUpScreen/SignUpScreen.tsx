@@ -6,7 +6,6 @@ import { Spacer } from "tamagui";
 
 import { SignUpForm } from "./SignUpForm";
 import { Containers } from "@ui-containers";
-import { RootStackNavigatorScreenProps } from "@navigation/types";
 import { HeadingBoldXl } from "@fonts";
 import { images } from "@images";
 
@@ -16,10 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type CreateAccountWithEmailScreenProps =
-  RootStackNavigatorScreenProps<"SignUpScreen">;
-
-const SignUpScreen = (_props: CreateAccountWithEmailScreenProps) => (
+const SignUpScreen = () => (
   <Containers.Screen shouldAutoResize={false}>
     <KeyboardAwareScrollView
       extraHeight={250}

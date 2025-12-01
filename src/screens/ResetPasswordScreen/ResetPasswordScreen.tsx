@@ -7,12 +7,11 @@ import { ResetPasswordForm } from "./ResetPasswordForm";
 import { Containers } from "@ui-containers";
 import { BodyRegularXl } from "@fonts";
 import { BaseIcon } from "@icons";
-import { RootStackNavigatorScreenProps } from "@navigation/types";
 import { useEffect } from "react";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
-import { useNavigation } from "@react-navigation/native";
 import { showAlert } from "@utils";
 import { supabase } from "@react-auth-client";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -20,11 +19,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const ResetPasswordScreen = ({
-  route,
-}: RootStackNavigatorScreenProps<"ResetPasswordScreen">) => {
-  const { url } = route.params ?? {};
-  const navigation = useNavigation();
+const ResetPasswordScreen = () => {
+  const { url } = useLocalSearchParams<{ url: string }>();
+
+  const router = useRouter();
   useEffect(() => {
     const setSession = async (accessToken: string, refreshToken: string) => {
       const { error } = await supabase.auth.setSession({
@@ -58,12 +56,12 @@ const ResetPasswordScreen = ({
           preset: "error",
         });
         setTimeout(() => {
-          navigation.navigate("LoginScreen");
+          router.navigate("/login");
         }, 5000);
       }
     };
     handleDeepLinkAuth();
-  }, [navigation, url]);
+  }, [router, url]);
 
   return (
     <Containers.Screen shouldAutoResize={false}>

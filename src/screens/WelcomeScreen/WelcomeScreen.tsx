@@ -2,16 +2,15 @@ import { useUserStore } from "@stores";
 import { LabelSemiboldLg } from "@fonts";
 import { Containers } from "@ui-containers";
 import { CTAButton } from "@molecules";
-import { RootStackNavigatorScreenProps } from "@navigation/types";
 import { Trans } from "@lingui/react/macro";
+import { useRouter } from "expo-router";
 
-const WelcomeScreen = ({
-  navigation,
-}: RootStackNavigatorScreenProps<"WelcomeScreen">) => {
+const WelcomeScreen = () => {
+  const router = useRouter();
   const setKeyValue = useUserStore((state) => state.setKeyValue);
   const handleOnPress = () => {
     setKeyValue("hasSeenWelcomeScreen", true);
-    navigation.navigate("HomeStackNavigator", { screen: "ProfileScreen" });
+    router.navigate("/profile");
   };
 
   return (

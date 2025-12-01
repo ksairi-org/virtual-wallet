@@ -12,3 +12,11 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "Plural-Forms: \n"
+
+#: ../../app/(app)/_layout.tsx:38
+msgid "AI Assistant"
+msgstr ""
+
+#: ../../app/(app)/_layout.tsx:33
+msgid "Profile"
+msgstr ""

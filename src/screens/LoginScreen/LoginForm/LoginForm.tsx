@@ -3,7 +3,6 @@ import type { SubmitHandler } from "react-hook-form";
 
 import { useCallback } from "react";
 
-import { useNavigation } from "@react-navigation/native";
 import { Spacer } from "tamagui";
 
 import { useBooleanState } from "@react-hooks";
@@ -11,13 +10,13 @@ import { useLayoutAnimationOnChange } from "@react-native-hooks";
 import { useUserStore } from "@stores";
 import { useLoginWithPersistence } from "@react-auth-core";
 import { createHandledFormElement, Form } from "@react-form";
-import { RootStackNavigation } from "@navigation/types";
 import { BaseTouchable } from "@ui-touchables";
 import { BaseTextInput, CTAButton } from "@molecules";
 import { loginSchema } from "@constants";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useGetFormMethods } from "@hooks";
 import { showAlert } from "@utils";
+import { useRouter } from "expo-router";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
@@ -32,7 +31,7 @@ const LoginForm = () => {
     state: isSecureTextEntryEnabled,
     toggleState: toggleSecureTextEntryEnabled,
   } = useBooleanState(true);
-  const navigation = useNavigation<RootStackNavigation>();
+  const router = useRouter();
   const { handleLogInWithEmail, status } = useLoginWithPersistence();
   const hasSeenWelcomeScreen = useUserStore(
     (state) => state.hasSeenWelcomeScreen,
@@ -56,9 +55,9 @@ const LoginForm = () => {
           password: data.password,
         });
         if (!hasSeenWelcomeScreen) {
-          navigation.navigate("WelcomeScreen");
+          router.navigate("/welcome");
         } else {
-          navigation.navigate("HomeStackNavigator");
+          router.navigate("/(app)");
         }
       } catch (e) {
         showAlert({
@@ -68,7 +67,7 @@ const LoginForm = () => {
         console.log(e);
       }
     },
-    [handleLogInWithEmail, hasSeenWelcomeScreen, navigation],
+    [handleLogInWithEmail, hasSeenWelcomeScreen, router],
   );
 
   const {
@@ -108,7 +107,7 @@ const LoginForm = () => {
       <BaseTouchable>
         <BodyRegularSm
           color={"$text-body"}
-          onPress={() => navigation.navigate("ForgotPasswordScreen")}
+          onPress={() => router.navigate("/reset-password")}
         >
           {"Forgot Password?"}
         </BodyRegularSm>

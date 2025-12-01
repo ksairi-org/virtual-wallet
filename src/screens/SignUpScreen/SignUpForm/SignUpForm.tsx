@@ -3,7 +3,6 @@ import type { SubmitHandler } from "react-hook-form";
 
 import { useCallback } from "react";
 
-import { useNavigation } from "@react-navigation/native";
 import { Spacer } from "tamagui";
 
 import { createHandledFormElement, Form } from "@react-form";
@@ -17,6 +16,7 @@ import { LabelSemiboldLg } from "@fonts";
 import { useGetFormMethods } from "@hooks";
 import { showAlert } from "@utils";
 import { makeRedirectUri } from "expo-auth-session";
+import { useRouter } from "expo-router";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
@@ -39,7 +39,7 @@ const SignUpForm = () => {
     toggleState: toggleConfPasswordSecureTextEntryEnabled,
   } = useBooleanState(true);
 
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const { handleSignUp, status } = useSignUpWithPersistence();
 
@@ -66,7 +66,7 @@ const SignUpForm = () => {
       };
       try {
         await handleSignUp(signUpData);
-        navigation.navigate("LoginScreen");
+        router.navigate("/login");
         showAlert({
           title: "Please check you inbox in order to confirm your email!",
           preset: "done",
@@ -78,7 +78,7 @@ const SignUpForm = () => {
         });
       }
     },
-    [handleSignUp, navigation],
+    [handleSignUp, router],
   );
 
   const {
@@ -174,7 +174,7 @@ const SignUpForm = () => {
         </LabelSemiboldLg>
       </CTAButton>
       <Spacer height={"$md"} />
-      <BaseTouchable onPress={() => navigation.navigate("LoginScreen")}>
+      <BaseTouchable onPress={() => router.navigate("/login")}>
         <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>
           {"Already have an account? Log in"}
         </LabelSemiboldLg>

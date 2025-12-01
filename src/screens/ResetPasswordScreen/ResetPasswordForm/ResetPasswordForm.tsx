@@ -3,7 +3,6 @@ import type { SubmitHandler } from "react-hook-form";
 
 import { useCallback } from "react";
 
-import { useNavigation } from "@react-navigation/native";
 import { Spacer } from "tamagui";
 
 import { createHandledFormElement, Form } from "@react-form";
@@ -15,6 +14,7 @@ import { resetPasswordSchema } from "@constants";
 import { useGetFormMethods } from "@hooks";
 import { showToast } from "@utils";
 import { supabase } from "@react-auth-client";
+import { useRouter } from "expo-router";
 
 const FormInput = createHandledFormElement<
   typeof BaseTextInput,
@@ -31,7 +31,7 @@ const ResetPasswordForm = () => {
     state: isConfPasswordSecureTextEntryEnabled,
     toggleState: toggleConfPasswordSecureTextEntryEnabled,
   } = useBooleanState(true);
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const { state: isLoading, toggleState: toggleIsLoading } =
     useBooleanState(false);
@@ -51,7 +51,7 @@ const ResetPasswordForm = () => {
             "Password reset successfully! Please log in with your new password.",
           preset: "done",
         });
-        navigation.navigate("LoginScreen");
+        router.navigate("/login");
       } catch (e) {
         showToast({
           title: e.message,
@@ -61,7 +61,7 @@ const ResetPasswordForm = () => {
         toggleIsLoading();
       }
     },
-    [navigation, toggleIsLoading],
+    [router, toggleIsLoading],
   );
 
   const {
@@ -123,7 +123,7 @@ const ResetPasswordForm = () => {
         </LabelSemiboldLg>
       </CTAButton>
       <Spacer height={"$md"} />
-      <BaseTouchable onPress={() => navigation.navigate("LoginScreen")}>
+      <BaseTouchable onPress={() => router.navigate("LoginScreen")}>
         <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>
           {"Already have an account? Log in"}
         </LabelSemiboldLg>

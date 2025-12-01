@@ -120,6 +120,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           "We needs access to your camera to take a profile picture",
       },
     ],
+    "expo-router",
   ],
   extra: {
     eas: {

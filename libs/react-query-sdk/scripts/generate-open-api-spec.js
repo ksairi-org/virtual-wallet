@@ -19,7 +19,7 @@ const generateOpenApiSpec = async () => {
 
   if (!process.env.EXPO_PUBLIC_OPEN_API_SERVER_URL || !apiKey) {
     console.error(
-      "❌ Missing required environment variables: process.env.EXPO_PUBLIC_OPEN_API_SERVER_URL and EXPO_PUBLIC_SUPABASE_API_KEY",
+      "❌ Missing required environment variables: EXPO_PUBLIC_OPEN_API_SERVER_URL and EXPO_PUBLIC_SUPABASE_API_KEY",
     );
     process.exit(1);
   }

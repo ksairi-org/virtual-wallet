@@ -1,7 +1,7 @@
 {
   "name": "virtual-wallet",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "expo-router/entry",
   "scripts": {
     "pre-start": "doppler run -p mobile -c $0 --command \"doppler secrets substitute env.template.yaml --output .env; source .env; yarn generate:open-api-hooks; $1\"",
     "start:expo": "[ $0 == 'prod' ] && yarn expo start --scheme virtual-wallet || yarn expo start --scheme virtual-wallet-$0",
@@ -40,8 +40,6 @@
     "@react-native-firebase/app": "23.4.0",
     "@react-native-firebase/messaging": "23.4.0",
     "@react-native-google-signin/google-signin": "^15.0.0",
-    "@react-navigation/native": "^7.1.14",
-    "@react-navigation/native-stack": "^7.3.21",
     "@sentry/react-native": "~7.1.0",
     "@supabase/supabase-js": "^2.55.0",
     "@tamagui/config": "1.35.0",
@@ -64,6 +62,7 @@
     "expo-linking": "~8.0.8",
     "expo-localization": "~17.0.7",
     "expo-notifications": "~0.32.12",
+    "expo-router": "~6.0.15",
     "expo-secure-store": "~15.0.7",
     "expo-splash-screen": "~31.0.10",
     "expo-status-bar": "~3.0.8",

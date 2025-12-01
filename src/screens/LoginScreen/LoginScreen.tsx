@@ -22,20 +22,18 @@ import {
 
 import { useAppState } from "@react-native-hooks";
 import { BaseTouchable } from "@ui-touchables";
-import { RootStackNavigatorScreenProps } from "@navigation/types";
 import { HeadingBoldXl, BodyRegularXl, LabelSemiboldLg } from "@fonts";
 import { BaseIcon } from "@icons";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { showAlert } from "@utils";
 import { supabase } from "@react-auth-client";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
     flexGrow: 1,
   },
 });
-
-type LoginScreenProps = RootStackNavigatorScreenProps<"LoginScreen">;
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -45,11 +43,12 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
-const LoginScreen = ({ navigation, route }: LoginScreenProps) => {
+const LoginScreen = () => {
   const appleSignInButtonRef = useRef<AppleSignInButtonHandle>(null);
   const hasInitializedAppleSignIn = useRef(false);
   const [prevState, appState] = useAppState();
-  const { url } = route.params || {};
+  const { url } = useLocalSearchParams<{ url: string }>();
+  const router = useRouter();
 
   useEffect(() => {
     if (url) {
@@ -61,7 +60,7 @@ const LoginScreen = ({ navigation, route }: LoginScreenProps) => {
         });
       }
     }
-  }, [url, navigation]);
+  }, [url, router]);
 
   if (
     Platform.OS === "ios" &&
@@ -138,7 +137,7 @@ const LoginScreen = ({ navigation, route }: LoginScreenProps) => {
             />
           </Containers.SubX>
           <Spacer height={"$md"} />
-          <BaseTouchable onPress={() => navigation.navigate("SignUpScreen")}>
+          <BaseTouchable onPress={() => router.navigate("/signup")}>
             <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>
               {"Don't have account? Sign up"}
             </LabelSemiboldLg>

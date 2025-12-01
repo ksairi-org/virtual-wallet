@@ -21,13 +21,13 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { PhotoFile } from "react-native-vision-camera";
 import { ImageBackground } from "expo-image";
 import * as FileSystem from "expo-file-system";
-import { HomeStackNavigatorScreenProps } from "@navigation/types";
 import * as ImagePicker from "expo-image-picker";
 import Animated, {
   ZoomInLeft,
   ZoomInRight,
   ZoomInRotate,
 } from "react-native-reanimated";
+import { useRouter } from "expo-router";
 
 const StyledImageBackground = styled(ImageBackground, {
   style: {
@@ -45,9 +45,8 @@ const StyledAnimatedSignOutView = styled(Animated.View, {
 
 const profilePhotoFileName = "profile-photo";
 
-const ProfileScreen = ({
-  navigation,
-}: HomeStackNavigatorScreenProps<"ProfileScreen">) => {
+const ProfileScreen = () => {
+  const router = useRouter();
   const {
     firstName,
     lastName,
@@ -241,7 +240,7 @@ const ProfileScreen = ({
             <Animated.View entering={ZoomInRight.duration(1100)}>
               <PrimaryButton
                 onPress={() => {
-                  navigation.navigate("AIScreen");
+                  router.navigate("/ai");
                 }}
                 text={t`AI Assistant`}
               />
