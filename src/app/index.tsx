@@ -1,14 +1,22 @@
-// src/app/index.tsx
 import { Redirect } from "expo-router";
 import { useAuthenticationStatus } from "@react-auth-core";
+import { useUserStore } from "@stores";
 
-export default function Index() {
+const Index = () => {
   const status = useAuthenticationStatus();
   const isLoggedIn = status === "logged in";
+  const hasSeenWelcomeScreen = useUserStore(
+    (state) => state.hasSeenWelcomeScreen,
+  );
 
   if (isLoggedIn) {
-    return <Redirect href="/(app)/profile" />;
+    if (!hasSeenWelcomeScreen) {
+      return <Redirect href="/(onboarding)/welcome" />;
+    }
+    return <Redirect href="/(app)/home" />;
   }
 
   return <Redirect href="/(auth)/login" />;
-}
+};
+
+export default Index;

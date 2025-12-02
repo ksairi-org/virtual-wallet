@@ -8,7 +8,7 @@ export default function AuthLayout() {
 
   // Redirect to home if already logged in
   if (isLoggedIn) {
-    return <Redirect href="/(app)" />;
+    return <Redirect href="/(app)/profile" />;
   }
 
   return (

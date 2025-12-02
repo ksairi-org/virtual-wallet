@@ -17,14 +17,15 @@ export default function AppLayout() {
   );
   const { t } = useLingui();
 
+  // Redirect to welcome screen if not seen yet
+  // Redirect to welcome if not seen yet
+  if (isLoggedIn && !hasSeenWelcomeScreen) {
+    return <Redirect href="/(onboarding)/welcome" />;
+  }
+
   // Redirect to login if not authenticated
   if (!isLoggedIn) {
     return <Redirect href="/(auth)/login" />;
-  }
-
-  // Redirect to welcome screen if not seen yet
-  if (!hasSeenWelcomeScreen) {
-    return <Redirect href="/(app)/welcome" />;
   }
 
   return (

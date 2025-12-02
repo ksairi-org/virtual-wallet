@@ -13,10 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: ../../app/(app)/_layout.tsx:38
+#: ../../app/(app)/_layout.tsx:39
 msgid "AI Assistant"
 msgstr ""
 
-#: ../../app/(app)/_layout.tsx:33
+#: ../../app/(app)/_layout.tsx:34
 msgid "Profile"
 msgstr ""

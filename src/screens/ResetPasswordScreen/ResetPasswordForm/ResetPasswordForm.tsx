@@ -123,7 +123,7 @@ const ResetPasswordForm = () => {
         </LabelSemiboldLg>
       </CTAButton>
       <Spacer height={"$md"} />
-      <BaseTouchable onPress={() => router.navigate("LoginScreen")}>
+      <BaseTouchable onPress={() => router.navigate("/login")}>
         <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>
           {"Already have an account? Log in"}
         </LabelSemiboldLg>

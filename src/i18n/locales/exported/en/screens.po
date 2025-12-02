@@ -13,18 +13,18 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: ../../screens/ProfileScreen/ProfileScreen.tsx:246
+#: ../../screens/ProfileScreen/ProfileScreen.tsx:245
 msgid "AI Assistant"
 msgstr ""
 
-#: ../../screens/WelcomeScreen/WelcomeScreen.tsx:25
+#: ../../screens/WelcomeScreen/WelcomeScreen.tsx:24
 msgid "Continue to App"
 msgstr "Continue to App"
 
-#: ../../screens/ProfileScreen/ProfileScreen.tsx:221
+#: ../../screens/ProfileScreen/ProfileScreen.tsx:220
 msgid "Full name"
 msgstr ""
 
-#: ../../screens/ProfileScreen/ProfileScreen.tsx:257
+#: ../../screens/ProfileScreen/ProfileScreen.tsx:256
 msgid "Sign Out"
 msgstr "Sign Out"

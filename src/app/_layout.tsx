@@ -47,7 +47,6 @@ const RootLayout = () => {
   if (!isAppReady) {
     return null;
   }
-
   return (
     <LinguiClientProvider>
       <QueryClientProvider client={queryClient}>
