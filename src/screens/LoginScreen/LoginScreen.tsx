@@ -47,7 +47,7 @@ const LoginScreen = () => {
   const appleSignInButtonRef = useRef<AppleSignInButtonHandle>(null);
   const hasInitializedAppleSignIn = useRef(false);
   const [prevState, appState] = useAppState();
-  const { url } = useLocalSearchParams<{ url: string }>();
+  const { url } = useLocalSearchParams<{ url?: string }>();
   const router = useRouter();
 
   useEffect(() => {

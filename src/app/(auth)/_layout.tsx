@@ -6,7 +6,7 @@ export default function AuthLayout() {
   const status = useAuthenticationStatus();
   const isLoggedIn = status === "logged in";
 
-  // Redirect to home if already logged in
+  // Redirect to profile if already logged in
   if (isLoggedIn) {
     return <Redirect href="/(app)/profile" />;
   }

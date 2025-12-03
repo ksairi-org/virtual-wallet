@@ -2,13 +2,12 @@
   "extends": "expo/tsconfig.base",
   "exclude": ["supabase/**/*"],
   "compilerOptions": {
+    "typeRoots": ["./types"],
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "@default-tamagui-config": ["src/theme/tamagui.config.ts"],
       "@screens": ["src/screens"],
-      "@navigation": ["src/navigation"],
-      "@navigation/types": ["src/navigation/types"],
       "@utils": ["src/utils"],
       "@atoms": ["src/components/atoms"],
       "@molecules": ["src/components/molecules"],
@@ -44,5 +43,6 @@
       "@hooks": ["src/hooks"],
       "@i18n": ["src/i18n"]
     }
-  }
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

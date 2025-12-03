@@ -13,7 +13,7 @@ const Index = () => {
     if (!hasSeenWelcomeScreen) {
       return <Redirect href="/(onboarding)/welcome" />;
     }
-    return <Redirect href="/(app)/home" />;
+    return <Redirect href="/(app)/profile" />;
   }
 
   return <Redirect href="/(auth)/login" />;

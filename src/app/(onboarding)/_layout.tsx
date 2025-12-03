@@ -1,8 +1,5 @@
 import { Stack } from "expo-router";
 
-const OnboardingLayout = () => (
-  <Stack screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="welcome" />
-  </Stack>
-);
+const OnboardingLayout = () => <Stack screenOptions={{ headerShown: false }} />;
+
 export default OnboardingLayout;

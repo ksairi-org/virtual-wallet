@@ -57,7 +57,7 @@ const LoginForm = () => {
         if (!hasSeenWelcomeScreen) {
           router.navigate("/welcome");
         } else {
-          router.navigate("/(app)");
+          router.navigate("/(app)/profile");
         }
       } catch (e) {
         showAlert({

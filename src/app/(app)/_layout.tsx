@@ -40,7 +40,6 @@ export default function AppLayout() {
             headerBackButtonDisplayMode: "minimal",
           }}
         />
-        <Stack.Screen name="welcome" options={{ headerShown: false }} />
       </Stack>
     </StyledSafeAreaView>
   );

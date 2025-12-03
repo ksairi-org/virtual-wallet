@@ -127,5 +127,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       projectId: "8a1c04aa-f006-452b-9bc6-8236ca8c2501",
     },
   },
+  experiments: {
+    typedRoutes: true,
+  },
   owner: "ksairi-org",
 });

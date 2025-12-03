@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 });
 
 const ResetPasswordScreen = () => {
-  const { url } = useLocalSearchParams<{ url: string }>();
+  const { url } = useLocalSearchParams<{ url?: string }>();
 
   const router = useRouter();
   useEffect(() => {
