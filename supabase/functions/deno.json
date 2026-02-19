@@ -1,0 +1,8 @@
+{
+  "workspace": ["mcp-client", "mcp-server"],
+  "lint": {
+    "rules": {
+      "exclude": ["no-import-prefix"]
+    }
+  }
+}

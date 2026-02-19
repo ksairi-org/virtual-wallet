@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "@anthropic-ai/sdk": "https://esm.sh/@anthropic-ai/sdk@0.36.3",
+    "openai": "https://esm.sh/openai@4.78.1",
+    "@modelcontextprotocol/sdk/client/index.js": "https://esm.sh/@modelcontextprotocol/sdk@1.26.0/client/index.js",
+    "@modelcontextprotocol/sdk/client/streamableHttp.js": "https://esm.sh/@modelcontextprotocol/sdk@1.26.0/client/streamableHttp.js"
+  }
+}

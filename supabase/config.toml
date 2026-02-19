@@ -1,4 +1,16 @@
 
+[functions.mcp-server]
+enabled = true
+verify_jwt = false
+import_map = "./functions/mcp-server/deno.json"
+entrypoint = "./functions/mcp-server/index.ts"
+
+[functions.mcp-client]
+enabled = true
+verify_jwt = false
+import_map = "./functions/mcp-client/deno.json"
+entrypoint = "./functions/mcp-client/index.ts"
+
 [functions.hello-world]
 enabled = true
 verify_jwt = true

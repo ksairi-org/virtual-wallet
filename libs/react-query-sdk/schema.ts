@@ -340,6 +340,22 @@ export type PatchWalletsParams = {
     currency_id?: RowFilterWalletsCurrencyIdParameter;
     user_id?: RowFilterWalletsUserIdParameter;
 };
+export type InvokeMcpClientBodyProvider = typeof InvokeMcpClientBodyProvider[keyof typeof InvokeMcpClientBodyProvider];
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const InvokeMcpClientBodyProvider = {
+    claude: 'claude',
+    openai: 'openai',
+} as const;
+export type InvokeMcpClientBody = {
+    prompt: string;
+    provider: InvokeMcpClientBodyProvider;
+};
+export type InvokeMcpClient200 = {
+    response?: string;
+};
+export type InvokeMcpClient400 = {
+    error?: string;
+};
 export type InvokeByeWorld200 = {
     [key: string]: unknown;
 };
@@ -1348,6 +1364,54 @@ export const usePatchWallets = <TError = unknown, TContext = unknown>(options?: 
     params?: PatchWalletsParams;
 }, TContext> => {
     const mutationOptions = getPatchWalletsMutationOptions(options);
+    return useMutation(mutationOptions, queryClient);
+};
+/**
+ * @summary Invoke mcp-client function
+ */
+export const invokeMcpClient = (invokeMcpClientBody: InvokeMcpClientBody, options?: SecondParameter<typeof customAxios>, signal?: AbortSignal) => {
+    return customAxios<InvokeMcpClient200>({ url: `/functions/v1/mcp-client`, method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        data: invokeMcpClientBody, signal
+    }, options);
+};
+export const getInvokeMcpClientMutationOptions = <TError = InvokeMcpClient400, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeMcpClient>>, TError, {
+        data: InvokeMcpClientBody;
+    }, TContext>;
+    request?: SecondParameter<typeof customAxios>;
+}): UseMutationOptions<Awaited<ReturnType<typeof invokeMcpClient>>, TError, {
+    data: InvokeMcpClientBody;
+}, TContext> => {
+    const mutationKey = ['invokeMcpClient'];
+    const { mutation: mutationOptions, request: requestOptions } = options ?
+        options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+            options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey, }, request: undefined };
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof invokeMcpClient>>, {
+        data: InvokeMcpClientBody;
+    }> = (props) => {
+        const { data } = props ?? {};
+        return invokeMcpClient(data, requestOptions);
+    };
+    return { mutationFn, ...mutationOptions };
+};
+export type InvokeMcpClientMutationResult = NonNullable<Awaited<ReturnType<typeof invokeMcpClient>>>;
+export type InvokeMcpClientMutationBody = InvokeMcpClientBody;
+export type InvokeMcpClientMutationError = InvokeMcpClient400;
+/**
+* @summary Invoke mcp-client function
+*/
+export const useInvokeMcpClient = <TError = InvokeMcpClient400, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof invokeMcpClient>>, TError, {
+        data: InvokeMcpClientBody;
+    }, TContext>;
+    request?: SecondParameter<typeof customAxios>;
+}, queryClient?: QueryClient): UseMutationResult<Awaited<ReturnType<typeof invokeMcpClient>>, TError, {
+    data: InvokeMcpClientBody;
+}, TContext> => {
+    const mutationOptions = getInvokeMcpClientMutationOptions(options);
     return useMutation(mutationOptions, queryClient);
 };
 /**

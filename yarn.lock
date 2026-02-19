@@ -8068,6 +8068,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"baseline-browser-mapping@npm:^2.9.19":
+  version: 2.9.19
+  resolution: "baseline-browser-mapping@npm:2.9.19"
+  bin:
+    baseline-browser-mapping: dist/cli.js
+  checksum: 10c0/569928db78bcd081953d7db79e4243a59a579a34b4ae1806b9b42d3b7f84e5bc40e6e82ae4fa06e7bef8291bf747b33b3f9ef5d3c6e1e420cb129d9295536129
+  languageName: node
+  linkType: hard
+
 "better-opn@npm:~3.0.2":
   version: 3.0.2
   resolution: "better-opn@npm:3.0.2"
@@ -14110,23 +14119,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openai@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "openai@npm:6.3.0"
-  peerDependencies:
-    ws: ^8.18.0
-    zod: ^3.25 || ^4.0
-  peerDependenciesMeta:
-    ws:
-      optional: true
-    zod:
-      optional: true
-  bin:
-    openai: bin/cli
-  checksum: 10c0/192304069a75b9b0d71ee6e1b719544ec31f6f64cd750e1837cff9cc00187c023c80dd2c6d3049627b3b74721dd0a463a8fed230443003e4ab72c705c0d540dc
-  languageName: node
-  linkType: hard
-
 "openapi3-ts@npm:4.5.0":
   version: 4.5.0
   resolution: "openapi3-ts@npm:4.5.0"
@@ -17356,6 +17348,7 @@ __metadata:
     axios: "npm:^1.11.0"
     babel-plugin-inline-import: "npm:^3.0.0"
     babel-preset-expo: "npm:~54.0.0"
+    baseline-browser-mapping: "npm:^2.9.19"
     burnt: "npm:^0.13.0"
     date-fns: "npm:^4.1.0"
     eslint: "npm:^9.0.0"
@@ -17381,7 +17374,6 @@ __metadata:
     expo-status-bar: "npm:~3.0.8"
     husky: "npm:^9.1.7"
     inflected: "npm:^2.1.0"
-    openai: "npm:^6.3.0"
     orval: "npm:^7.11.2"
     prettier: "npm:^3.6.2"
     react: "npm:19.1.0"
