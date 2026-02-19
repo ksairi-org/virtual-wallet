@@ -30,6 +30,25 @@ function getMcpServerUrl(): string {
   throw new Error("Cannot determine MCP_SERVER_URL: SUPABASE_URL is not set");
 }
 
+// ─── User name pre-fetch (parallel with MCP setup) ───────────────────────────
+async function getUserName(jwt: string): Promise<string> {
+  const supabaseUrl = Deno.env.get("SUPABASE_URL");
+  const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
+  if (!supabaseUrl || !anonKey) return "";
+  try {
+    const res = await fetch(`${supabaseUrl}/auth/v1/user`, {
+      headers: { Authorization: `Bearer ${jwt}`, apikey: anonKey },
+    });
+    if (!res.ok) return "";
+    const data = await res.json();
+    const firstName = data.user_metadata?.firstName ?? "";
+    const lastName = data.user_metadata?.lastName ?? "";
+    return [firstName, lastName].filter(Boolean).join(" ");
+  } catch {
+    return "";
+  }
+}
+
 // ─── MCP Client ──────────────────────────────────────────────────────────────
 async function buildMcpClient(jwt: string): Promise<Client> {
   const client = new Client(
@@ -101,6 +120,7 @@ async function runClaude(
   anthropic: Anthropic,
   prompt: string,
   mcpClient: Client,
+  userName: string,
 ): Promise<string> {
   const { tools: mcpTools } = await mcpClient.listTools();
   const anthropicTools = toAnthropicTools(mcpTools);
@@ -113,6 +133,7 @@ async function runClaude(
     const response = await anthropic.messages.create({
       model: "claude-haiku-4-5-20251001",
       max_tokens: 1024,
+      ...(userName ? { system: `The user's name is: ${userName}` } : {}),
       tools: anthropicTools,
       messages,
     });
@@ -159,11 +180,15 @@ async function runOpenAI(
   openai: OpenAI,
   prompt: string,
   mcpClient: Client,
+  userName: string,
 ): Promise<string> {
   const { tools: mcpTools } = await mcpClient.listTools();
   const openAITools = toOpenAITools(mcpTools);
 
   const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
+    ...(userName
+      ? [{ role: "system" as const, content: `The user's name is: ${userName}` }]
+      : []),
     { role: "user", content: prompt },
   ];
 
@@ -261,7 +286,10 @@ Deno.serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    const mcpClient = await buildMcpClient(jwt);
+    const [mcpClient, userName] = await Promise.all([
+      buildMcpClient(jwt),
+      getUserName(jwt),
+    ]);
 
     let response: string;
 
@@ -276,7 +304,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
           },
         );
       }
-      response = await runOpenAI(new OpenAI({ apiKey }), prompt, mcpClient);
+      response = await runOpenAI(new OpenAI({ apiKey }), prompt, mcpClient, userName);
     } else {
       const apiKey = Deno.env.get("ANTHROPIC_API_KEY");
       if (!apiKey) {
@@ -288,7 +316,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
           },
         );
       }
-      response = await runClaude(new Anthropic({ apiKey }), prompt, mcpClient);
+      response = await runClaude(new Anthropic({ apiKey }), prompt, mcpClient, userName);
     }
 
     return new Response(JSON.stringify({ response }), {
