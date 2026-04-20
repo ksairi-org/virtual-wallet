@@ -4,6 +4,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { useCallback } from "react";
 
 import { Spacer } from "tamagui";
+import { useLingui, Trans } from "@lingui/react/macro";
 
 import { useBooleanState } from "@react-hooks";
 import { useLayoutAnimationOnChange } from "@react-native-hooks";
@@ -27,6 +28,7 @@ const FormInput = createHandledFormElement<
  * @returns Form
  */
 const LoginForm = () => {
+  const { t } = useLingui();
   const {
     state: isSecureTextEntryEnabled,
     toggleState: toggleSecureTextEntryEnabled,
@@ -78,7 +80,7 @@ const LoginForm = () => {
       <Form methods={methods}>
         <FormInput
           autoCapitalize={"none"}
-          placeholder={"Email"}
+          placeholder={t`Email`}
           name={"email"}
           fontSize={"$2"}
           keyboardType={"email-address"}
@@ -90,7 +92,7 @@ const LoginForm = () => {
           secureTextEntry={isSecureTextEntryEnabled}
           textContentType={"password"}
           name={"password"}
-          placeholder={"Password"}
+          placeholder={t`Password`}
           fontSize={"$2"}
           returnKeyType={"done"}
           rightIconProps={{
@@ -109,7 +111,7 @@ const LoginForm = () => {
           color={"$text-body"}
           onPress={() => router.navigate("/reset-password")}
         >
-          {"Forgot Password?"}
+          <Trans>Forgot Password?</Trans>
         </BodyRegularSm>
       </BaseTouchable>
       <Spacer size={"$3xl"} />
@@ -119,7 +121,7 @@ const LoginForm = () => {
         loading={status === "loading"}
       >
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
-          {"Login"}
+          <Trans>Login</Trans>
         </LabelSemiboldLg>
       </CTAButton>
     </>

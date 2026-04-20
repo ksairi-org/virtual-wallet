@@ -17,7 +17,7 @@ const WelcomeScreen = () => {
     <Containers.Screen backgroundColor={"$background-body"}>
       <Containers.SubY flex={1} alignItems="center" justifyContent="center">
         <LabelSemiboldLg color={"$text-body"}>
-          {"WelcomeScreen"}
+          <Trans>WelcomeScreen</Trans>
         </LabelSemiboldLg>
         <CTAButton onPress={handleOnPress}>
           <LabelSemiboldLg color={"$text-success"}>

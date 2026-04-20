@@ -1,0 +1,19 @@
+appId: com.virtual-wallet
+---
+- launchApp
+# Assumes user is already logged in via login.yaml
+- tapOn:
+    text: "Send"
+- assertVisible: "Send Money"
+- tapOn:
+    text: "Amount"
+- inputText: "10"
+- tapOn:
+    text: "Recipient"
+- inputText: "recipient@example.com"
+- tapOn:
+    text: "Continue"
+- assertVisible: "Confirm"
+- tapOn:
+    text: "Confirm"
+- assertVisible: "Success"

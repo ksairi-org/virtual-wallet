@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
 
 import { Image } from "@expo-image";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Spacer } from "tamagui";
 
 import { SignUpForm } from "./SignUpForm";
 import { Containers } from "@ui-containers";
 import { HeadingBoldXl } from "@fonts";
 import { images } from "@images";
+import { Trans } from "@lingui/react/macro";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -18,8 +19,6 @@ const styles = StyleSheet.create({
 const SignUpScreen = () => (
   <Containers.Screen shouldAutoResize={false}>
     <KeyboardAwareScrollView
-      extraHeight={250}
-      enableOnAndroid={true}
       keyboardShouldPersistTaps={"handled"}
       contentContainerStyle={styles.contentContainerStyle}
       showsVerticalScrollIndicator={false}
@@ -33,7 +32,7 @@ const SignUpScreen = () => (
           maxFontScaleToApply={1.2}
         />
         <Spacer height={"$2xl"} />
-        <HeadingBoldXl>{"Create Account"}</HeadingBoldXl>
+        <HeadingBoldXl><Trans>Create Account</Trans></HeadingBoldXl>
         <Spacer height={"$md"} />
         <SignUpForm />
       </Containers.SubY>

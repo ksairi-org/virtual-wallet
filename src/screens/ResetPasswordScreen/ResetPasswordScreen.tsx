@@ -1,11 +1,12 @@
 import { StyleSheet } from "react-native";
 
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Spacer } from "tamagui";
 
 import { ResetPasswordForm } from "./ResetPasswordForm";
 import { Containers } from "@ui-containers";
 import { BodyRegularXl } from "@fonts";
+import { Trans } from "@lingui/react/macro";
 import { BaseIcon } from "@icons";
 import { useEffect } from "react";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
@@ -66,9 +67,7 @@ const ResetPasswordScreen = () => {
   return (
     <Containers.Screen shouldAutoResize={false}>
       <KeyboardAwareScrollView
-        extraHeight={250}
-        enableOnAndroid={true}
-        keyboardShouldPersistTaps={"handled"}
+keyboardShouldPersistTaps={"handled"}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
       >
@@ -88,7 +87,7 @@ const ResetPasswordScreen = () => {
             paddingHorizontal={"$2xl"}
             color={"$text-body"}
           >
-            {"Reset your password for your account."}
+            <Trans>Reset your password for your account.</Trans>
           </BodyRegularXl>
           <Spacer height={"$2xl"} />
           <ResetPasswordForm />

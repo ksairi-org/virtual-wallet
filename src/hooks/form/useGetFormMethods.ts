@@ -1,12 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { FieldValues } from "react-hook-form";
 import { DefaultValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const ON_CHANGE_TEXT_ERROR_DELAY = 2000;
 
-const useGetFormMethods = <T>(
+const useGetFormMethods = <T extends FieldValues>(
   fields: DefaultValues<T>,
-  schema: z.ZodTypeAny,
+  schema: z.ZodType<T, T>,
 ) => {
   const methods = useForm<T>({
     mode: "onChange",

@@ -1,0 +1,13 @@
+appId: com.virtual-wallet
+---
+- launchApp
+- assertVisible: "Login"
+- tapOn:
+    text: "Email"
+- inputText: "test@example.com"
+- tapOn:
+    text: "Password"
+- inputText: "password123"
+- tapOn:
+    text: "Login"
+- assertVisible: "Home"

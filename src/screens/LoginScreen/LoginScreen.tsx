@@ -1,6 +1,6 @@
 import { AppState, Platform, StyleSheet } from "react-native";
 
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Spacer } from "tamagui";
 
 import { LoginForm } from "./LoginForm";
@@ -23,6 +23,7 @@ import {
 import { useAppState } from "@react-native-hooks";
 import { BaseTouchable } from "@ui-touchables";
 import { HeadingBoldXl, BodyRegularXl, LabelSemiboldLg } from "@fonts";
+import { Trans } from "@lingui/react/macro";
 import { BaseIcon } from "@icons";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { showAlert } from "@utils";
@@ -96,9 +97,7 @@ const LoginScreen = () => {
   return (
     <Containers.Screen shouldAutoResize={false}>
       <KeyboardAwareScrollView
-        extraHeight={200}
-        enableOnAndroid={true}
-        keyboardShouldPersistTaps={"handled"}
+keyboardShouldPersistTaps={"handled"}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
       >
@@ -112,7 +111,7 @@ const LoginScreen = () => {
             color={"$text-subtle"}
           />
           <Spacer height={"$2xl"} />
-          <HeadingBoldXl>{"Login"}</HeadingBoldXl>
+          <HeadingBoldXl><Trans>Login</Trans></HeadingBoldXl>
           <Spacer height={"$md"} />
           <BodyRegularXl
             opacity={0.5}
@@ -120,7 +119,7 @@ const LoginScreen = () => {
             paddingHorizontal={"$2xl"}
             color={"$text-body"}
           >
-            {"Enter your email and password to login."}
+            <Trans>Enter your email and password to login.</Trans>
           </BodyRegularXl>
           <Spacer height={"$2xl"} />
           <LoginForm />

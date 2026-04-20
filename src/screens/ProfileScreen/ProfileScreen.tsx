@@ -212,7 +212,7 @@ const ProfileScreen = () => {
         >
           <Containers.SubY alignItems="center">
             <Animated.View entering={ZoomInRotate.duration(1100)}>
-              <BodyRegularSm>{"Email"}</BodyRegularSm>
+              <BodyRegularSm><Trans>Email</Trans></BodyRegularSm>
               <Spacer size={"$sm"} />
               <BodyBoldMd>{email}</BodyBoldMd>
               <Spacer size={"$md"} />

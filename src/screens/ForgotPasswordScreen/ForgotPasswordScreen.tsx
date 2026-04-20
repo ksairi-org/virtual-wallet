@@ -1,12 +1,13 @@
 import { StyleSheet } from "react-native";
 
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Spacer } from "tamagui";
 
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
 import { Containers } from "@ui-containers";
 import { BodyRegularXl } from "@fonts";
 import { BaseIcon } from "@icons";
+import { Trans } from "@lingui/react/macro";
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -17,8 +18,6 @@ const styles = StyleSheet.create({
 const ForgotPasswordScreen = () => (
   <Containers.Screen shouldAutoResize={false}>
     <KeyboardAwareScrollView
-      extraHeight={250}
-      enableOnAndroid={true}
       keyboardShouldPersistTaps={"handled"}
       contentContainerStyle={styles.contentContainerStyle}
       showsVerticalScrollIndicator={false}
@@ -39,7 +38,7 @@ const ForgotPasswordScreen = () => (
           paddingHorizontal={"$2xl"}
           color={"$text-body"}
         >
-          {"Reset your password for your account."}
+          <Trans>Reset your password for your account.</Trans>
         </BodyRegularXl>
         <Spacer height={"$2xl"} />
         <ForgotPasswordForm />

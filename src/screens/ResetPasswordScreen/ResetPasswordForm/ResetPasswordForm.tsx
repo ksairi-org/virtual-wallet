@@ -4,6 +4,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { useCallback } from "react";
 
 import { Spacer } from "tamagui";
+import { useLingui, Trans } from "@lingui/react/macro";
 
 import { createHandledFormElement, Form } from "@react-form";
 import { useBooleanState } from "@react-hooks";
@@ -22,6 +23,7 @@ const FormInput = createHandledFormElement<
 >(BaseTextInput);
 
 const ResetPasswordForm = () => {
+  const { t } = useLingui();
   const {
     state: isPasswordSecureTextEntryEnabled,
     toggleState: togglePasswordSecureTextEntryEnabled,
@@ -75,7 +77,7 @@ const ResetPasswordForm = () => {
           secureTextEntry={isPasswordSecureTextEntryEnabled}
           textContentType={"password"}
           name={"password"}
-          placeholder={"Password"}
+          placeholder={t`Password`}
           fontSize={"$2"}
           returnKeyType={"done"}
           rightIconProps={{
@@ -96,7 +98,7 @@ const ResetPasswordForm = () => {
           secureTextEntry={isConfPasswordSecureTextEntryEnabled}
           textContentType={"password"}
           name={"confirmPassword"}
-          placeholder={"Confirm Password"}
+          placeholder={t`Confirm Password`}
           fontSize={"$2"}
           returnKeyType={"done"}
           rightIconProps={{
@@ -119,13 +121,13 @@ const ResetPasswordForm = () => {
         loading={isLoading}
       >
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
-          {"Submit"}
+          <Trans>Submit</Trans>
         </LabelSemiboldLg>
       </CTAButton>
       <Spacer height={"$md"} />
       <BaseTouchable onPress={() => router.navigate("/login")}>
         <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>
-          {"Already have an account? Log in"}
+          <Trans>Already have an account? Log in</Trans>
         </LabelSemiboldLg>
       </BaseTouchable>
     </>

@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { makeRedirectUri } from "expo-auth-session";
 
 import { Spacer } from "tamagui";
+import { useLingui, Trans } from "@lingui/react/macro";
 
 import { createHandledFormElement, Form } from "@react-form";
 import { useBooleanState } from "@react-hooks";
@@ -28,6 +29,7 @@ const redirectTo = makeRedirectUri({
 });
 
 const ForgotPasswordForm = () => {
+  const { t } = useLingui();
   const router = useRouter();
 
   const { state: isLoading, toggleState: toggleIsLoading } =
@@ -72,7 +74,7 @@ const ForgotPasswordForm = () => {
       <Form methods={methods}>
         <FormInput
           autoFocus={true}
-          placeholder={"Email"}
+          placeholder={t`Email`}
           name={"email"}
           fontSize={"$2"}
           autoCapitalize="none"
@@ -90,13 +92,13 @@ const ForgotPasswordForm = () => {
         loading={isLoading}
       >
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
-          {"Submit"}
+          <Trans>Submit</Trans>
         </LabelSemiboldLg>
       </CTAButton>
       <Spacer height={"$md"} />
       <BaseTouchable onPress={() => router.navigate("/login")}>
         <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>
-          {"Already have an account? Log in"}
+          <Trans>Already have an account? Log in</Trans>
         </LabelSemiboldLg>
       </BaseTouchable>
     </>

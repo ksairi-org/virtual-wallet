@@ -20,6 +20,7 @@
       }
     },
     "store": {
+      "channel": "production",
       "autoIncrement": true,
       "distribution": "store",
       "ios": {
@@ -34,6 +35,7 @@
     },
     "internal": {
       "extends": "store",
+      "channel": "staging",
       "autoIncrement": false,
       "distribution": "internal",
       "android": {
@@ -42,6 +44,7 @@
     },
     "internal-simulator": {
       "extends": "store",
+      "channel": "staging",
       "autoIncrement": false,
       "distribution": "internal",
       "ios": {

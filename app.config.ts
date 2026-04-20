@@ -13,6 +13,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: "1.0.0",
   orientation: "portrait",
   userInterfaceStyle: "light",
+  runtimeVersion: {
+    policy: "appVersion",
+  },
+  updates: {
+    url: "https://u.expo.dev/8a1c04aa-f006-452b-9bc6-8236ca8c2501",
+  },
   icon: "./assets/app-icon.png",
   newArchEnabled: true,
   scheme: process.env.EXPO_PUBLIC_APP_SCHEMA,
@@ -121,6 +127,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     "expo-router",
+    "@stripe/stripe-react-native",
+    [
+      "expo-local-authentication",
+      {
+        faceIDPermission:
+          "Allow Virtual Wallet to use Face ID for authentication.",
+      },
+    ],
+    "expo-updates",
   ],
   extra: {
     eas: {

@@ -4,6 +4,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { useCallback } from "react";
 
 import { Spacer } from "tamagui";
+import { useLingui, Trans } from "@lingui/react/macro";
 
 import { createHandledFormElement, Form } from "@react-form";
 import { BaseTouchable } from "@ui-touchables";
@@ -29,6 +30,7 @@ const emailRedirectTo = makeRedirectUri({
 });
 
 const SignUpForm = () => {
+  const { t } = useLingui();
   const {
     state: isPasswordSecureTextEntryEnabled,
     toggleState: togglePasswordSecureTextEntryEnabled,
@@ -90,7 +92,7 @@ const SignUpForm = () => {
       <Form methods={methods}>
         <FormInput
           autoCapitalize={"words"}
-          placeholder={"Name"}
+          placeholder={t`Name`}
           name={"firstName"}
           fontSize={"$2"}
           keyboardType={"default"}
@@ -102,7 +104,7 @@ const SignUpForm = () => {
 
         <FormInput
           autoCapitalize={"words"}
-          placeholder={"Last Name"}
+          placeholder={t`Last Name`}
           name={"lastName"}
           fontSize={"$2"}
           keyboardType={"default"}
@@ -113,7 +115,7 @@ const SignUpForm = () => {
 
         <FormInput
           autoCapitalize={"none"}
-          placeholder={"Email"}
+          placeholder={t`Email`}
           name={"email"}
           fontSize={"$2"}
           keyboardType={"email-address"}
@@ -126,7 +128,7 @@ const SignUpForm = () => {
           secureTextEntry={isPasswordSecureTextEntryEnabled}
           textContentType={"password"}
           name={"password"}
-          placeholder={"Password"}
+          placeholder={t`Password`}
           fontSize={"$2"}
           returnKeyType={"done"}
           rightIconProps={{
@@ -147,7 +149,7 @@ const SignUpForm = () => {
           secureTextEntry={isConfPasswordSecureTextEntryEnabled}
           textContentType={"password"}
           name={"confirmPassword"}
-          placeholder={"Confirm Password"}
+          placeholder={t`Confirm Password`}
           fontSize={"$2"}
           returnKeyType={"done"}
           rightIconProps={{
@@ -170,13 +172,13 @@ const SignUpForm = () => {
         loading={status === "loading"}
       >
         <LabelSemiboldLg textAlign={"center"} color={"$text-action-inverse"}>
-          {"Create Account"}
+          <Trans>Create Account</Trans>
         </LabelSemiboldLg>
       </CTAButton>
       <Spacer height={"$md"} />
       <BaseTouchable onPress={() => router.navigate("/login")}>
         <LabelSemiboldLg color={"$text-brand"} textAlign={"center"}>
-          {"Already have an account? Log in"}
+          <Trans>Already have an account? Log in</Trans>
         </LabelSemiboldLg>
       </BaseTouchable>
     </>

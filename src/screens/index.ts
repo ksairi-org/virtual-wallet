@@ -5,3 +5,5 @@ export * from "./WelcomeScreen";
 export * from "./ResetPasswordScreen";
 export * from "./ProfileScreen";
 export * from "./AIScreen";
+export * from "./WalletScreen";
+export * from "./SendMoneyScreen";

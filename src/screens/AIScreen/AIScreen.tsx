@@ -4,6 +4,7 @@ import { useInvokeMcpClient, InvokeMcpClientBody } from "@react-query-sdk";
 import { Containers } from "@ui-containers";
 import { isAxiosError } from "axios";
 import { useState } from "react";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Pressable } from "react-native";
 import { Spacer, TextArea, XStack, YStack } from "tamagui";
 
@@ -18,6 +19,7 @@ const AIScreen = () => {
   const [text, setText] = useState("");
   const [response, setResponse] = useState("");
   const [provider, setProvider] = useState<Provider>("claude");
+  const { t } = useLingui();
 
   const { mutate, isPending, isError, error } = useInvokeMcpClient();
 
@@ -67,7 +69,7 @@ const AIScreen = () => {
         <Spacer size={"$md"} />
 
         <TextArea
-          placeholder="Prompt"
+          placeholder={t`Prompt`}
           value={text}
           height={200}
           onChangeText={(text) => setText(text)}
@@ -76,13 +78,13 @@ const AIScreen = () => {
         <Spacer size={"$md"} />
 
         <CTAButton loading={isPending} onPress={handleOnPressSend}>
-          <BodyBoldLg color={"$text-subtle"}>{"Send"}</BodyBoldLg>
+          <BodyBoldLg color={"$text-subtle"}><Trans>Send</Trans></BodyBoldLg>
         </CTAButton>
 
         {isError && errorMessage ? (
           <>
             <Spacer size={"$sm"} />
-            <BodyBoldSm>{"Error:"}</BodyBoldSm>
+            <BodyBoldSm><Trans>Error:</Trans></BodyBoldSm>
             <BodyRegularSm>{errorMessage}</BodyRegularSm>
           </>
         ) : null}
@@ -90,7 +92,7 @@ const AIScreen = () => {
         {response ? (
           <>
             <Spacer size={"$sm"} />
-            <BodyBoldSm>{"Response:"}</BodyBoldSm>
+            <BodyBoldSm><Trans>Response:</Trans></BodyBoldSm>
             <BodyRegularSm>{response}</BodyRegularSm>
           </>
         ) : null}

@@ -1,7 +1,10 @@
 import { Slot } from "expo-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import { StatusBar, StyleSheet, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 import { TamaguiProvider } from "tamagui";
 import tamaguiConfig from "../../tamagui.config";
 import { SplashView } from "@react-native-splash-view";
@@ -10,9 +13,13 @@ import { useCustomFonts } from "@hooks";
 import { LinguiClientProvider } from "@i18n";
 import * as Sentry from "@sentry/react-native";
 import { setupSentry } from "@sentry";
+import { StripeProvider } from "@stripe/stripe-react-native";
 import splash from "../../assets/splash.riv";
 
 const shouldEnableSentry = !__DEV__;
+
+const STRIPE_PUBLISHABLE_KEY =
+  process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? "";
 
 setupSentry(shouldEnableSentry);
 
@@ -38,6 +45,11 @@ const getSplashViewStyle = (isOSThemeDark: boolean) => ({
     : themes.light["splash-background2"],
 });
 
+const ReactQueryDevToolsProvider = () => {
+  useReactQueryDevTools(queryClient);
+  return null;
+};
+
 const RootLayout = () => {
   const fontsLoaded = useCustomFonts();
   const colorScheme = useColorScheme();
@@ -49,17 +61,24 @@ const RootLayout = () => {
   }
   return (
     <LinguiClientProvider>
-      <QueryClientProvider client={queryClient}>
-        <GestureHandlerRootView style={styles.gestureHandler}>
-          <TamaguiProvider
-            config={tamaguiConfig}
-            defaultTheme={isOSThemeDark ? "dark" : "light"}
-          >
-            <StatusBar barStyle={"default"} />
-            <Slot />
-          </TamaguiProvider>
-        </GestureHandlerRootView>
-      </QueryClientProvider>
+      <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevToolsProvider />
+          <GestureHandlerRootView style={styles.gestureHandler}>
+            <TamaguiProvider
+              config={tamaguiConfig}
+              defaultTheme={isOSThemeDark ? "dark" : "light"}
+            >
+              <BottomSheetModalProvider>
+                <KeyboardProvider>
+                  <StatusBar barStyle={"default"} />
+                  <Slot />
+                </KeyboardProvider>
+              </BottomSheetModalProvider>
+            </TamaguiProvider>
+          </GestureHandlerRootView>
+        </QueryClientProvider>
+      </StripeProvider>
       <SplashView
         style={getSplashViewStyle(isOSThemeDark)}
         source={splash}
