@@ -3447,6 +3447,187 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ksairi-org/expo-image@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/expo-image@npm:0.1.0"
+  peerDependencies:
+    expo-image: "*"
+  checksum: 10c0/ea06fe7d391d4b14c27088a46b7c281273d70ae6d5dedabb1486091ae7dde4c36d16c875c0dea090dde42075b3c98139d4928ce230ab15aafcbe7bdb5db1480d
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-auth-client@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-auth-client@npm:0.1.0"
+  peerDependencies:
+    "@supabase/supabase-js": "*"
+  checksum: 10c0/e6d584bfc59f42fd7e4072f1b505e3af723c0b0c70bc8ebfb3e226d42545a4a181dc7a6ee232728400fa9ca8c9c73807034c9394ebb6afb0e24a390a48c5e544
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-auth-core@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-auth-core@npm:0.1.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/4e4189d674983042f8f04c2567d70304ad7483f760e973a70fa82771fc631fa3ee0857758f0986c99aaff4c3bf0289310454951749b4601dfaec3286c8a91b43
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-auth-hooks@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-auth-hooks@npm:0.1.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/305a6160e80f63fc5f70d479bb2732b762e0b69cae5a87673069dfcd04c6459374f93560cc76b78bc45b97a7b17ee6a71af119676493d9dd6940fa08c70e1192
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-auth-setup@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-auth-setup@npm:0.1.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/8eeff82af237a069acebdf91ae4565413db0dc4e9158c2e936bb87c9750e96fec84e7eb3cd7725128a73fd43a840d02b05d7868544a599f8f53dc45ad09102b9
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-auth-storage@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-auth-storage@npm:0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native-mmkv: "*"
+    zustand: "*"
+  checksum: 10c0/395fcbaf2c51ad3d81b146af75d2d4a2d8a9de3d15fa564d0bb9f68c377c67a57c4d88cfac7c3c125f0f2666e842e020e8eb456d6f769fc62d4b30f79ed23201
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-form@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-form@npm:0.1.0"
+  peerDependencies:
+    "@hookform/resolvers": "*"
+    react: "*"
+    react-hook-form: "*"
+  checksum: 10c0/ef46cd33a0c2453bceb1f98b5ff7f956a65dcbe233728ad1623eb1e0b0cf518e431754f3020720b18711608926fe1ee401e3128af2a226e9fc75a49c8d90462a
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-hooks@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-hooks@npm:0.1.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/fb42fee7e712d7dd06502a7547422fff7057dec1d83b2c9d40d69c42262e797c19898b30859b37175c9629bc26d9fc632684502d212a9742c0d805dbc01d55db
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-native-auth-apple@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-native-auth-apple@npm:0.1.0"
+  peerDependencies:
+    "@invertase/react-native-apple-authentication": "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/97b492319f7e9dbbfca89af6934df5d1a793c6da709823ab6e1f900430d0722176a43c77be8647038ebb4621cc486479447f235a2d6e1d32e0c2bc8e69c21479
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-native-auth-google@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-native-auth-google@npm:0.1.0"
+  peerDependencies:
+    "@react-native-google-signin/google-signin": "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/2b25012d6fb5565448a7ea228caae111bf5d9221b3afcf5afcb61d924629e17f8d31756988f337975937842db002ea037f4cc660ac2b1e607d9328790038d0f6
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-native-functions@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-native-functions@npm:0.1.0"
+  peerDependencies:
+    react-native: "*"
+    react-native-reanimated: "*"
+  checksum: 10c0/07108aa03f9e58920a94db3149001b64396bc09b881e6d11146c4a0c820b356a2f779b7b9d62f2c6d0f0bfd18db5f7432b513e056cb8acdfbf994aa359f5d87c
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-native-hooks@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-native-hooks@npm:0.1.0"
+  peerDependencies:
+    "@react-native-community/netinfo": "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/f707b1bd6cdbd71acda9951d448e63cdcb160f8455b17d08399e91e7cff9c0c873188bdc6b396bb95d28ac2879afbb885a289300eb6b04870bb0e41d1615143c
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-native-splash-view@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-native-splash-view@npm:0.1.0"
+  peerDependencies:
+    expo-splash-screen: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/f6df98bf00ee5b09b7a1d2dcef0a3795974d4ae0359864b5ada5ccb8bfedf162c26df45696321f1ae08983387a0c7f8a28666468e8b3ba549e993e79f7db6ed1
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-native-ui-config@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-native-ui-config@npm:0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    tamagui: "*"
+  checksum: 10c0/b9233229ea6af84a6a19a3aaacc7f17b6335cae8f961905a7859feff52eb39d8aa3419b66ed82df5fbd9ac92a9bf2b9b999a6169423c7dd29f5411030973d757
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/react-query-sdk@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/react-query-sdk@npm:0.1.0"
+  peerDependencies:
+    "@tanstack/react-query": "*"
+    axios: "*"
+    react: "*"
+  checksum: 10c0/3c8020d056aba5f1254c1e4ca1a7eadd82c02e0e2a4b0eeee1a048d80e50bcb6b4c46d01bb11884198c4631dfa814c095ced9c4623585a37d47b1fcc9aa8f0b5
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/typescript-functions@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/typescript-functions@npm:0.1.0"
+  checksum: 10c0/50b82adfb042248332cced3adccd2b72d0c98489dbb5c2798bfd25ff252877e21143ef6f85105eec8dc0e0b79d8e7bf78abc6e25832411eb7bf6685fa55713dd
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/ui-containers@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/ui-containers@npm:0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    tamagui: "*"
+  checksum: 10c0/d868cb5ed27d913cc9e7a966633d08d18093fffd8b06be719aef322007fb3ab0030aef294c173fda84ec8677a8ee1b2dd7f0006c70ef7b157af2e86d87165d5f
+  languageName: node
+  linkType: hard
+
+"@ksairi-org/ui-touchables@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@ksairi-org/ui-touchables@npm:0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    tamagui: "*"
+  checksum: 10c0/8fa792bb3a166780e1af8f95dd622edb14f70b9ff43ba49bd499f5fcad5642372b07122e72239d669d4de6f29b7c386a09eee953e149c35e6b612d56a7c55146
+  languageName: node
+  linkType: hard
+
 "@lingui/babel-plugin-extract-messages@npm:5.5.0":
   version: 5.5.0
   resolution: "@lingui/babel-plugin-extract-messages@npm:5.5.0"
@@ -18818,6 +18999,24 @@ __metadata:
     "@gorhom/bottom-sheet": "npm:^5.2.9"
     "@hookform/resolvers": "npm:^5.2.1"
     "@invertase/react-native-apple-authentication": "npm:^2.4.1"
+    "@ksairi-org/expo-image": "npm:^0.1.0"
+    "@ksairi-org/react-auth-client": "npm:^0.1.0"
+    "@ksairi-org/react-auth-core": "npm:^0.1.0"
+    "@ksairi-org/react-auth-hooks": "npm:^0.1.0"
+    "@ksairi-org/react-auth-setup": "npm:^0.1.0"
+    "@ksairi-org/react-auth-storage": "npm:^0.1.0"
+    "@ksairi-org/react-form": "npm:^0.1.0"
+    "@ksairi-org/react-hooks": "npm:^0.1.0"
+    "@ksairi-org/react-native-auth-apple": "npm:^0.1.0"
+    "@ksairi-org/react-native-auth-google": "npm:^0.1.0"
+    "@ksairi-org/react-native-functions": "npm:^0.1.0"
+    "@ksairi-org/react-native-hooks": "npm:^0.1.0"
+    "@ksairi-org/react-native-splash-view": "npm:^0.1.0"
+    "@ksairi-org/react-native-ui-config": "npm:^0.1.0"
+    "@ksairi-org/react-query-sdk": "npm:^0.1.0"
+    "@ksairi-org/typescript-functions": "npm:^0.1.0"
+    "@ksairi-org/ui-containers": "npm:^0.1.0"
+    "@ksairi-org/ui-touchables": "npm:^0.1.0"
     "@lingui/babel-plugin-lingui-macro": "npm:^5.4.1"
     "@lingui/cli": "npm:^5.4.1"
     "@lingui/conf": "npm:^5.4.1"
