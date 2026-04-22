@@ -3474,12 +3474,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ksairi-org/react-auth-hooks@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@ksairi-org/react-auth-hooks@npm:0.1.1"
+"@ksairi-org/react-auth-hooks@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@ksairi-org/react-auth-hooks@npm:0.1.2"
   peerDependencies:
     react: "*"
-  checksum: 10c0/8d946531b9cf1b43249ca58ade4609ce30b86162a777248363527fb2259fdce3ded152db74f80a10b30982a746f592b70401fec19fdb80ee63c8d5f79ac8d232
+  checksum: 10c0/809a6b4a599dfc1a1bb57f4cde585593032c7846b5f2eee277a8814823d5a360204f50cd9c724b6648a623977a4d6c2ea20a3861a8909c6b88eef9df1aa46ef9
   languageName: node
   linkType: hard
 
@@ -3617,14 +3617,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ksairi-org/ui-touchables@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@ksairi-org/ui-touchables@npm:0.1.0"
+"@ksairi-org/ui-touchables@npm:0.1.1":
+  version: 0.1.1
+  resolution: "@ksairi-org/ui-touchables@npm:0.1.1"
   peerDependencies:
     react: "*"
     react-native: "*"
     tamagui: "*"
-  checksum: 10c0/8fa792bb3a166780e1af8f95dd622edb14f70b9ff43ba49bd499f5fcad5642372b07122e72239d669d4de6f29b7c386a09eee953e149c35e6b612d56a7c55146
+  checksum: 10c0/e49646c3d0b40bbd064600e11948a7a46a1e9092d36ba632abf86e7a39983f7431f338dc012451d1ad638f5756186a034c172cb0d9e5eb0a551740791549c5f4
   languageName: node
   linkType: hard
 
@@ -19002,7 +19002,7 @@ __metadata:
     "@ksairi-org/expo-image": "npm:^0.1.1"
     "@ksairi-org/react-auth-client": "npm:^0.1.1"
     "@ksairi-org/react-auth-core": "npm:^0.1.1"
-    "@ksairi-org/react-auth-hooks": "npm:^0.1.1"
+    "@ksairi-org/react-auth-hooks": "npm:^0.1.2"
     "@ksairi-org/react-auth-setup": "npm:^0.1.1"
     "@ksairi-org/react-auth-storage": "npm:^0.1.1"
     "@ksairi-org/react-form": "npm:^0.1.1"
@@ -19016,7 +19016,7 @@ __metadata:
     "@ksairi-org/react-query-sdk": "npm:^0.1.1"
     "@ksairi-org/typescript-functions": "npm:^0.1.1"
     "@ksairi-org/ui-containers": "npm:^0.1.0"
-    "@ksairi-org/ui-touchables": "npm:^0.1.0"
+    "@ksairi-org/ui-touchables": "npm:0.1.1"
     "@lingui/babel-plugin-lingui-macro": "npm:^5.4.1"
     "@lingui/cli": "npm:^5.4.1"
     "@lingui/conf": "npm:^5.4.1"
