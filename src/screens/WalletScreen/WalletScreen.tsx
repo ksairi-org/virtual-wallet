@@ -9,7 +9,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import type { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/src/components/bottomSheetBackdrop/types";
 import { MotiView } from "moti";
-import { Containers } from "@ui-containers";
+import { Containers } from "@ksairi/ui-containers";
 import {
   DisplayBoldMd,
   HeadingSemiboldMd,
@@ -19,8 +19,8 @@ import {
   BodyRegularSm,
 } from "@fonts";
 import { useGetLoggedUserProfile, useBottomSheet } from "@hooks";
-import { useGetTransactions, useGetWallets } from "@react-query-sdk";
-import type { Transactions } from "@react-query-sdk";
+import { useGetTransactions, useGetWallets } from "@ksairi/react-query-sdk";
+import type { Transactions } from "@ksairi/react-query-sdk";
 import { getQueryFilters } from "@utils";
 import { Trans, useLingui } from "@lingui/react/macro";
 

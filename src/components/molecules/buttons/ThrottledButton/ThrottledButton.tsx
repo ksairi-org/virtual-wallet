@@ -1,4 +1,4 @@
-import { BaseTouchable } from "@ui-touchables";
+import { BaseTouchable } from "@ksairi/ui-touchables";
 import { useState, useCallback } from "react";
 import type { ComponentProps } from "react";
 

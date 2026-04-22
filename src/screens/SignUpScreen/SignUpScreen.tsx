@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 
-import { Image } from "@expo-image";
+import { Image } from "@ksairi/expo-image";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Spacer } from "tamagui";
 
 import { SignUpForm } from "./SignUpForm";
-import { Containers } from "@ui-containers";
+import { Containers } from "@ksairi/ui-containers";
 import { HeadingBoldXl } from "@fonts";
 import { images } from "@images";
 import { Trans } from "@lingui/react/macro";

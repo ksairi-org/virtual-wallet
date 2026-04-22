@@ -4,9 +4,9 @@ import type { ColorTokens } from "tamagui";
 import { SvgXml } from "react-native-svg";
 
 import { svgImports } from "./svg-imports";
-import { getImageDimensions } from "@react-native-functions";
-import { useFontScale } from "@react-native-hooks";
-import { useColorTokenValue } from "@react-native-ui-config";
+import { getImageDimensions } from "@ksairi/react-native-functions";
+import { useFontScale } from "@ksairi/react-native-hooks";
+import { useColorTokenValue } from "@ksairi/react-native-ui-config";
 
 type IconName = keyof typeof svgImports;
 

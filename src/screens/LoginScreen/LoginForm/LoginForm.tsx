@@ -6,12 +6,12 @@ import { useCallback } from "react";
 import { Spacer } from "tamagui";
 import { useLingui, Trans } from "@lingui/react/macro";
 
-import { useBooleanState } from "@react-hooks";
-import { useLayoutAnimationOnChange } from "@react-native-hooks";
+import { useBooleanState } from "@ksairi/react-hooks";
+import { useLayoutAnimationOnChange } from "@ksairi/react-native-hooks";
 import { useUserStore } from "@stores";
-import { useLoginWithPersistence } from "@react-auth-core";
-import { createHandledFormElement, Form } from "@react-form";
-import { BaseTouchable } from "@ui-touchables";
+import { useLoginWithPersistence } from "@ksairi/react-auth-core";
+import { createHandledFormElement, Form } from "@ksairi/react-form";
+import { BaseTouchable } from "@ksairi/ui-touchables";
 import { BaseTextInput, CTAButton } from "@molecules";
 import { loginSchema } from "@constants";
 import { BodyRegularSm, LabelSemiboldLg } from "@fonts";

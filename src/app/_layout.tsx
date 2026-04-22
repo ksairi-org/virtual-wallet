@@ -7,7 +7,7 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { TamaguiProvider } from "tamagui";
 import tamaguiConfig from "../../tamagui.config";
-import { SplashView } from "@react-native-splash-view";
+import { SplashView } from "@ksairi/react-native-splash-view";
 import { themes } from "@theme";
 import { useCustomFonts } from "@hooks";
 import { LinguiClientProvider } from "@i18n";

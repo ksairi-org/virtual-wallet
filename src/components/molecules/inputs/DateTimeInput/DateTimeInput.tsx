@@ -16,8 +16,8 @@ import { format } from "date-fns";
 import { YStack } from "tamagui";
 
 import { BaseTextInput, type BaseTextInputProps } from "../BaseTextInput";
-import { performLayoutAnimation } from "@react-native-functions";
-import { useBooleanState } from "@react-hooks";
+import { performLayoutAnimation } from "@ksairi/react-native-functions";
+import { useBooleanState } from "@ksairi/react-hooks";
 
 type DateTimePickerProps = DatePickerOptions & {
   mode: IOSNativeProps["mode"] & AndroidNativeProps["mode"];

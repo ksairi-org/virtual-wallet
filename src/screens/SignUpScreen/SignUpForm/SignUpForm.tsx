@@ -6,10 +6,10 @@ import { useCallback } from "react";
 import { Spacer } from "tamagui";
 import { useLingui, Trans } from "@lingui/react/macro";
 
-import { createHandledFormElement, Form } from "@react-form";
-import { BaseTouchable } from "@ui-touchables";
-import { useBooleanState } from "@react-hooks";
-import { useSignUpWithPersistence } from "@react-auth-core";
+import { createHandledFormElement, Form } from "@ksairi/react-form";
+import { BaseTouchable } from "@ksairi/ui-touchables";
+import { useBooleanState } from "@ksairi/react-hooks";
+import { useSignUpWithPersistence } from "@ksairi/react-auth-core";
 import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
 import { BaseTextInput, CTAButton } from "@molecules";
 import { CONFIRM_EMAIL_URL, signUpSchema } from "@constants";

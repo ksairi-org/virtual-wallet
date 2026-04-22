@@ -5,7 +5,7 @@ import type { TertiaryButtonProps } from "../TertiaryButton";
 import { PrimaryButton } from "../PrimaryButton";
 import { SecondaryButton } from "../SecondaryButton";
 import { TertiaryButton } from "../TertiaryButton";
-import { Containers } from "@ui-containers";
+import { Containers } from "@ksairi/ui-containers";
 
 type ActionButtonsConfig = {
   firstButton: PrimaryButtonProps;

@@ -1,7 +1,7 @@
 import { BodyBoldLg, BodyBoldSm, BodyRegularSm } from "@fonts";
 import { CTAButton } from "@molecules";
-import { useInvokeMcpClient, InvokeMcpClientBody } from "@react-query-sdk";
-import { Containers } from "@ui-containers";
+import { useInvokeMcpClient, InvokeMcpClientBody } from "@ksairi/react-query-sdk";
+import { Containers } from "@ksairi/ui-containers";
 import { isAxiosError } from "axios";
 import { useState } from "react";
 import { Trans, useLingui } from "@lingui/react/macro";

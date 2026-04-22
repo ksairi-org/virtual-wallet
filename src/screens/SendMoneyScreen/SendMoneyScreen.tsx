@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Spacer, YStack } from "tamagui";
-import { Containers } from "@ui-containers";
+import { Containers } from "@ksairi/ui-containers";
 import {
   DisplayBoldMd,
   LabelSemiboldLg,
@@ -9,7 +9,7 @@ import {
 } from "@fonts";
 import { BaseTextInput, PrimaryButton } from "@molecules";
 import { useGetLoggedUserProfile } from "@hooks";
-import { useGetWallets } from "@react-query-sdk";
+import { useGetWallets } from "@ksairi/react-query-sdk";
 import { getQueryFilters, showAlert } from "@utils";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ActivityIndicator } from "react-native";

@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Spacer } from "tamagui";
 
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
-import { Containers } from "@ui-containers";
+import { Containers } from "@ksairi/ui-containers";
 import { BodyRegularXl } from "@fonts";
 import { BaseIcon } from "@icons";
 import { Trans } from "@lingui/react/macro";
