@@ -1,5 +1,5 @@
 import { LabelSemiboldLg } from "@fonts";
-import { Containers } from "@ksairi/ui-containers";
+import { Containers } from "@ksairi-org/ui-containers";
 import { Trans } from "@lingui/react/macro";
 
 const HomeScreen = () => (

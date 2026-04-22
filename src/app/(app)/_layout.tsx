@@ -1,5 +1,5 @@
 import { Redirect, Stack } from "expo-router";
-import { useAuthenticationStatus } from "@ksairi/react-auth-core";
+import { useAuthenticationStatus } from "@ksairi-org/react-auth-core";
 import { useUserStore } from "@stores";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styled } from "tamagui";

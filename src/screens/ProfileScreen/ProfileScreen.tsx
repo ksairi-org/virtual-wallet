@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { Containers } from "@ksairi/ui-containers";
+import { Containers } from "@ksairi-org/ui-containers";
 import { Spacer, styled } from "tamagui";
 import { CTAButton, PrimaryButton } from "@molecules";
 import { BodyBoldMd, BodyRegularSm, LabelSemiboldLg } from "@fonts";
-import { useAuthStore } from "@ksairi/react-auth-storage";
-import { useBooleanState } from "@ksairi/react-hooks";
+import { useAuthStore } from "@ksairi-org/react-auth-storage";
+import { useBooleanState } from "@ksairi-org/react-hooks";
 import {
   patchProfiles,
   useGetWallets,
   useInvokeByeWorld,
   useInvokeHelloWorld,
-} from "@ksairi/react-query-sdk";
-import { supabase } from "@ksairi/react-auth-client";
+} from "@ksairi-org/react-query-sdk";
+import { supabase } from "@ksairi-org/react-auth-client";
 import { Avatar, VisionCamera } from "@organisms";
 import { useGetLoggedUserProfile } from "@hooks";
 import { getQueryFilters, showAlert, uploadImage } from "@utils";

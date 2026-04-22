@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { supabase } from "@ksairi/react-auth-client";
+import { supabase } from "@ksairi-org/react-auth-client";
 import { BUCKET_NAME } from "@constants";
 import { BaseIcon } from "@icons";
-import { Image } from "@ksairi/expo-image";
+import { Image } from "@ksairi-org/expo-image";
 import { Spacer, XStack, YStack } from "tamagui";
-import { BaseTouchable } from "@ksairi/ui-touchables";
+import { BaseTouchable } from "@ksairi-org/ui-touchables";
 import { ActivityIndicator } from "react-native";
 
 type AvatarProps = {

@@ -6,15 +6,15 @@ import { useCallback } from "react";
 import { Spacer } from "tamagui";
 import { useLingui, Trans } from "@lingui/react/macro";
 
-import { createHandledFormElement, Form } from "@ksairi/react-form";
-import { useBooleanState } from "@ksairi/react-hooks";
-import { BaseTouchable } from "@ksairi/ui-touchables";
+import { createHandledFormElement, Form } from "@ksairi-org/react-form";
+import { useBooleanState } from "@ksairi-org/react-hooks";
+import { BaseTouchable } from "@ksairi-org/ui-touchables";
 import { BaseTextInput, CTAButton } from "@molecules";
 import { LabelSemiboldLg } from "@fonts";
 import { resetPasswordSchema } from "@constants";
 import { useGetFormMethods } from "@hooks";
 import { showToast } from "@utils";
-import { supabase } from "@ksairi/react-auth-client";
+import { supabase } from "@ksairi-org/react-auth-client";
 import { useRouter } from "expo-router";
 
 const FormInput = createHandledFormElement<

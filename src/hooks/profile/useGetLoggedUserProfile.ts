@@ -1,5 +1,5 @@
-import { supabase } from "@ksairi/react-auth-client";
-import { useGetProfiles } from "@ksairi/react-query-sdk";
+import { supabase } from "@ksairi-org/react-auth-client";
+import { useGetProfiles } from "@ksairi-org/react-query-sdk";
 import { useUserStore } from "@stores";
 import { getQueryFilters } from "@utils";
 import { useEffect, useMemo, useState } from "react";

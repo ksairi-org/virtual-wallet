@@ -1,5 +1,5 @@
 import { Redirect } from "expo-router";
-import { useAuthenticationStatus } from "@ksairi/react-auth-core";
+import { useAuthenticationStatus } from "@ksairi-org/react-auth-core";
 import { useUserStore } from "@stores";
 
 const Index = () => {

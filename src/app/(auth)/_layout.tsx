@@ -1,6 +1,6 @@
 // src/app/(auth)/_layout.tsx
 import { Redirect, Stack } from "expo-router";
-import { useAuthenticationStatus } from "@ksairi/react-auth-core";
+import { useAuthenticationStatus } from "@ksairi-org/react-auth-core";
 
 export default function AuthLayout() {
   const status = useAuthenticationStatus();

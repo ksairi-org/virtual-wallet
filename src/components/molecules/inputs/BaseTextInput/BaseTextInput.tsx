@@ -3,8 +3,8 @@ import type { ColorTokens, InputProps, XStackProps } from "tamagui";
 import type { ForwardedRef, Ref } from "react";
 
 import { Input, Spacer } from "tamagui";
-import { useColorTokenValue } from "@ksairi/react-native-ui-config";
-import { BaseTouchable } from "@ksairi/ui-touchables";
+import { useColorTokenValue } from "@ksairi-org/react-native-ui-config";
+import { BaseTouchable } from "@ksairi-org/ui-touchables";
 import { BodyRegularMd, BodyRegularSm } from "@fonts";
 import { BaseIcon, BaseIconProps } from "@icons";
 

@@ -1,5 +1,5 @@
-import { scaleBasedOnScreenDimension } from "@ksairi/react-native-functions";
-import { createFontObject } from "@ksairi/react-native-ui-config";
+import { scaleBasedOnScreenDimension } from "@ksairi-org/react-native-functions";
+import { createFontObject } from "@ksairi-org/react-native-ui-config";
 import { createFont } from "tamagui";
 
 const size = createFontObject(

@@ -1,4 +1,4 @@
-import { useColorTokenValue } from "@ksairi/react-native-ui-config";
+import { useColorTokenValue } from "@ksairi-org/react-native-ui-config";
 import type { Token, ColorTokens } from "tamagui";
 
 import { View, getTokenValue } from "tamagui";

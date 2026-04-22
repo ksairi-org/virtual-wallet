@@ -1,7 +1,7 @@
 // This is the base Tamagui config for this monorepo
 // It is used by the tamagui CLI to generate typings based on this project's configuration
 
-import { typedKeys } from "@ksairi/typescript-functions";
+import { typedKeys } from "@ksairi-org/typescript-functions";
 import { createTamagui, createTokens } from "tamagui";
 import { themes } from "./themes";
 import { sizesSpaces, radius, fonts } from "./tokens";

@@ -4,14 +4,14 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Spacer } from "tamagui";
 
 import { ResetPasswordForm } from "./ResetPasswordForm";
-import { Containers } from "@ksairi/ui-containers";
+import { Containers } from "@ksairi-org/ui-containers";
 import { BodyRegularXl } from "@fonts";
 import { Trans } from "@lingui/react/macro";
 import { BaseIcon } from "@icons";
 import { useEffect } from "react";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import { showAlert } from "@utils";
-import { supabase } from "@ksairi/react-auth-client";
+import { supabase } from "@ksairi-org/react-auth-client";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 const styles = StyleSheet.create({
