@@ -4,7 +4,8 @@
   "main": "expo-router/entry",
   "scripts": {
     "sync-env-vars": "doppler secrets substitute env.template.yaml --output .env --project mobile --config $0",
-    "pre-start": "yarn sync-env-vars; yarn generate:open-api-hooks; $1\"",
+    "sync-design-tokens": "FIGMA_TOKEN=$FIGMA_API_KEY figma-tamagui-sync --fileId=$FIGMA_FILE_ID --out=./src/theme",
+    "pre-start": "yarn sync-env-vars; yarn sync-design-tokens; yarn generate:open-api-hooks; $1\"",
     "start:expo": "[ $0 == 'prod' ] && yarn expo start --scheme virtual-wallet || yarn expo start --scheme virtual-wallet-$0",
     "start": "yarn i18n-compile && yarn pre-start ${0:-stg} \"yarn start:expo ${0:-stg}\"",
     "build": "yarn sync-env-vars; yarn generate:open-api-hooks; $1\"",
@@ -119,6 +120,7 @@
     "@babel/core": "^7.28.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@ksairi-org/figma-tamagui-generator": "^0.1.1",
     "@lingui/babel-plugin-lingui-macro": "^5.4.1",
     "@lingui/cli": "^5.4.1",
     "@lingui/conf": "^5.4.1",
@@ -149,6 +151,7 @@
     "react-native-svg-transformer": "^1.5.1",
     "react-test-renderer": "19.1.0",
     "supabase": "2.39.2",
+    "tsx": "^4.19.2",
     "typescript": "~5.9.2"
   },
   "packageManager": "yarn@4.9.2",
