@@ -12,12 +12,12 @@ React Native / Expo + Supabase app. For coding standards run `/expo-rn-plugin:co
 
 ## Org libraries (`@ksairi-org/*`)
 
-Source: `https://github.com/ksairi-org` — use the GitHub MCP to read source when needed.
+Source: `https://github.com/ksairi-org/ksairi-libs`. Run `/expo-rn-plugin:ksairi-libs` for the full reference before writing any hook, utility, or layout code.
 
-- **Auth:** `@ksairi-org/react-auth-*` (core, client, hooks, storage, setup, google, apple) — always use these, never raw Supabase auth
-- **Forms:** `@ksairi-org/react-form` — use for all form fields; fallback Tamagui `Input` + `Label`
-- **UI:** `@ksairi-org/ui-touchables` (not `Pressable`), `@ksairi-org/expo-image` (not raw `expo-image`), `@ksairi-org/ui-containers`
-- **SDK:** `@ksairi-org/react-query-sdk` — orval config lives here; run `/expo-rn-plugin:scaffold` to generate hooks
+- **Auth:** `@ksairi-org/react-auth-*` — always use, never raw Supabase auth
+- **Forms:** `@ksairi-org/react-form` — all form fields; fallback Tamagui `Input` + `Label`
+- **UI:** `@ksairi-org/ui-touchables`, `@ksairi-org/expo-image`, `@ksairi-org/ui-containers`
+- **SDK:** `@ksairi-org/react-query-sdk` — orval config base; hooks generated into `src/api/generated/`
 
 ## Design Token Sync (Figma → Tamagui)
 
