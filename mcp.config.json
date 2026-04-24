@@ -3,7 +3,7 @@
     "project": "mobile",
     "config": "stg"
   },
-  "supabase": {
+  "database": {
     "schema": "api"
   },
   "components": {

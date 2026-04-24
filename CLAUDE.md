@@ -29,15 +29,7 @@ The sync also runs automatically on every bundler start (`yarn start`) and on ev
 
 ## Env Vars / Doppler
 
-Secrets: project `mobile`, configs `dev` / `stg` / `prod`.
-
-To add a secret:
-
-1. Add to `env.template.yaml`: `VAR_NAME={{ .VAR_NAME }}`
-2. Set in all configs: `doppler secrets set VAR_NAME="value" --project mobile --config dev|stg|prod`
-3. Sync locally: `yarn sync-env-vars stg`
-
-`EXPO_PUBLIC_` prefix required for client-side vars.
+Secrets: project `mobile`, configs `dev` / `stg` / `prod`. To add a secret, run `/expo-rn-plugin:coding-standards`.
 
 ## E2E Tests (Maestro)
 
