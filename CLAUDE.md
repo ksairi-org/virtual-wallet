@@ -10,6 +10,15 @@ React Native / Expo + Supabase app. For coding standards run `/expo-rn-plugin:co
 - Supabase `api` schema (not `public`)
 - Stripe for payments
 
+## Org libraries (`@ksairi-org/*`)
+
+Source: `https://github.com/ksairi-org` — use the GitHub MCP to read source when needed.
+
+- **Auth:** `@ksairi-org/react-auth-*` (core, client, hooks, storage, setup, google, apple) — always use these, never raw Supabase auth
+- **Forms:** `@ksairi-org/react-form` — use for all form fields; fallback Tamagui `Input` + `Label`
+- **UI:** `@ksairi-org/ui-touchables` (not `Pressable`), `@ksairi-org/expo-image` (not raw `expo-image`), `@ksairi-org/ui-containers`
+- **SDK:** `@ksairi-org/react-query-sdk` — orval config lives here; run `/expo-rn-plugin:scaffold` to generate hooks
+
 ## Design Token Sync (Figma → Tamagui)
 
 Token files in `src/theme/` are auto-generated from Figma. To regenerate after a design system change:

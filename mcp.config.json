@@ -12,7 +12,7 @@
     "organisms": "src/components/organisms",
     "screens": "src/screens"
   },
-  "libs": ["libs/ui-containers", "libs/react-form", "libs/ui-touchables"],
+  "libs": ["node_modules/@ksairi-org/ui-containers", "node_modules/@ksairi-org/react-form", "node_modules/@ksairi-org/ui-touchables"],
   "router": "expo-router",
   "routesDir": "src/app",
   "orval": {
