@@ -6,6 +6,7 @@ import {
   LabelSemiboldLg,
   BodyRegularMd,
   BodyBoldMd,
+  BodyBoldLg,
 } from "@fonts";
 import { BaseTextInput, PrimaryButton } from "@molecules";
 import { useGetLoggedUserProfile } from "@hooks";
@@ -120,11 +121,12 @@ const SendMoneyScreen = () => {
         <Spacer size="$xl" />
 
         <PrimaryButton
-          text={t`Send Money`}
           onPress={handleSend}
           disabled={!canSend}
           loading={isSending}
-        />
+        >
+          <BodyBoldLg color={"$surface-app"}>{t`Send Money`}</BodyBoldLg>
+        </PrimaryButton>
 
         <Spacer size="$md" />
 

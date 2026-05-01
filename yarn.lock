@@ -3799,6 +3799,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ksairi-org/ui-action-buttons@portal:../ksairi-libs/packages/ui-action-buttons::locator=virtual-wallet%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@ksairi-org/ui-action-buttons@portal:../ksairi-libs/packages/ui-action-buttons::locator=virtual-wallet%40workspace%3A."
+  peerDependencies:
+    "@ksairi-org/ui-containers": "*"
+    react: "*"
+    react-native: "*"
+    tamagui: "*"
+  languageName: node
+  linkType: soft
+
+"@ksairi-org/ui-button-animated@portal:../ksairi-libs/packages/ui-button-animated::locator=virtual-wallet%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@ksairi-org/ui-button-animated@portal:../ksairi-libs/packages/ui-button-animated::locator=virtual-wallet%40workspace%3A."
+  peerDependencies:
+    "@ksairi-org/react-native-ui-config": "*"
+    "@ksairi-org/ui-touchables": "*"
+    react: "*"
+    react-native: "*"
+    react-native-reanimated: "*"
+    tamagui: "*"
+  languageName: node
+  linkType: soft
+
+"@ksairi-org/ui-button@portal:../ksairi-libs/packages/ui-button::locator=virtual-wallet%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@ksairi-org/ui-button@portal:../ksairi-libs/packages/ui-button::locator=virtual-wallet%40workspace%3A."
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    tamagui: "*"
+  languageName: node
+  linkType: soft
+
 "@ksairi-org/ui-containers@npm:^0.1.0":
   version: 0.1.0
   resolution: "@ksairi-org/ui-containers@npm:0.1.0"
@@ -3810,16 +3844,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ksairi-org/ui-touchables@npm:0.1.1":
-  version: 0.1.1
-  resolution: "@ksairi-org/ui-touchables@npm:0.1.1"
+"@ksairi-org/ui-touchables@portal:../ksairi-libs/packages/ui-touchables::locator=virtual-wallet%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@ksairi-org/ui-touchables@portal:../ksairi-libs/packages/ui-touchables::locator=virtual-wallet%40workspace%3A."
   peerDependencies:
     react: "*"
     react-native: "*"
     tamagui: "*"
-  checksum: 10c0/e49646c3d0b40bbd064600e11948a7a46a1e9092d36ba632abf86e7a39983f7431f338dc012451d1ad638f5756186a034c172cb0d9e5eb0a551740791549c5f4
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@lingui/babel-plugin-extract-messages@npm:5.5.0":
   version: 5.5.0
@@ -19360,8 +19393,11 @@ __metadata:
     "@ksairi-org/react-native-ui-config": "npm:^0.1.1"
     "@ksairi-org/react-query-sdk": "npm:^0.1.1"
     "@ksairi-org/typescript-functions": "npm:^0.1.1"
+    "@ksairi-org/ui-action-buttons": "portal:../ksairi-libs/packages/ui-action-buttons"
+    "@ksairi-org/ui-button": "portal:../ksairi-libs/packages/ui-button"
+    "@ksairi-org/ui-button-animated": "portal:../ksairi-libs/packages/ui-button-animated"
     "@ksairi-org/ui-containers": "npm:^0.1.0"
-    "@ksairi-org/ui-touchables": "npm:0.1.1"
+    "@ksairi-org/ui-touchables": "portal:../ksairi-libs/packages/ui-touchables"
     "@lingui/babel-plugin-lingui-macro": "npm:^5.4.1"
     "@lingui/cli": "npm:^5.4.1"
     "@lingui/conf": "npm:^5.4.1"

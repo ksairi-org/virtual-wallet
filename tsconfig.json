@@ -5,6 +5,7 @@
     "typeRoots": ["./node_modules/@types", "./types"],
     "rootDir": ".",
     "baseUrl": ".",
+    "preserveSymlinks": true,
     "paths": {
       "@default-tamagui-config": ["src/theme/tamagui.config.ts"],
       "@screens": ["src/screens"],

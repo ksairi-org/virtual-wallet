@@ -1,3 +1,3 @@
 export * from "./buttons";
 export * from "./inputs";
-export * from "./CircularLoadingSpinner";
+export { CircularLoadingSpinner } from "@ksairi-org/ui-button-animated";

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Containers } from "@ksairi-org/ui-containers";
 import { Spacer, styled } from "tamagui";
 import { CTAButton, PrimaryButton } from "@molecules";
-import { BodyBoldMd, BodyRegularSm, LabelSemiboldLg } from "@fonts";
+import { BodyBoldLg, BodyBoldMd, BodyRegularSm, LabelSemiboldLg } from "@fonts";
 import { useAuthStore } from "@ksairi-org/react-auth-storage";
 import { useBooleanState } from "@ksairi-org/react-hooks";
 import {
@@ -242,8 +242,9 @@ const ProfileScreen = () => {
                 onPress={() => {
                   router.navigate("/ai");
                 }}
-                text={t`AI Assistant`}
-              />
+              >
+                <BodyBoldLg color={"$surface-app"}>{t`AI Assistant`}</BodyBoldLg>
+              </PrimaryButton>
             </Animated.View>
           </Containers.SubY>
 
